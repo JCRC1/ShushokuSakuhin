@@ -17,8 +17,7 @@ public class SelectedLaneDisplay : MonoBehaviour
 
     public InputField m_angleDisplay;
     public InputField m_rotationDurationDisplay;
-    public InputField m_pivotXDisplay;
-    public InputField m_pivotYDisplay;
+    public Toggle m_pivotToggle;
     public Dropdown m_rotationEaseSelect;
 
 

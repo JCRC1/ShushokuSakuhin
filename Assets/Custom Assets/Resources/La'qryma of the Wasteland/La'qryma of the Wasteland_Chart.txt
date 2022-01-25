@@ -70,15 +70,6 @@
                         "x": -5.0,
                         "y": -9.0
                     }
-                },
-                {
-                    "m_beat": 105.88999938964844,
-                    "m_duration": 2.2100000381469728,
-                    "m_easeType": 1,
-                    "m_targetPosition": {
-                        "x": 4.25,
-                        "y": -9.0
-                    }
                 }
             ],
             "m_laneEventsRotation": [
@@ -86,13 +77,8 @@
                     "m_beat": 6.0,
                     "m_duration": 1.0,
                     "m_easeType": 2,
-                    "m_targetRotation": -90.0
-                },
-                {
-                    "m_beat": 87.05000305175781,
-                    "m_duration": 9.609999656677246,
-                    "m_easeType": 1,
-                    "m_targetRotation": 18.219999313354493
+                    "m_targetRotation": 90.0,
+                    "m_pivotAtEnd": false
                 }
             ]
         },

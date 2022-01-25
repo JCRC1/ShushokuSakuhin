@@ -17,18 +17,16 @@ public class LaneHandler : MonoBehaviour
     public LaneEventRotation m_laneEventRotation;
     public int m_rotationIndex;
     public float m_startRotation;
-    private float m_currentRotation;
+    private float m_currentAngle;
 
     // Where notes spawn and end
     private Transform m_startPoint;
     private Transform m_endPoint;
     private SpriteShapeController m_spriteShapeController;
-
     // Note spawn related
     // Holds a reference in a queue to all the notes of this lane
     public Queue<NoteHandler> m_notes;
     private int m_nextNoteIndex;
-
     private void Start()
     {
         m_startPoint = transform.GetChild(0);
@@ -37,7 +35,6 @@ public class LaneHandler : MonoBehaviour
         m_spriteShapeController = GetComponent<SpriteShapeController>();
 
         m_laneEventMovement = new LaneEventMovement();
-
         m_notes = new Queue<NoteHandler>();
         m_nextNoteIndex = 0;
     }
@@ -63,7 +60,7 @@ public class LaneHandler : MonoBehaviour
         LaneRotationUpdate();
 
         NoteSpawn();
-        NoteJudgement();        
+        NoteJudgement();
     }
 
     // To freely be able to move the start and end points and it morphs the lane with it
@@ -188,9 +185,9 @@ public class LaneHandler : MonoBehaviour
                     break;
             }
 
-            m_currentRotation = Mathf.Lerp(m_startRotation, m_laneEventRotation.m_targetRotation, t);
+            m_currentAngle = Mathf.Lerp(m_startRotation, m_laneEventRotation.m_targetRotation, t);
 
-            transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_currentRotation);
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_currentAngle);
         }
         else
         {
@@ -220,14 +217,8 @@ public class LaneHandler : MonoBehaviour
                 default:
                     break;
             }
-
-            m_currentRotation = Mathf.Lerp(m_startRotation, m_laneEventRotation.m_targetRotation, t);
-
-            //transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_currentRotation);
-            m_laneEventRotation.m_pivotPoint = new Vector2(transform.position.x - 5.0f, transform.position.y);
-            Quaternion rot = Quaternion.Euler(0.0f, 0.0f, m_currentRotation);
-            transform.position = rot * (transform.position - (Vector3)m_laneEventRotation.m_pivotPoint) + (Vector3)m_laneEventRotation.m_pivotPoint;
-            transform.rotation = rot; 
+            m_currentAngle = Mathf.Lerp(m_startRotation, m_laneEventRotation.m_targetRotation, t);
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_currentAngle);
         }
     }
 
@@ -279,5 +270,5 @@ public class LaneHandler : MonoBehaviour
                 Destroy(m_notes.Dequeue().gameObject);
             }
         }
-    } 
+    }
 }

@@ -34,12 +34,11 @@ public class DummyLaneMovement : MonoBehaviour
         m_movementGizmo.SetActive(false);
     }
 
-    public void StartUseR(float _pivotX, float _pivotY)
+    public void StartUseR()
     {
         m_rotationGizmo.SetActive(true);
         m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_operating = true;
         m_rotationGizmo.transform.GetChild(0).GetComponent< RotationGizmo>().SetTargetObject(gameObject);
-        m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_pivot = new Vector2(_pivotX, _pivotY);
     }
 
     public void EndUseR()
@@ -57,8 +56,10 @@ public class DummyLaneMovement : MonoBehaviour
 
             SelectedLaneDisplay.Instance.m_angleDisplay.text = m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_currentAngle.ToString("0.00");
 
-            //SelectedLaneDisplay.Instance.m_pivotYDisplay.text = transform.position.y.ToString("0.00");
-            //SelectedLaneDisplay.Instance.m_pivotXDisplay.text = transform.position.x.ToString("0.00");
+            if (SelectedLaneDisplay.Instance.m_pivotToggle.isOn)
+                m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_pivot = new Vector2(m_rotationGizmo.transform.GetChild(0).transform.position.x - 5.0f, m_rotationGizmo.transform.GetChild(0).transform.position.y);
+            else
+                m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_pivot = new Vector2(m_rotationGizmo.transform.GetChild(0).transform.position.x, m_rotationGizmo.transform.GetChild(0).transform.position.y);
         }
     }
 }
