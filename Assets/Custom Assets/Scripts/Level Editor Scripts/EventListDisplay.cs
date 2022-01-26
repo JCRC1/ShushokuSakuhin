@@ -74,7 +74,7 @@ public class EventListDisplay : MonoBehaviour
 
                         LaneEventMovement move = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement[m_movementIndex[i]];
 
-                        m_movements[i].m_objects[j].GetComponent<MoveEventHolder>().m_heldLaneEvent = move;
+                        obj.GetComponent<MoveEventHolder>().m_heldLaneEvent = move;
                         m_movements[i].m_moves.Add(move);
                         m_movementIndex[i]++;
                     }
@@ -103,7 +103,7 @@ public class EventListDisplay : MonoBehaviour
 
                         LaneEventRotation rot = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsRotation[m_rotationIndex[i]];
 
-                        m_rotations[i].m_objects[j].GetComponent<RotEventHolder>().m_heldLaneEvent = rot;                        
+                        obj.GetComponent<RotEventHolder>().m_heldLaneEvent = rot;                        
                         m_rotations[i].m_rots.Add(rot);
                         m_rotationIndex[i]++;
                     }

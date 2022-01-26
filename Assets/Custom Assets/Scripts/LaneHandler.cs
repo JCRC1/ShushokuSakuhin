@@ -92,7 +92,7 @@ public class LaneHandler : MonoBehaviour
             float trackPosInBeats;
             trackPosInBeats = GameManager.Instance.m_trackPosInBeats;
 
-            float t = (0.0f - (m_laneEventMovement.m_beat - trackPosInBeats) / m_laneEventMovement.m_duration);
+            float t = (0.0f - (m_laneEventMovement.m_beat - trackPosInBeats) / (m_laneEventMovement.m_duration + 0.001f));
             t = Mathf.Clamp01(t);
 
             switch (m_laneEventMovement.m_easeType)
@@ -125,7 +125,7 @@ public class LaneHandler : MonoBehaviour
                 float trackPosInBeats;
 
                 trackPosInBeats = LevelEditorManager.Instance.m_trackPosInBeats;
-                float t = (0.0f - (m_laneEventMovement.m_beat - trackPosInBeats) / m_laneEventMovement.m_duration);
+                float t = (0.0f - (m_laneEventMovement.m_beat - trackPosInBeats) / (m_laneEventMovement.m_duration + 0.001f));
                 t = Mathf.Clamp01(t);
 
                 switch (m_laneEventMovement.m_easeType)
@@ -161,7 +161,7 @@ public class LaneHandler : MonoBehaviour
             float trackPosInBeats;
             trackPosInBeats = GameManager.Instance.m_trackPosInBeats;
 
-            float t = (0.0f - (m_laneEventRotation.m_beat - trackPosInBeats) / m_laneEventRotation.m_duration);
+            float t = (0.0f - (m_laneEventRotation.m_beat - trackPosInBeats) / (m_laneEventRotation.m_duration + 0.001f));
             t = Mathf.Clamp01(t);
 
             switch (m_laneEventRotation.m_easeType)
@@ -194,7 +194,7 @@ public class LaneHandler : MonoBehaviour
             float trackPosInBeats;
             trackPosInBeats = LevelEditorManager.Instance.m_trackPosInBeats;
 
-            float t = (0.0f - (m_laneEventRotation.m_beat - trackPosInBeats) / m_laneEventRotation.m_duration);
+            float t = (0.0f - (m_laneEventRotation.m_beat - trackPosInBeats) / (m_laneEventRotation.m_duration + 0.001f));
             t = Mathf.Clamp01(t);
 
             switch (m_laneEventRotation.m_easeType)

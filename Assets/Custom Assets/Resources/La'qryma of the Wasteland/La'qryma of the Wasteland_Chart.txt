@@ -81,26 +81,6 @@
                     "m_pivotAtEnd": false
                 }
             ]
-        },
-        {
-            "m_initialPosition": {
-                "x": 6.0,
-                "y": 5.0
-            },
-            "m_initialRotation": 180.0,
-            "m_notes": [],
-            "m_laneEventsMovement": [
-                {
-                    "m_beat": 0.0,
-                    "m_duration": 0.5,
-                    "m_easeType": 2,
-                    "m_targetPosition": {
-                        "x": 80.0,
-                        "y": 5.0
-                    }
-                }
-            ],
-            "m_laneEventsRotation": []
         }
     ]
 }
