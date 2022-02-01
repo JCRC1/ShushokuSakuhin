@@ -99,6 +99,8 @@ MonoBehaviour:
     m_beat: 0
     m_duration: 0
     m_easeType: 0
+    m_targetAlpha: 1
+    m_fadeNotes: 0
   m_fadeIndex: 0
   m_startAlpha: 0
 --- !u!1971053207 &2742321154508824718

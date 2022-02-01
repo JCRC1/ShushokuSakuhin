@@ -91,8 +91,16 @@ public class LaneHandler : MonoBehaviour
         GameObject start = transform.GetChild(0).gameObject;
         GameObject end = transform.GetChild(1).gameObject;
 
-        spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y + 0.5f));
-        spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y - 0.5f));
+        if (start.transform.localPosition.x > 0)
+        {
+            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y + 0.5f));
+            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y - 0.5f));
+        }
+        else
+        {
+            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y + 0.5f));
+            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y - 0.5f));
+        }
 
         spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y - 0.5f));
         spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y + 0.5f));
