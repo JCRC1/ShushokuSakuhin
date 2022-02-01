@@ -25,6 +25,10 @@ public class SelectedLaneDisplay : MonoBehaviour
     public Toggle m_fadeNotesToggle;
     public Dropdown m_fadeEaseSelect;
 
+    public InputField m_targetLengthDisplay;
+    public InputField m_lengthDurationDisplay;
+    public Dropdown m_lengthEaseSelect;
+
     private void Awake()
     {
         Instance = this;

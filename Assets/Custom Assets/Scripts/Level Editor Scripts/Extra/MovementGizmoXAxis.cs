@@ -18,6 +18,7 @@ public class MovementGizmoXAxis : MonoBehaviour
     private void OnMouseDown()
     {
         m_isDrag = true;
+       
         m_offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - m_main.m_targetObject.transform.position;
     }
 

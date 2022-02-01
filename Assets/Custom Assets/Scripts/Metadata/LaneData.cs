@@ -11,6 +11,7 @@ public class LaneData
     public Vector2                      m_initialPosition;
     public float                        m_initialRotation;      // Z Axis
     public float                        m_initialAlpha = 1.0f;
+    public float                        m_initialLength = 10.0f;
 
     // Notes on this lane
     public List<NoteData>               m_notes;
@@ -19,4 +20,5 @@ public class LaneData
     public List<LaneEventMovement>      m_laneEventsMovement;
     public List<LaneEventRotation>      m_laneEventsRotation;
     public List<LaneEventFade>          m_laneEventFade;
+    public List<LaneEventLength>        m_laneEventLength;
 }

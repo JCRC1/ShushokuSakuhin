@@ -220,8 +220,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementGizmoPrefab: {fileID: 5861614386212264844, guid: 755110c4ac620ec40825467eadde5907, type: 3}
+  m_XmovementGizmoPrefab: {fileID: 5861614386212264844, guid: abedbe050cf934d49bd1a644f92973f4, type: 3}
   m_rotationGizmoPrefab: {fileID: 5861614386212264844, guid: da3406ab738e811468f985559543d4a9, type: 3}
   m_movementGizmo: {fileID: 0}
+  m_XmovementGizmo: {fileID: 0}
   m_rotationGizmo: {fileID: 0}
 --- !u!1 &7632251749566391523
 GameObject:

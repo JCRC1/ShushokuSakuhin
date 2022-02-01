@@ -8,12 +8,14 @@ public class SelectedEventEditor : MonoBehaviour
     public MoveEventHolder m_selectedMovementEvent;
     public RotEventHolder m_selectedRotationEvent;
     public FadeEventHolder m_selectedFadeEvent;
+    public LengthEventHolder m_selectedLengthEvent;
 
     public void SelectMoveEvent(MoveEventHolder _holder)
     {
         m_selectedMovementEvent = _holder;
         m_selectedRotationEvent = null;
         m_selectedFadeEvent = null;
+        m_selectedLengthEvent = null;
     }
 
     public void SelectRotEvent(RotEventHolder _holder)
@@ -21,6 +23,7 @@ public class SelectedEventEditor : MonoBehaviour
         m_selectedMovementEvent = null;
         m_selectedRotationEvent = _holder;
         m_selectedFadeEvent = null;
+        m_selectedLengthEvent = null;
     }
 
     public void SelectFadeEvent(FadeEventHolder _holder)
@@ -28,6 +31,15 @@ public class SelectedEventEditor : MonoBehaviour
         m_selectedMovementEvent = null;
         m_selectedRotationEvent = null;
         m_selectedFadeEvent = _holder;
+        m_selectedLengthEvent = null;
+    }
+
+    public void SelectLengthEvent(LengthEventHolder _holder)
+    {
+        m_selectedMovementEvent = null;
+        m_selectedRotationEvent = null;
+        m_selectedFadeEvent = null;
+        m_selectedLengthEvent = _holder;
     }
 
     public void RemoveFromList()
@@ -48,7 +60,7 @@ public class SelectedEventEditor : MonoBehaviour
                 correspondingLane.transform.position = chart.m_lane[lane].m_laneEventsMovement[movIndex - 1].m_targetPosition;
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventMovement = null;
             }
-            else if(movIndex == 0)
+            else if (movIndex == 0)
             {
                 correspondingLane.transform.position = chart.m_lane[lane].m_initialPosition;
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventMovement = null;
@@ -58,12 +70,12 @@ public class SelectedEventEditor : MonoBehaviour
             LevelEditorManager.Instance.m_currentMovementIndex[lane]--;
 
             // Remove this from all the lists
-            EventListDisplay.Instance.m_movements[lane].m_moves.Remove(laneEvent); 
+            EventListDisplay.Instance.m_movements[lane].m_moves.Remove(laneEvent);
             EventListDisplay.Instance.m_movements[lane].m_objects.Remove(item);
             chart.m_lane[lane].m_laneEventsMovement.Remove(laneEvent);
             Destroy(item);
         }
-        else if(m_selectedRotationEvent)
+        else if (m_selectedRotationEvent)
         {
             // References to all the members we actually need, though mostly for making things less spaghetti
             ChartData chart = LevelEditorManager.Instance.m_chartData;
@@ -125,6 +137,37 @@ public class SelectedEventEditor : MonoBehaviour
             chart.m_lane[lane].m_laneEventFade.Remove(laneEvent);
             Destroy(item);
         }
+        else if (m_selectedLengthEvent)
+        {
+            // References to all the members we actually need, though mostly for making things less spaghetti
+            ChartData chart = LevelEditorManager.Instance.m_chartData;
+            LaneEventLength laneEvent = m_selectedLengthEvent.m_heldLaneEvent;
+            int lengthIndex = m_selectedLengthEvent.m_indexOfThis;
+            int lane = m_selectedLengthEvent.m_laneID;
+            GameObject item = EventListDisplay.Instance.m_lengths[lane].m_objects[lengthIndex];
+            GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
+
+            // Return corresponding lane back to previous position
+            if (lengthIndex == chart.m_lane[lane].m_laneEventLength.Count)
+            {
+                correspondingLane.transform.GetChild(0).localPosition = new Vector2(chart.m_lane[lane].m_laneEventLength[lengthIndex - 1].m_targetLength, 0);
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventLength = null;
+            }
+            else if (lengthIndex == 1)
+            {
+                correspondingLane.transform.GetChild(0).localPosition = new Vector2(chart.m_lane[lane].m_initialLength, 0);
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventLength = null;
+            }
+
+            // It never goes below 0 anyways so no harm in lowering it outside an if statement
+            LevelEditorManager.Instance.m_currentLengthIndex[lane]--;
+
+            // Remove this from all the lists
+            EventListDisplay.Instance.m_lengths[lane].m_lengths.Remove(laneEvent);
+            EventListDisplay.Instance.m_lengths[lane].m_objects.Remove(item);
+            chart.m_lane[lane].m_laneEventLength.Remove(laneEvent);
+            Destroy(item);
+        }
     }
 
     public void EditMoveEvent(GameObject _display)
@@ -151,6 +194,14 @@ public class SelectedEventEditor : MonoBehaviour
         }
     }
 
+    public void EditLengthEvent(GameObject _display)
+    {
+        if (m_selectedLengthEvent)
+        {
+            _display.SetActive(true);
+        }
+    }
+
     public void SeekToSelectedEvent()
     {
         if (m_selectedMovementEvent)
@@ -164,6 +215,10 @@ public class SelectedEventEditor : MonoBehaviour
         else if (m_selectedFadeEvent)
         {
             LevelEditorManager.Instance.m_audioSource.time = (LevelEditorManager.Instance.m_secPerBeat * m_selectedFadeEvent.m_heldLaneEvent.m_beat) + LevelEditorManager.Instance.m_chartData.m_trackOffset;
+        }
+        else if (m_selectedLengthEvent)
+        {
+            LevelEditorManager.Instance.m_audioSource.time = (LevelEditorManager.Instance.m_secPerBeat * m_selectedLengthEvent.m_heldLaneEvent.m_beat) + LevelEditorManager.Instance.m_chartData.m_trackOffset;
         }
     }
 }

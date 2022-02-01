@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-[ExecuteInEditMode]
 public class LaneHandler : MonoBehaviour
 {
     public int m_identifier;
@@ -23,6 +22,11 @@ public class LaneHandler : MonoBehaviour
     public int m_fadeIndex;
     public float m_startAlpha = 1;
     private float m_currentAlpha;
+
+    public LaneEventLength m_laneEventLength;
+    public int m_lengthIndex;
+    public float m_startLength = 10.0f;
+    private float m_currentLength;
 
     // Where notes spawn and end
     private Transform m_startPoint;
@@ -44,6 +48,7 @@ public class LaneHandler : MonoBehaviour
         m_notes = new Queue<NoteHandler>();
         m_nextNoteIndex = 0;
         m_currentAlpha = m_startAlpha;
+        m_currentLength = m_startLength;
     }
 
     // Assign lane event to this object
@@ -67,19 +72,27 @@ public class LaneHandler : MonoBehaviour
         m_startAlpha = _startAlpha;
     }
 
+    // Assign lane event to this object
+    public void InitializeLength(LaneEventLength _laneEvent, float _startLength)
+    {
+        m_laneEventLength = _laneEvent;
+        m_startLength = _startLength;
+    }
+
     private void Update()
     {
-        LaneLengthUpdate();
+        SpriteShapeUpdate();
+
         LaneMovementUpdate();
         LaneRotationUpdate();
         LaneAlphaUpdate();
+        LaneLengthUpdate();
 
         NoteSpawn();
         NoteJudgement();
     }
 
-    // To freely be able to move the start and end points and it morphs the lane with it
-    void LaneLengthUpdate()
+    private void SpriteShapeUpdate()
     {
         Spline spline = m_spriteShapeController.spline;
         spline.Clear();
@@ -91,7 +104,7 @@ public class LaneHandler : MonoBehaviour
         GameObject start = transform.GetChild(0).gameObject;
         GameObject end = transform.GetChild(1).gameObject;
 
-        if (start.transform.localPosition.x > 0)
+        if (start.transform.localPosition.x >= 0)
         {
             spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y + 0.5f));
             spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y - 0.5f));
@@ -106,6 +119,77 @@ public class LaneHandler : MonoBehaviour
         spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y + 0.5f));
 
         m_spriteShapeController.RefreshSpriteShape();
+    }
+
+    // To freely be able to move the start and end points and it morphs the lane with it
+    void LaneLengthUpdate()
+    {
+        if (GameManager.Instance)
+        {
+            float trackPosInBeats;
+            trackPosInBeats = GameManager.Instance.m_trackPosInBeats;
+
+            float t = (0.0f - (m_laneEventLength.m_beat - trackPosInBeats) / (m_laneEventLength.m_duration + 0.001f));
+            t = Mathf.Clamp01(t);
+
+            switch (m_laneEventLength.m_easeType)
+            {
+                case LaneEvent.EaseType.EASE_NONE:
+                    break;
+
+                case LaneEvent.EaseType.EASE_NORMAL:
+                    t = Mathf.Lerp(0.0f, 1.0f, t);
+                    break;
+
+                case LaneEvent.EaseType.EASE_IN:
+                    t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
+                    break;
+
+                case LaneEvent.EaseType.EASE_OUT:
+                    t = Mathf.Sin(t * Mathf.PI * 0.5f);
+                    break;
+
+                default:
+                    break;
+            }
+
+            m_currentLength = Mathf.Lerp(m_startLength, m_laneEventLength.m_targetLength, t);
+
+            m_startPoint.localPosition = new Vector2(m_currentLength, 0);
+        }
+        else
+        {
+            float trackPosInBeats;
+            trackPosInBeats = LevelEditorManager.Instance.m_trackPosInBeats;
+
+            float t = (0.0f - (m_laneEventLength.m_beat - trackPosInBeats) / (m_laneEventLength.m_duration + 0.001f));
+            t = Mathf.Clamp01(t);
+
+            switch (m_laneEventLength.m_easeType)
+            {
+                case LaneEvent.EaseType.EASE_NONE:
+                    break;
+
+                case LaneEvent.EaseType.EASE_NORMAL:
+                    t = Mathf.Lerp(0.0f, 1.0f, t);
+                    break;
+
+                case LaneEvent.EaseType.EASE_IN:
+                    t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
+                    break;
+
+                case LaneEvent.EaseType.EASE_OUT:
+                    t = Mathf.Sin(t * Mathf.PI * 0.5f);
+                    break;
+
+                default:
+                    break;
+            }
+
+            m_currentLength = Mathf.Lerp(m_startLength, m_laneEventLength.m_targetLength, t);
+
+            m_startPoint.localPosition = new Vector2(m_currentLength, 0);
+        }
     }
 
     private void LaneMovementUpdate()
@@ -193,7 +277,7 @@ public class LaneHandler : MonoBehaviour
                     break;
 
                 case LaneEvent.EaseType.EASE_NORMAL:
-                    Mathf.Lerp(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, (0.0f - (m_laneEventRotation.m_beat - trackPosInBeats) / m_laneEventRotation.m_duration))));
+                    t = Mathf.Lerp(0.0f, 1.0f, t);
                     break;
 
                 case LaneEvent.EaseType.EASE_IN:
@@ -226,7 +310,7 @@ public class LaneHandler : MonoBehaviour
                     break;
 
                 case LaneEvent.EaseType.EASE_NORMAL:
-                    Mathf.Lerp(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, (0.0f - (m_laneEventRotation.m_beat - trackPosInBeats) / m_laneEventRotation.m_duration))));
+                    t = Mathf.Lerp(0.0f, 1.0f, t);
                     break;
 
                 case LaneEvent.EaseType.EASE_IN:
@@ -261,7 +345,7 @@ public class LaneHandler : MonoBehaviour
                     break;
 
                 case LaneEvent.EaseType.EASE_NORMAL:
-                    Mathf.Lerp(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, (0.0f - (m_laneEventFade.m_beat - trackPosInBeats) / m_laneEventFade.m_duration))));
+                    t = Mathf.Lerp(0.0f, 1.0f, t);
                     break;
 
                 case LaneEvent.EaseType.EASE_IN:
@@ -296,7 +380,7 @@ public class LaneHandler : MonoBehaviour
                     break;
 
                 case LaneEvent.EaseType.EASE_NORMAL:
-                    Mathf.Lerp(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, (0.0f - (m_laneEventFade.m_beat - trackPosInBeats) / m_laneEventFade.m_duration))));
+                    t = Mathf.Lerp(0.0f, 1.0f, t);
                     break;
 
                 case LaneEvent.EaseType.EASE_IN:
