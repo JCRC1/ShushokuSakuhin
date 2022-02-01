@@ -35,6 +35,8 @@ public class LevelEditorManager : MonoBehaviour
     public List<int> m_currentMovementIndex;
     //[HideInInspector]
     public List<int> m_currentRotationIndex;
+    //[HideInInspector]
+    public List<int> m_currentFadeIndex;
 
     // Total lanes
     [HideInInspector]
@@ -97,6 +99,7 @@ public class LevelEditorManager : MonoBehaviour
             m_nextNoteIndex = new List<int>();
             m_currentMovementIndex = new List<int>();
             m_currentRotationIndex = new List<int>();
+            m_currentFadeIndex = new List<int>();
         }
 
         m_audioSource.Play();
@@ -111,6 +114,7 @@ public class LevelEditorManager : MonoBehaviour
         m_nextNoteIndex = new List<int>();
         m_currentMovementIndex = new List<int>();
         m_currentRotationIndex = new List<int>();
+        m_currentFadeIndex = new List<int>();
 
         for (int i = 0; i < m_chartData.m_lane.Count; i++)
         {
@@ -128,10 +132,13 @@ public class LevelEditorManager : MonoBehaviour
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_identifier = m_totalLanes;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_movementStartPosition = _laneData.m_initialPosition;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startRotation = _laneData.m_initialRotation;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startAlpha = 1.0f;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventFade.m_targetAlpha = 1.0f;
 
         m_nextNoteIndex.Add(0);
         m_currentMovementIndex.Add(0);
         m_currentRotationIndex.Add(0);
+        m_currentFadeIndex.Add(0);
 
         Instantiate(m_laneIDDisplayPrefab, m_lanes[m_totalLanes].transform).GetComponent<TextMeshPro>().text = m_totalLanes.ToString();
         m_totalLanes++;
@@ -144,6 +151,7 @@ public class LevelEditorManager : MonoBehaviour
 
         newLane.m_laneEventsMovement = new List<LaneEventMovement>();
         newLane.m_laneEventsRotation = new List<LaneEventRotation>();
+        newLane.m_laneEventFade = new List<LaneEventFade>();
         newLane.m_notes = new List<NoteData>();
 
         m_lanes.Add(Instantiate(m_lanePrefab, newLane.m_initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, newLane.m_initialRotation))));
@@ -151,10 +159,13 @@ public class LevelEditorManager : MonoBehaviour
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_identifier = m_totalLanes;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_movementStartPosition = newLane.m_initialPosition;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startRotation = newLane.m_initialRotation;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startAlpha = 1.0f;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventFade.m_targetAlpha = 1.0f;
 
         m_nextNoteIndex.Add(0);
         m_currentMovementIndex.Add(0);
         m_currentRotationIndex.Add(0);
+        m_currentFadeIndex.Add(0);
 
         m_chartData.m_lane.Add(newLane);
         Instantiate(m_laneIDDisplayPrefab, m_lanes[m_totalLanes].transform).GetComponent<TextMeshPro>().text = m_totalLanes.ToString();
@@ -239,6 +250,39 @@ public class LevelEditorManager : MonoBehaviour
                         }
                     }
                 }
+
+                if (m_currentFadeIndex[i] <= 0)
+                {
+                    m_currentFadeIndex[i] = 0;
+                }
+
+                // First check if the current index is less than the total count of events
+                if (m_currentFadeIndex[i] < m_chartData.m_lane[i].m_laneEventFade.Count)
+                {
+                    if (m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]].m_beat < m_trackPosInBeats)
+                    {
+                        if (m_currentFadeIndex[i] < 1)
+                        {
+                            float a = m_chartData.m_lane[i].m_initialAlpha;
+                            m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], a);
+
+                            m_currentFadeIndex[i]++;
+                        }
+                        else
+                        {
+                            float a = m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_targetAlpha;
+
+                            if (a >= 1)
+                                a = 1;
+                            else if (a <= 0)
+                                a = 0;
+
+                            m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], a);
+
+                            m_currentFadeIndex[i]++;
+                        }
+                    }
+                }
             }
         }
 
@@ -291,6 +335,28 @@ public class LevelEditorManager : MonoBehaviour
             {
                 m_lanes[i].GetComponent<LaneHandler>().InitializeRotation(m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i]], m_chartData.m_lane[i].m_initialRotation);
 
+            }
+
+            // For fades
+            if (m_chartData.m_lane[i].m_laneEventFade.Count > 0 && m_currentFadeIndex[i] - 1 >= 0)
+            {
+                if (m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_beat + m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_duration >= m_trackPosInBeats)
+                {
+                    if (m_currentFadeIndex[i] - 1 >= 0)
+                    {
+                        m_currentFadeIndex[i]--;
+                        // Continue looping but stop here since this means we are at 0, and therefore continuing through this specific iteration will be sad at itself cuz negative indexes are not fun
+                        continue;
+                    }
+
+                    float a = m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_targetAlpha;
+
+                    m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], a);
+                }
+            }
+            else if (m_chartData.m_lane[i].m_laneEventFade.Count > 0 && m_currentFadeIndex[i] - 1 < 0)
+            {
+                m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], m_chartData.m_lane[i].m_initialAlpha);
             }
         }
     }

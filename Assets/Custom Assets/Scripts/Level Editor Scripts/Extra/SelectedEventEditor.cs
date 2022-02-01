@@ -1,27 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class SelectedEventEditor : MonoBehaviour
 {
     public MoveEventHolder m_selectedMovementEvent;
     public RotEventHolder m_selectedRotationEvent;
+    public FadeEventHolder m_selectedFadeEvent;
 
     public void SelectMoveEvent(MoveEventHolder _holder)
     {
         m_selectedMovementEvent = _holder;
         m_selectedRotationEvent = null;
+        m_selectedFadeEvent = null;
     }
 
     public void SelectRotEvent(RotEventHolder _holder)
     {
         m_selectedMovementEvent = null;
         m_selectedRotationEvent = _holder;
+        m_selectedFadeEvent = null;
+    }
+
+    public void SelectFadeEvent(FadeEventHolder _holder)
+    {
+        m_selectedMovementEvent = null;
+        m_selectedRotationEvent = null;
+        m_selectedFadeEvent = _holder;
     }
 
     public void RemoveFromList()
     {
-        if (m_selectedMovementEvent && !m_selectedRotationEvent)
+        if (m_selectedMovementEvent)
         {
             // References to all the members we actually need, though mostly for making things less spaghetti
             ChartData chart = LevelEditorManager.Instance.m_chartData;
@@ -52,7 +63,7 @@ public class SelectedEventEditor : MonoBehaviour
             chart.m_lane[lane].m_laneEventsMovement.Remove(laneEvent);
             Destroy(item);
         }
-        else if(!m_selectedMovementEvent && m_selectedRotationEvent)
+        else if(m_selectedRotationEvent)
         {
             // References to all the members we actually need, though mostly for making things less spaghetti
             ChartData chart = LevelEditorManager.Instance.m_chartData;
@@ -63,7 +74,7 @@ public class SelectedEventEditor : MonoBehaviour
             GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
 
             // Return corresponding lane back to previous position
-            if (rotIndex == chart.m_lane[lane].m_laneEventsMovement.Count)
+            if (rotIndex == chart.m_lane[lane].m_laneEventsRotation.Count)
             {
                 correspondingLane.transform.rotation = Quaternion.Euler(0.0f, 0.0f, chart.m_lane[lane].m_laneEventsRotation[rotIndex - 1].m_targetRotation);
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventRotation = null;
@@ -83,11 +94,42 @@ public class SelectedEventEditor : MonoBehaviour
             chart.m_lane[lane].m_laneEventsRotation.Remove(laneEvent);
             Destroy(item);
         }
+        else if (m_selectedFadeEvent)
+        {
+            // References to all the members we actually need, though mostly for making things less spaghetti
+            ChartData chart = LevelEditorManager.Instance.m_chartData;
+            LaneEventFade laneEvent = m_selectedFadeEvent.m_heldLaneEvent;
+            int fadeIndex = m_selectedFadeEvent.m_indexOfThis;
+            int lane = m_selectedFadeEvent.m_laneID;
+            GameObject item = EventListDisplay.Instance.m_fades[lane].m_objects[fadeIndex];
+            GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
+
+            // Return corresponding lane back to previous position
+            if (fadeIndex == chart.m_lane[lane].m_laneEventFade.Count)
+            {
+                correspondingLane.GetComponent<SpriteShapeRenderer>().color = new Color(correspondingLane.GetComponent<SpriteShapeRenderer>().color.r, correspondingLane.GetComponent<SpriteShapeRenderer>().color.g, correspondingLane.GetComponent<SpriteShapeRenderer>().color.b, chart.m_lane[lane].m_laneEventFade[fadeIndex - 1].m_targetAlpha);
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = null;
+            }
+            else if (fadeIndex == 1)
+            {
+                correspondingLane.GetComponent<SpriteShapeRenderer>().color = new Color(correspondingLane.GetComponent<SpriteShapeRenderer>().color.r, correspondingLane.GetComponent<SpriteShapeRenderer>().color.g, correspondingLane.GetComponent<SpriteShapeRenderer>().color.b, chart.m_lane[lane].m_initialAlpha);
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = null;
+            }
+
+            // It never goes below 0 anyways so no harm in lowering it outside an if statement
+            LevelEditorManager.Instance.m_currentFadeIndex[lane]--;
+
+            // Remove this from all the lists
+            EventListDisplay.Instance.m_fades[lane].m_fades.Remove(laneEvent);
+            EventListDisplay.Instance.m_fades[lane].m_objects.Remove(item);
+            chart.m_lane[lane].m_laneEventFade.Remove(laneEvent);
+            Destroy(item);
+        }
     }
 
     public void EditMoveEvent(GameObject _display)
     {
-        if (m_selectedMovementEvent && !m_selectedRotationEvent)
+        if (m_selectedMovementEvent)
         {
             _display.SetActive(true);           
         }
@@ -95,20 +137,33 @@ public class SelectedEventEditor : MonoBehaviour
 
     public void EditRotEvent(GameObject _display)
     {
-        if (!m_selectedMovementEvent && m_selectedRotationEvent)
+        if (m_selectedRotationEvent)
         {
             _display.SetActive(true);
         }
     }
+
+    public void EditFadeEvent(GameObject _display)
+    {
+        if (m_selectedFadeEvent)
+        {
+            _display.SetActive(true);
+        }
+    }
+
     public void SeekToSelectedEvent()
     {
-        if (m_selectedMovementEvent && !m_selectedRotationEvent)
+        if (m_selectedMovementEvent)
         {
             LevelEditorManager.Instance.m_audioSource.time = (LevelEditorManager.Instance.m_secPerBeat * m_selectedMovementEvent.m_heldLaneEvent.m_beat) + LevelEditorManager.Instance.m_chartData.m_trackOffset;
         }
-        else if (!m_selectedMovementEvent && m_selectedRotationEvent)
+        else if (m_selectedRotationEvent)
         {
             LevelEditorManager.Instance.m_audioSource.time = (LevelEditorManager.Instance.m_secPerBeat * m_selectedRotationEvent.m_heldLaneEvent.m_beat) + LevelEditorManager.Instance.m_chartData.m_trackOffset;
+        }
+        else if (m_selectedFadeEvent)
+        {
+            LevelEditorManager.Instance.m_audioSource.time = (LevelEditorManager.Instance.m_secPerBeat * m_selectedFadeEvent.m_heldLaneEvent.m_beat) + LevelEditorManager.Instance.m_chartData.m_trackOffset;
         }
     }
 }

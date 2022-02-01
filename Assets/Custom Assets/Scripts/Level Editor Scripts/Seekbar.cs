@@ -53,7 +53,7 @@ public class Seekbar : MonoBehaviour
         // Keep track of the beats of the track
         if (!ManualButton.m_manualBeatInput)
         {
-            if (!CreateLaneMovement.m_creatingMovement && !CreateLaneMovement.m_creatingRotation)
+            if (!CreateLaneEvent.m_creatingMovement && !CreateLaneEvent.m_creatingRotation)
             {
                 m_currentBeatText.text = LevelEditorManager.Instance.m_trackPosInBeats.ToString("00.00");
             }

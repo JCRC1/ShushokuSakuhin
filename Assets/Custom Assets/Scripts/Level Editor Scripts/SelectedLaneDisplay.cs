@@ -20,6 +20,10 @@ public class SelectedLaneDisplay : MonoBehaviour
     public Toggle m_pivotToggle;
     public Dropdown m_rotationEaseSelect;
 
+    public InputField m_targetAlphaDisplay;
+    public InputField m_fadeDurationDisplay;
+    public Toggle m_fadeNotesToggle;
+    public Dropdown m_fadeEaseSelect;
 
     private void Awake()
     {

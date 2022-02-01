@@ -19,24 +19,31 @@ public class LaneHandler : MonoBehaviour
     public float m_startRotation;
     private float m_currentAngle;
 
+    public LaneEventFade m_laneEventFade;
+    public int m_fadeIndex;
+    public float m_startAlpha = 1;
+    private float m_currentAlpha;
+
     // Where notes spawn and end
     private Transform m_startPoint;
     private Transform m_endPoint;
     private SpriteShapeController m_spriteShapeController;
+
     // Note spawn related
     // Holds a reference in a queue to all the notes of this lane
     public Queue<NoteHandler> m_notes;
     private int m_nextNoteIndex;
+
     private void Start()
     {
         m_startPoint = transform.GetChild(0);
         m_endPoint = transform.GetChild(1);
 
         m_spriteShapeController = GetComponent<SpriteShapeController>();
-
-        m_laneEventMovement = new LaneEventMovement();
+        
         m_notes = new Queue<NoteHandler>();
         m_nextNoteIndex = 0;
+        m_currentAlpha = m_startAlpha;
     }
 
     // Assign lane event to this object
@@ -53,11 +60,19 @@ public class LaneHandler : MonoBehaviour
         m_startRotation = _startRotation;
     }
 
+    // Assign lane event to this object
+    public void InitializeFade(LaneEventFade _laneEvent, float _startAlpha)
+    {
+        m_laneEventFade = _laneEvent;
+        m_startAlpha = _startAlpha;
+    }
+
     private void Update()
     {
         LaneLengthUpdate();
         LaneMovementUpdate();
         LaneRotationUpdate();
+        LaneAlphaUpdate();
 
         NoteSpawn();
         NoteJudgement();
@@ -219,6 +234,80 @@ public class LaneHandler : MonoBehaviour
             }
             m_currentAngle = Mathf.Lerp(m_startRotation, m_laneEventRotation.m_targetRotation, t);
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_currentAngle);
+        }
+    }
+
+    private void LaneAlphaUpdate()
+    {
+        if (GameManager.Instance)
+        {
+            float trackPosInBeats;
+            trackPosInBeats = GameManager.Instance.m_trackPosInBeats;
+
+            float t = (0.0f - (m_laneEventFade.m_beat - trackPosInBeats) / (m_laneEventFade.m_duration + 0.001f));
+            t = Mathf.Clamp01(t);
+
+            switch (m_laneEventFade.m_easeType)
+            {
+                case LaneEvent.EaseType.EASE_NONE:
+                    break;
+
+                case LaneEvent.EaseType.EASE_NORMAL:
+                    Mathf.Lerp(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, (0.0f - (m_laneEventFade.m_beat - trackPosInBeats) / m_laneEventFade.m_duration))));
+                    break;
+
+                case LaneEvent.EaseType.EASE_IN:
+                    t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
+                    break;
+
+                case LaneEvent.EaseType.EASE_OUT:
+                    t = Mathf.Sin(t * Mathf.PI * 0.5f);
+                    break;
+
+                default:
+                    break;
+            }
+
+            m_currentAlpha = Mathf.Lerp(m_startAlpha, m_laneEventFade.m_targetAlpha, t);
+
+            GetComponent<SpriteShapeRenderer>().color = new Color(GetComponent<SpriteShapeRenderer>().color.r, GetComponent<SpriteShapeRenderer>().color.g, GetComponent<SpriteShapeRenderer>().color.b, m_currentAlpha);
+            transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(transform.GetChild(1).GetComponent<SpriteRenderer>().color.r, transform.GetChild(1).GetComponent<SpriteRenderer>().color.g, transform.GetChild(1).GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
+
+        }
+        else
+        {
+            float trackPosInBeats;
+            trackPosInBeats = LevelEditorManager.Instance.m_trackPosInBeats;
+
+            float t = (0.0f - (m_laneEventFade.m_beat - trackPosInBeats) / (m_laneEventFade.m_duration + 0.001f));
+            t = Mathf.Clamp01(t);
+
+            switch (m_laneEventFade.m_easeType)
+            {
+                case LaneEvent.EaseType.EASE_NONE:
+                    break;
+
+                case LaneEvent.EaseType.EASE_NORMAL:
+                    Mathf.Lerp(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, Mathf.SmoothStep(0.0f, 1.0f, (0.0f - (m_laneEventFade.m_beat - trackPosInBeats) / m_laneEventFade.m_duration))));
+                    break;
+
+                case LaneEvent.EaseType.EASE_IN:
+                    t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
+                    break;
+
+                case LaneEvent.EaseType.EASE_OUT:
+                    t = Mathf.Sin(t * Mathf.PI * 0.5f);
+                    break;
+
+                default:
+                    break;
+            }
+
+            m_currentAlpha = Mathf.Lerp(m_startAlpha, m_laneEventFade.m_targetAlpha, t);
+
+            GetComponent<SpriteShapeRenderer>().color = new Color(GetComponent<SpriteShapeRenderer>().color.r, GetComponent<SpriteShapeRenderer>().color.g, GetComponent<SpriteShapeRenderer>().color.b, m_currentAlpha);
+            transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(transform.GetChild(1).GetComponent<SpriteRenderer>().color.r, transform.GetChild(1).GetComponent<SpriteRenderer>().color.g, transform.GetChild(1).GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
+
         }
     }
 

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreateLaneMovement : MonoBehaviour
+public class CreateLaneEvent: MonoBehaviour
 {
     public static bool m_creatingMovement = false;
     public static bool m_creatingRotation = false;
+    public static bool m_creatingFade = false;
 
     public Camera m_worldCam;
     public GameObject m_dummyLanePrefab;
@@ -89,6 +90,33 @@ public class CreateLaneMovement : MonoBehaviour
         int selected = LaneEditor.Instance.m_selectedLane.m_identifier;
         EndRotationButton();
         LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsRotation.Remove(LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsRotation[LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsRotation.Count - 1]);
+    }
+
+    public void CreateFadeButton()
+    {
+        m_creatingFade = true;
+
+        m_timeOfStart = LevelEditorManager.Instance.m_trackPosInBeats;
+    }
+
+    public void EndFadeButton()
+    {
+        LaneEventFade newFade = new LaneEventFade();
+
+        float.TryParse(Seekbar.Instance.m_currentBeatText.text, out newFade.m_beat);
+        float.TryParse(SelectedLaneDisplay.Instance.m_fadeDurationDisplay.text, out newFade.m_duration);
+        float.TryParse(SelectedLaneDisplay.Instance.m_targetAlphaDisplay.text, out newFade.m_targetAlpha);
+        newFade.m_fadeNotes = SelectedLaneDisplay.Instance.m_fadeNotesToggle.isOn;
+        newFade.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_fadeEaseSelect.value;
+
+        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventFade.Add(newFade);
+        m_creatingFade = false;
+    }
+    public void CancelFadeButton()
+    {
+        int selected = LaneEditor.Instance.m_selectedLane.m_identifier;
+        EndFadeButton();
+        LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventFade.Remove(LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventFade[LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventFade.Count - 1]);
     }
 
     public void SetPositionX(Text _text)

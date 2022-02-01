@@ -1,0 +1,102 @@
+{
+    "m_trackAudioPath": "La'qryma of the Wasteland/La'qryma of the Wasteland",
+    "m_trackCoverArtPath": "La'qryma of the Wasteland/La'qryma of the Wasteland.jpg",
+    "m_trackName": "La'qryma of the Wasteland",
+    "m_trackArtist": "DJ Noriken",
+    "m_trackDifficulty": 1,
+    "m_trackOffset": 1.4285714626312256,
+    "m_trackBPM": 168.0,
+    "m_lane": [
+        {
+            "m_initialPosition": {
+                "x": 5.0,
+                "y": 9.0
+            },
+            "m_initialRotation": 0.0,
+            "m_initialAlpha": 1.0,
+            "m_notes": [],
+            "m_laneEventsMovement": [
+                {
+                    "m_beat": 0.25,
+                    "m_duration": 0.5,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": 100.0,
+                        "y": 9.0
+                    }
+                }
+            ],
+            "m_laneEventsRotation": [],
+            "m_laneEventFade": []
+        },
+        {
+            "m_initialPosition": {
+                "x": -5.0,
+                "y": 7.0
+            },
+            "m_initialRotation": 0.0,
+            "m_initialAlpha": 1.0,
+            "m_notes": [],
+            "m_laneEventsMovement": [
+                {
+                    "m_beat": 0.0,
+                    "m_duration": 0.5,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -100.0,
+                        "y": 7.0
+                    }
+                },
+                {
+                    "m_beat": 0.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": -100.0,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 4.0,
+                    "m_duration": 1.0,
+                    "m_easeType": 3,
+                    "m_targetPosition": {
+                        "x": -3.0,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 5.0,
+                    "m_duration": 0.25,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -5.0,
+                        "y": -9.0
+                    }
+                }
+            ],
+            "m_laneEventsRotation": [
+                {
+                    "m_beat": 6.0,
+                    "m_duration": 1.0,
+                    "m_easeType": 2,
+                    "m_targetRotation": 90.0,
+                    "m_pivotAtEnd": false
+                }
+            ],
+            "m_laneEventFade": []
+        },
+        {
+            "m_initialPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "m_initialRotation": 0.0,
+            "m_initialAlpha": 1.0,
+            "m_notes": [],
+            "m_laneEventsMovement": [],
+            "m_laneEventsRotation": [],
+            "m_laneEventFade": []
+        }
+    ]
+}
