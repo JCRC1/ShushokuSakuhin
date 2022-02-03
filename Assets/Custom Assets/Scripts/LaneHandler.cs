@@ -32,6 +32,7 @@ public class LaneHandler : MonoBehaviour
     private Transform m_startPoint;
     private Transform m_endPoint;
     private SpriteShapeController m_spriteShapeController;
+    private LineRenderer m_lineRenderer;
 
     // Note spawn related
     // Holds a reference in a queue to all the notes of this lane
@@ -43,8 +44,9 @@ public class LaneHandler : MonoBehaviour
         m_startPoint = transform.GetChild(0);
         m_endPoint = transform.GetChild(1);
 
-        m_spriteShapeController = GetComponent<SpriteShapeController>();
-        
+        //m_spriteShapeController = GetComponent<SpriteShapeController>();
+        m_lineRenderer = GetComponent<LineRenderer>();
+
         m_notes = new Queue<NoteHandler>();
         m_nextNoteIndex = 0;
         m_currentAlpha = m_startAlpha;
@@ -94,31 +96,34 @@ public class LaneHandler : MonoBehaviour
 
     private void SpriteShapeUpdate()
     {
-        Spline spline = m_spriteShapeController.spline;
-        spline.Clear();
+        //Spline spline = m_spriteShapeController.spline;
+        //spline.Clear();
+        //
+        //// Lock Y Movement
+        //transform.GetChild(0).localPosition = new Vector2(transform.GetChild(0).localPosition.x, 0);
+        //transform.GetChild(1).localPosition = new Vector2(transform.GetChild(1).localPosition.x, 0);
+        //
+        //GameObject start = transform.GetChild(0).gameObject;
+        //GameObject end = transform.GetChild(1).gameObject;
+        //
+        //if (start.transform.localPosition.x >= 0)
+        //{
+        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y + 0.5f));
+        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y - 0.5f));
+        //}
+        //else
+        //{
+        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y + 0.5f));
+        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y - 0.5f));
+        //}
+        //
+        //spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y - 0.5f));
+        //spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y + 0.5f));
+        //
+        //m_spriteShapeController.RefreshSpriteShape();
 
-        // Lock Y Movement
-        transform.GetChild(0).localPosition = new Vector2(transform.GetChild(0).localPosition.x, 0);
-        transform.GetChild(1).localPosition = new Vector2(transform.GetChild(1).localPosition.x, 0);
 
-        GameObject start = transform.GetChild(0).gameObject;
-        GameObject end = transform.GetChild(1).gameObject;
-
-        if (start.transform.localPosition.x >= 0)
-        {
-            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y + 0.5f));
-            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y - 0.5f));
-        }
-        else
-        {
-            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y + 0.5f));
-            spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y - 0.5f));
-        }
-
-        spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y - 0.5f));
-        spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y + 0.5f));
-
-        m_spriteShapeController.RefreshSpriteShape();
+        m_lineRenderer.SetPosition(1, m_startPoint.localPosition);
     }
 
     // To freely be able to move the start and end points and it morphs the lane with it
@@ -362,7 +367,9 @@ public class LaneHandler : MonoBehaviour
 
             m_currentAlpha = Mathf.Lerp(m_startAlpha, m_laneEventFade.m_targetAlpha, t);
 
-            GetComponent<SpriteShapeRenderer>().color = new Color(GetComponent<SpriteShapeRenderer>().color.r, GetComponent<SpriteShapeRenderer>().color.g, GetComponent<SpriteShapeRenderer>().color.b, m_currentAlpha);
+            GetComponent<LineRenderer>().startColor = new Color(GetComponent<LineRenderer>().startColor.r, GetComponent<LineRenderer>().startColor.g, GetComponent<LineRenderer>().startColor.b, m_currentAlpha);
+            GetComponent<LineRenderer>().endColor = new Color(GetComponent<LineRenderer>().endColor.r, GetComponent<LineRenderer>().endColor.g, GetComponent<LineRenderer>().endColor.b, m_currentAlpha);
+            
             transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(transform.GetChild(1).GetComponent<SpriteRenderer>().color.r, transform.GetChild(1).GetComponent<SpriteRenderer>().color.g, transform.GetChild(1).GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
 
         }
@@ -397,7 +404,9 @@ public class LaneHandler : MonoBehaviour
 
             m_currentAlpha = Mathf.Lerp(m_startAlpha, m_laneEventFade.m_targetAlpha, t);
 
-            GetComponent<SpriteShapeRenderer>().color = new Color(GetComponent<SpriteShapeRenderer>().color.r, GetComponent<SpriteShapeRenderer>().color.g, GetComponent<SpriteShapeRenderer>().color.b, m_currentAlpha);
+            GetComponent<LineRenderer>().startColor = new Color(GetComponent<LineRenderer>().startColor.r, GetComponent<LineRenderer>().startColor.g, GetComponent<LineRenderer>().startColor.b, m_currentAlpha);
+            GetComponent<LineRenderer>().endColor = new Color(GetComponent<LineRenderer>().endColor.r, GetComponent<LineRenderer>().endColor.g, GetComponent<LineRenderer>().endColor.b, m_currentAlpha);
+
             transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(transform.GetChild(1).GetComponent<SpriteRenderer>().color.r, transform.GetChild(1).GetComponent<SpriteRenderer>().color.g, transform.GetChild(1).GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
 
         }

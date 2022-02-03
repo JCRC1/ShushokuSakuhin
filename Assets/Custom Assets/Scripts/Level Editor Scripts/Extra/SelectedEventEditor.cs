@@ -136,12 +136,15 @@ public class SelectedEventEditor : MonoBehaviour
             // Return corresponding lane back to previous position
             if (fadeIndex == chart.m_lane[lane].m_laneEventFade.Count - 1 && chart.m_lane[lane].m_laneEventFade.Count - 1 > 0)
             {
-                correspondingLane.GetComponent<SpriteShapeRenderer>().color = new Color(correspondingLane.GetComponent<SpriteShapeRenderer>().color.r, correspondingLane.GetComponent<SpriteShapeRenderer>().color.g, correspondingLane.GetComponent<SpriteShapeRenderer>().color.b, chart.m_lane[lane].m_laneEventFade[fadeIndex - 1].m_targetAlpha);
+                correspondingLane.GetComponent<LineRenderer>().startColor = new Color(correspondingLane.GetComponent<LineRenderer>().startColor.r, correspondingLane.GetComponent<LineRenderer>().startColor.g, correspondingLane.GetComponent<LineRenderer>().startColor.b, chart.m_lane[lane].m_laneEventFade[fadeIndex - 1].m_targetAlpha);
+                correspondingLane.GetComponent<LineRenderer>().endColor = new Color(correspondingLane.GetComponent<LineRenderer>().endColor.r, correspondingLane.GetComponent<LineRenderer>().endColor.g, correspondingLane.GetComponent<LineRenderer>().endColor.b, chart.m_lane[lane].m_laneEventFade[fadeIndex - 1].m_targetAlpha);
+
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = chart.m_lane[lane].m_laneEventFade[fadeIndex - 1];
             }
             else if (LevelEditorManager.Instance.m_currentFadeIndex[lane] == 0 || fadeIndex == 0)
             {
-                correspondingLane.GetComponent<SpriteShapeRenderer>().color = new Color(correspondingLane.GetComponent<SpriteShapeRenderer>().color.r, correspondingLane.GetComponent<SpriteShapeRenderer>().color.g, correspondingLane.GetComponent<SpriteShapeRenderer>().color.b, chart.m_lane[lane].m_initialAlpha);
+                correspondingLane.GetComponent<LineRenderer>().startColor = new Color(correspondingLane.GetComponent<LineRenderer>().startColor.r, correspondingLane.GetComponent<LineRenderer>().startColor.g, correspondingLane.GetComponent<LineRenderer>().startColor.b, chart.m_lane[lane].m_initialAlpha);
+                correspondingLane.GetComponent<LineRenderer>().endColor = new Color(correspondingLane.GetComponent<LineRenderer>().endColor.r, correspondingLane.GetComponent<LineRenderer>().endColor.g, correspondingLane.GetComponent<LineRenderer>().endColor.b, chart.m_lane[lane].m_initialAlpha);
 
                 LaneEventFade origin = new LaneEventFade();
                 origin.m_beat = 0.0f;
