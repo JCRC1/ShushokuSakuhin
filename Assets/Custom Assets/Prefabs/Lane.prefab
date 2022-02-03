@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8718929751464832700}
+  - component: {fileID: 5101233566143755851}
   m_Layer: 0
   m_Name: Notes
   m_TagString: Untagged
@@ -30,6 +31,24 @@ Transform:
   m_Father: {fileID: 7632251748279742532}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5101233566143755851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3710898999858870056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744d5759a52388f419724ec76aafc476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledNotes:
+  - {fileID: 0}
+  notesToPool:
+  - noteToPool: {fileID: 1499816178328720486, guid: 18233e59c13f3e14095452e5220b15b5, type: 3}
+    poolAmount: 10
+    shouldExpand: 1
 --- !u!1 &7632251748279742534
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +122,13 @@ MonoBehaviour:
     m_fadeNotes: 0
   m_fadeIndex: 0
   m_startAlpha: 0
+  m_laneEventLength:
+    m_beat: 0
+    m_duration: 0
+    m_easeType: 0
+    m_targetLength: 0
+  m_lengthIndex: 0
+  m_startLength: 10
 --- !u!1971053207 &2742321154508824718
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -113,7 +139,7 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -143,7 +169,7 @@ SpriteShapeRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
@@ -343,7 +369,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   m_FlipX: 0

@@ -132,6 +132,7 @@ MonoBehaviour:
   m_operating: 0
   m_isDrag: 0
   m_currentAngle: 0
+  m_pivot: {x: 0, y: 0}
 --- !u!65 &4316956497493376477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -300,7 +301,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 20
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

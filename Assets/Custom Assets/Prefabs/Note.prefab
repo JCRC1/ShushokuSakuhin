@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 833853569895591656}
   m_Layer: 0
   m_Name: Note
-  m_TagString: Untagged
+  m_TagString: Single Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 11
   m_Sprite: {fileID: -2135585597343286014, guid: 4b2a04fdbe0ef4d8da8f90eaca817cd1, type: 3}
   m_Color: {r: 0, g: 0.02998209, b: 1, a: 1}
   m_FlipX: 0
@@ -95,6 +95,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74853da618668e045a89ca7952d2d5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_beat: 0
-  m_start: {fileID: 0}
-  m_end: {fileID: 0}
+  m_noteData:
+    m_beat: 0

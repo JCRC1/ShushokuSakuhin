@@ -17,7 +17,33 @@ public class NoteHandler : MonoBehaviour
 
     private void Update()
     {
+        float t = 0;
         // Note Movement
-        transform.position = Vector2.Lerp(m_start.position, m_end.position, GameManager.Instance.m_beatsToShow - (m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats));
+        if (GameManager.Instance)
+        {
+            t = (1.0f - (m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats) / GameManager.Instance.m_beatsToShow);
+
+        }
+        else if (LevelEditorManager.Instance)
+        {
+            t = (1.0f - (m_noteData.m_beat - LevelEditorManager.Instance.m_trackPosInBeats) / LevelEditorManager.Instance.m_beatsToShow);
+        }
+
+        t = Mathf.Clamp01(t);
+        transform.position = Vector2.Lerp(m_start.position, m_end.position, t);
+
+        if (LevelEditorManager.Instance)
+        {
+            NoteHandler temp = new NoteHandler();
+
+            if (m_noteData.m_beat < LevelEditorManager.Instance.m_trackPosInBeats)
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            }
+        }
     }
 }

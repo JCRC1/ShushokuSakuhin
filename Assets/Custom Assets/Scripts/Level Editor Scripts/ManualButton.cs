@@ -14,6 +14,6 @@ public class ManualButton : MonoBehaviour
 
     public void InputOnOff(InputField _inputField)
     {
-        _inputField.interactable = !_inputField.interactable;
+        _inputField.interactable = m_manualBeatInput;
     }
 }

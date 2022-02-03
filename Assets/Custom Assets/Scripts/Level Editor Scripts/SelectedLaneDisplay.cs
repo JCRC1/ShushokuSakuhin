@@ -8,7 +8,7 @@ public class SelectedLaneDisplay : MonoBehaviour
     public static SelectedLaneDisplay Instance;
 
     // Contains reference to the display boxes
-    public InputField m_indexDisplay;
+    public InputField[] m_indexDisplay;
 
     public InputField m_moveToXDisplay;
     public InputField m_moveToYDisplay;
@@ -41,11 +41,17 @@ public class SelectedLaneDisplay : MonoBehaviour
         {
             if (LaneEditor.Instance.m_selectedLane)
             {
-                m_indexDisplay.text = LaneEditor.Instance.m_selectedLane.m_identifier.ToString();
+                for (int i = 0; i < m_indexDisplay.Length; i++)
+                {
+                    m_indexDisplay[i].text = LaneEditor.Instance.m_selectedLane.m_identifier.ToString();
+                }
             }
             else
             {
-                m_indexDisplay.text = "None";
+                for (int i = 0; i < m_indexDisplay.Length; i++)
+                {
+                    m_indexDisplay[i].text = "None";
+                }
             }
         }
     }

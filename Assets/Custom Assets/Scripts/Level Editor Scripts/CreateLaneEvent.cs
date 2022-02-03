@@ -39,7 +39,7 @@ public class CreateLaneEvent: MonoBehaviour
 
         LaneEventMovement newMovement = new LaneEventMovement();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText.text, out newMovement.m_beat);
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newMovement.m_beat);
         float.TryParse(SelectedLaneDisplay.Instance.m_movementDurationDisplay.text, out newMovement.m_duration);
         float.TryParse(SelectedLaneDisplay.Instance.m_moveToXDisplay.text, out newMovement.m_targetPosition.x);
         float.TryParse(SelectedLaneDisplay.Instance.m_moveToYDisplay.text, out newMovement.m_targetPosition.y);
@@ -75,7 +75,7 @@ public class CreateLaneEvent: MonoBehaviour
 
         LaneEventRotation newRotation = new LaneEventRotation();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText.text, out newRotation.m_beat);
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newRotation.m_beat);
         float.TryParse(SelectedLaneDisplay.Instance.m_rotationDurationDisplay.text, out newRotation.m_duration);
         float.TryParse(SelectedLaneDisplay.Instance.m_angleDisplay.text, out newRotation.m_targetRotation);
         newRotation.m_pivotAtEnd = SelectedLaneDisplay.Instance.m_pivotToggle.isOn;
@@ -103,7 +103,7 @@ public class CreateLaneEvent: MonoBehaviour
     {
         LaneEventFade newFade = new LaneEventFade();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText.text, out newFade.m_beat);
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newFade.m_beat);
         float.TryParse(SelectedLaneDisplay.Instance.m_fadeDurationDisplay.text, out newFade.m_duration);
         float.TryParse(SelectedLaneDisplay.Instance.m_targetAlphaDisplay.text, out newFade.m_targetAlpha);
         newFade.m_fadeNotes = SelectedLaneDisplay.Instance.m_fadeNotesToggle.isOn;
@@ -140,7 +140,7 @@ public class CreateLaneEvent: MonoBehaviour
 
         LaneEventLength newLength = new LaneEventLength();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText.text, out newLength.m_beat);
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newLength.m_beat);
         float.TryParse(SelectedLaneDisplay.Instance.m_lengthDurationDisplay.text, out newLength.m_duration);
         float.TryParse(SelectedLaneDisplay.Instance.m_targetLengthDisplay.text, out newLength.m_targetLength);
         newLength.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_lengthEaseSelect.value;

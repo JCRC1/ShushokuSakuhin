@@ -10,7 +10,7 @@ public class Seekbar : MonoBehaviour
     private AudioSource m_audioSource;
     private Slider m_slider;
 
-    public InputField m_currentBeatText;
+    public InputField[] m_currentBeatText;
 
     private float m_trackTime;
 
@@ -55,7 +55,10 @@ public class Seekbar : MonoBehaviour
         {
             if (!CreateLaneEvent.m_creatingMovement && !CreateLaneEvent.m_creatingRotation)
             {
-                m_currentBeatText.text = LevelEditorManager.Instance.m_trackPosInBeats.ToString("00.00");
+                for (int i = 0; i < m_currentBeatText.Length; i++)
+                {
+                    m_currentBeatText[i].text = LevelEditorManager.Instance.m_trackPosInBeats.ToString("00.00");
+                }
             }
         }
 

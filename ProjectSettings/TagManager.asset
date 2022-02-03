@@ -8,6 +8,7 @@ TagManager:
   - Dummy
   - EditorCamera
   - MGizmo
+  - Single Note
   layers:
   - Default
   - TransparentFX

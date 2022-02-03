@@ -134,8 +134,13 @@ public class LevelEditorManager : MonoBehaviour
         m_lanes.Add(Instantiate(m_lanePrefab, _laneData.m_initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, _laneData.m_initialRotation))));
 
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_identifier = m_totalLanes;
+
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_movementStartPosition = _laneData.m_initialPosition;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventMovement.m_targetPosition = _laneData.m_initialPosition;
+
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startRotation = _laneData.m_initialRotation;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventRotation.m_targetRotation = _laneData.m_initialRotation;
+
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startAlpha = 1.0f;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventFade.m_targetAlpha = 1.0f;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startLength = 10.0f;
@@ -159,13 +164,18 @@ public class LevelEditorManager : MonoBehaviour
         newLane.m_laneEventsMovement = new List<LaneEventMovement>();
         newLane.m_laneEventsRotation = new List<LaneEventRotation>();
         newLane.m_laneEventFade = new List<LaneEventFade>();
+        newLane.m_laneEventLength = new List<LaneEventLength>();
         newLane.m_notes = new List<NoteData>();
 
         m_lanes.Add(Instantiate(m_lanePrefab, newLane.m_initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, newLane.m_initialRotation))));
 
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_identifier = m_totalLanes;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_movementStartPosition = newLane.m_initialPosition;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventMovement.m_targetPosition = newLane.m_initialPosition;
+
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startRotation = newLane.m_initialRotation;
+        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventRotation.m_targetRotation = newLane.m_initialRotation;
+
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startAlpha = 1.0f;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventFade.m_targetAlpha = 1.0f;
         m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startLength = 10.0f;

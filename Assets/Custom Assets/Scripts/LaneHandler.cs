@@ -411,10 +411,15 @@ public class LaneHandler : MonoBehaviour
             if (m_nextNoteIndex < GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes.Count)
             {
                 // Check if the track position in beats has surpassed the beat of the notes to spawn, and if so, spawn them
-                if (GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex].m_beat < GameManager.Instance.m_trackPosInBeats + GameManager.Instance.m_beatsToShow + 10)
+                if (GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex].m_beat < GameManager.Instance.m_trackPosInBeats + GameManager.Instance.m_beatsToShow)
                 {
-                    var note = Instantiate(GameManager.Instance.m_notePrefab, transform.GetChild(2));
-                    note.GetComponent<NoteHandler>().Initialize(GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
+                    NoteHandler note = (transform.GetChild(2).GetComponent<ObjectPooler>().GetPooledNote("Single Note")).GetComponent<NoteHandler>();
+                    note.Initialize(GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
+
+                    if (note != null)
+                    {
+                        note.gameObject.SetActive(true);
+                    }
 
                     m_notes.Enqueue(note.GetComponent<NoteHandler>());
                     m_nextNoteIndex++;
@@ -429,10 +434,15 @@ public class LaneHandler : MonoBehaviour
                 if (m_nextNoteIndex < LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes.Count)
                 {
                     // Check if the track position in beats has surpassed the beat of the notes to spawn, and if so, spawn them
-                    if (LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex].m_beat < LevelEditorManager.Instance.m_trackPosInBeats + LevelEditorManager.Instance.m_beatsToShow + 10)
+                    if (LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex].m_beat < LevelEditorManager.Instance.m_trackPosInBeats + LevelEditorManager.Instance.m_beatsToShow)
                     {
-                        var note = Instantiate(LevelEditorManager.Instance.m_notePrefab, transform.GetChild(2));
-                        note.GetComponent<NoteHandler>().Initialize(LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
+                        NoteHandler note = (transform.GetChild(2).GetComponent<ObjectPooler>().GetPooledNote("Single Note")).GetComponent<NoteHandler>();
+                        note.Initialize(LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
+
+                        if (note != null)
+                        {
+                            note.gameObject.SetActive(true);
+                        }
 
                         m_notes.Enqueue(note.GetComponent<NoteHandler>());
                         m_nextNoteIndex++;
@@ -444,11 +454,17 @@ public class LaneHandler : MonoBehaviour
 
     public void NoteJudgement()
     {
-        if (m_notes.Count > 0)
+        if (m_notes.Count <= 0)
         {
-            if (Vector2.Distance(m_notes.Peek().transform.position, m_endPoint.position) <= 0.5f)
+            return;
+        }
+
+        if (GameManager.Instance)
+        {
+            if (m_notes.Peek().m_noteData.m_beat < GameManager.Instance.m_trackPosInBeats)
             {
-                Destroy(m_notes.Dequeue().gameObject);
+                m_notes.Peek().gameObject.SetActive(false);
+                m_notes.Dequeue();
             }
         }
     }

@@ -18,7 +18,7 @@ public class LaneEditor : MonoBehaviour
     public LaneHandler m_selectedLane;
 
     public Color m_highlightedCol;
-    private Color m_defaultCol;
+    public Color m_defaultCol;
 
     public InputField m_startPosX;
     public InputField m_startPosY;
@@ -32,7 +32,7 @@ public class LaneEditor : MonoBehaviour
     private void Awake()
     {
         // Singleton declaration
-        Instance = this;  
+        Instance = this;
     }
 
     private void Start()
@@ -58,7 +58,6 @@ public class LaneEditor : MonoBehaviour
                 {
                     Vector2 vec2;
                     vec2 = m_worldCam.ScreenToWorldPoint(Input.mousePosition);
-                    Debug.Log(vec2);
                     vec2.x = Mathf.Round(vec2.x);
                     vec2.y = Mathf.Round(vec2.y);
 
@@ -74,8 +73,8 @@ public class LaneEditor : MonoBehaviour
             {
                 m_dummyLane.SetActive(false);
             }
-                // Check if there isnt already a lane selected
-                if (!m_selectedLane)
+            // Check if there isnt already a lane selected
+            if (!m_selectedLane)
             {
                 // If we hit something, in this case, the lane, and click...
                 if (Physics.Raycast(m_ray, out m_hit))
@@ -86,7 +85,6 @@ public class LaneEditor : MonoBehaviour
                         {
                             // It is now selected
                             m_selectedLane = m_hit.collider.GetComponent<LaneHandler>();
-                            m_defaultCol = m_selectedLane.GetComponent<SpriteShapeRenderer>().color;
                         }
                     }
                 }

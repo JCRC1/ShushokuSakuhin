@@ -54,16 +54,25 @@ public class SelectedEventEditor : MonoBehaviour
             GameObject item = EventListDisplay.Instance.m_movements[lane].m_objects[movIndex];
             GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
 
-            // Return corresponding lane back to previous position
-            if (movIndex > 0)
+            // Return corresponding lane back to previous position if we are in front
+            if (movIndex == chart.m_lane[lane].m_laneEventsMovement.Count - 1 && chart.m_lane[lane].m_laneEventsMovement.Count - 1 > 0)
             {
                 correspondingLane.transform.position = chart.m_lane[lane].m_laneEventsMovement[movIndex - 1].m_targetPosition;
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventMovement = null;
+
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventMovement = chart.m_lane[lane].m_laneEventsMovement[movIndex - 1];
             }
-            else if (movIndex == 0)
+            else if (LevelEditorManager.Instance.m_currentMovementIndex[lane] == 0 || movIndex == 0)
             {
                 correspondingLane.transform.position = chart.m_lane[lane].m_initialPosition;
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventMovement = null;
+
+                LaneEventMovement origin = new LaneEventMovement();
+                origin.m_beat = 0.0f;
+                origin.m_duration = 0.0f;
+                origin.m_easeType = 0.0f;
+                origin.m_targetPosition = chart.m_lane[lane].m_initialPosition;
+
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventMovement = origin;
+                correspondingLane.GetComponent<LaneHandler>().m_movementStartPosition = chart.m_lane[lane].m_initialPosition;
             }
 
             // It never goes below 0 anyways so no harm in lowering it outside an if statement
@@ -86,15 +95,23 @@ public class SelectedEventEditor : MonoBehaviour
             GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
 
             // Return corresponding lane back to previous position
-            if (rotIndex == chart.m_lane[lane].m_laneEventsRotation.Count)
+            if (rotIndex == chart.m_lane[lane].m_laneEventsRotation.Count - 1 && chart.m_lane[lane].m_laneEventsRotation.Count - 1 > 0)
             {
                 correspondingLane.transform.rotation = Quaternion.Euler(0.0f, 0.0f, chart.m_lane[lane].m_laneEventsRotation[rotIndex - 1].m_targetRotation);
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventRotation = null;
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventRotation = chart.m_lane[lane].m_laneEventsRotation[rotIndex - 1];
             }
-            else if (rotIndex == 1)
+            else if (LevelEditorManager.Instance.m_currentRotationIndex[lane] == 0 || rotIndex == 0)
             {
                 correspondingLane.transform.rotation = Quaternion.Euler(0.0f, 0.0f, chart.m_lane[lane].m_initialRotation);
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventRotation = null;
+
+                LaneEventRotation origin = new LaneEventRotation();
+                origin.m_beat = 0.0f;
+                origin.m_duration = 0.0f;
+                origin.m_easeType = 0.0f;
+                origin.m_targetRotation = chart.m_lane[lane].m_initialRotation;
+
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventRotation = origin;
+                correspondingLane.GetComponent<LaneHandler>().m_startRotation = chart.m_lane[lane].m_initialRotation;
             }
 
             // It never goes below 0 anyways so no harm in lowering it outside an if statement
@@ -117,15 +134,23 @@ public class SelectedEventEditor : MonoBehaviour
             GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
 
             // Return corresponding lane back to previous position
-            if (fadeIndex == chart.m_lane[lane].m_laneEventFade.Count)
+            if (fadeIndex == chart.m_lane[lane].m_laneEventFade.Count - 1 && chart.m_lane[lane].m_laneEventFade.Count - 1 > 0)
             {
                 correspondingLane.GetComponent<SpriteShapeRenderer>().color = new Color(correspondingLane.GetComponent<SpriteShapeRenderer>().color.r, correspondingLane.GetComponent<SpriteShapeRenderer>().color.g, correspondingLane.GetComponent<SpriteShapeRenderer>().color.b, chart.m_lane[lane].m_laneEventFade[fadeIndex - 1].m_targetAlpha);
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = null;
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = chart.m_lane[lane].m_laneEventFade[fadeIndex - 1];
             }
-            else if (fadeIndex == 1)
+            else if (LevelEditorManager.Instance.m_currentFadeIndex[lane] == 0 || fadeIndex == 0)
             {
                 correspondingLane.GetComponent<SpriteShapeRenderer>().color = new Color(correspondingLane.GetComponent<SpriteShapeRenderer>().color.r, correspondingLane.GetComponent<SpriteShapeRenderer>().color.g, correspondingLane.GetComponent<SpriteShapeRenderer>().color.b, chart.m_lane[lane].m_initialAlpha);
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = null;
+
+                LaneEventFade origin = new LaneEventFade();
+                origin.m_beat = 0.0f;
+                origin.m_duration = 0.0f;
+                origin.m_easeType = 0.0f;
+                origin.m_targetAlpha = chart.m_lane[lane].m_initialAlpha;
+
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = origin;
+                correspondingLane.GetComponent<LaneHandler>().m_startAlpha = chart.m_lane[lane].m_initialAlpha;
             }
 
             // It never goes below 0 anyways so no harm in lowering it outside an if statement
@@ -148,15 +173,23 @@ public class SelectedEventEditor : MonoBehaviour
             GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
 
             // Return corresponding lane back to previous position
-            if (lengthIndex == chart.m_lane[lane].m_laneEventLength.Count)
+            if (lengthIndex == chart.m_lane[lane].m_laneEventFade.Count - 1 && chart.m_lane[lane].m_laneEventFade.Count - 1 > 0)
             {
                 correspondingLane.transform.GetChild(0).localPosition = new Vector2(chart.m_lane[lane].m_laneEventLength[lengthIndex - 1].m_targetLength, 0);
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventLength = null;
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventLength = chart.m_lane[lane].m_laneEventLength[lengthIndex - 1];
             }
-            else if (lengthIndex == 1)
+            else if (LevelEditorManager.Instance.m_currentLengthIndex[lane] == 0 || lengthIndex == 0)
             {
                 correspondingLane.transform.GetChild(0).localPosition = new Vector2(chart.m_lane[lane].m_initialLength, 0);
-                correspondingLane.GetComponent<LaneHandler>().m_laneEventLength = null;
+
+                LaneEventLength origin = new LaneEventLength();
+                origin.m_beat = 0.0f;
+                origin.m_duration = 0.0f;
+                origin.m_easeType = 0;
+                origin.m_targetLength = chart.m_lane[lane].m_initialLength;
+
+                correspondingLane.GetComponent<LaneHandler>().m_laneEventLength = origin;
+                correspondingLane.GetComponent<LaneHandler>().m_startLength = chart.m_lane[lane].m_initialLength;
             }
 
             // It never goes below 0 anyways so no harm in lowering it outside an if statement
