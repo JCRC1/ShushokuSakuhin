@@ -97,8 +97,8 @@ public class LaneEditor : MonoBehaviour
                     {
                         if (m_hit.collider.tag != "MGizmo" && m_hit.collider.tag != "Dummy")
                         {
-                            GetComponent<LineRenderer>().startColor = m_defaultCol;
-                            GetComponent<LineRenderer>().endColor = m_defaultCol;
+                            m_selectedLane.GetComponent<LineRenderer>().startColor = m_defaultCol;
+                            m_selectedLane.GetComponent<LineRenderer>().endColor = m_defaultCol;
                             m_selectedLane = null;
                         }
                     }
@@ -127,8 +127,8 @@ public class LaneEditor : MonoBehaviour
 
         if (m_selectedLane)
         {
-            GetComponent<LineRenderer>().startColor = m_highlightedCol;
-            GetComponent<LineRenderer>().endColor = m_highlightedCol;
+            m_selectedLane.GetComponent<LineRenderer>().startColor = m_highlightedCol;
+            m_selectedLane.GetComponent<LineRenderer>().endColor = m_highlightedCol;
         }
     }
 
@@ -136,8 +136,8 @@ public class LaneEditor : MonoBehaviour
     {
         if (m_selectedLane)
         {
-            GetComponent<LineRenderer>().startColor = m_defaultCol;
-            GetComponent<LineRenderer>().endColor = m_defaultCol;
+            m_selectedLane.GetComponent<LineRenderer>().startColor = m_defaultCol;
+            m_selectedLane.GetComponent<LineRenderer>().endColor = m_defaultCol;
         }
 
         m_selectedLane = LevelEditorManager.Instance.m_lanes[int.Parse(_text.text)].GetComponent<LaneHandler>();

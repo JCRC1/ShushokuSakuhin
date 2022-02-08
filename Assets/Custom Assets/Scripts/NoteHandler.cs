@@ -8,6 +8,8 @@ public class NoteHandler : MonoBehaviour
     private Transform m_start;
     private Transform m_end;
 
+    public bool m_canHit;
+
     public void Initialize(NoteData _noteData, Transform _start, Transform _end)
     {
         m_noteData = _noteData;

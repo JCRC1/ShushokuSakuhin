@@ -31,7 +31,6 @@ public class LaneHandler : MonoBehaviour
     // Where notes spawn and end
     private Transform m_startPoint;
     private Transform m_endPoint;
-    private SpriteShapeController m_spriteShapeController;
     private LineRenderer m_lineRenderer;
 
     // Note spawn related
@@ -96,34 +95,16 @@ public class LaneHandler : MonoBehaviour
 
     private void SpriteShapeUpdate()
     {
-        //Spline spline = m_spriteShapeController.spline;
-        //spline.Clear();
-        //
-        //// Lock Y Movement
-        //transform.GetChild(0).localPosition = new Vector2(transform.GetChild(0).localPosition.x, 0);
-        //transform.GetChild(1).localPosition = new Vector2(transform.GetChild(1).localPosition.x, 0);
-        //
-        //GameObject start = transform.GetChild(0).gameObject;
-        //GameObject end = transform.GetChild(1).gameObject;
-        //
-        //if (start.transform.localPosition.x >= 0)
-        //{
-        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y + 0.5f));
-        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x + 0.5f, start.transform.localPosition.y - 0.5f));
-        //}
-        //else
-        //{
-        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y + 0.5f));
-        //    spline.InsertPointAt(0, new Vector2(start.transform.localPosition.x - 0.5f, start.transform.localPosition.y - 0.5f));
-        //}
-        //
-        //spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y - 0.5f));
-        //spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y + 0.5f));
-        //
-        //m_spriteShapeController.RefreshSpriteShape();
-
-
-        m_lineRenderer.SetPosition(1, m_startPoint.localPosition);
+        if(m_startPoint.localPosition.x >= 0)
+        {
+            m_lineRenderer.SetPosition(0, new Vector3(0.5f, 0.0f, 0.0f));
+            m_lineRenderer.SetPosition(1, m_startPoint.localPosition + new Vector3(0.5f, 0.0f, 0.0f));
+        }
+        else
+        {
+            m_lineRenderer.SetPosition(0, new Vector3(-0.5f, 0.0f, 0.0f));
+            m_lineRenderer.SetPosition(1, m_startPoint.localPosition - new Vector3(0.5f, 0.0f, 0.0f));
+        }
     }
 
     // To freely be able to move the start and end points and it morphs the lane with it
@@ -369,7 +350,20 @@ public class LaneHandler : MonoBehaviour
 
             GetComponent<LineRenderer>().startColor = new Color(GetComponent<LineRenderer>().startColor.r, GetComponent<LineRenderer>().startColor.g, GetComponent<LineRenderer>().startColor.b, m_currentAlpha);
             GetComponent<LineRenderer>().endColor = new Color(GetComponent<LineRenderer>().endColor.r, GetComponent<LineRenderer>().endColor.g, GetComponent<LineRenderer>().endColor.b, m_currentAlpha);
-            
+
+            if (m_laneEventFade.m_fadeNotes)
+            {
+                foreach (Transform notes in transform.GetChild(2))
+                {
+                    if (!notes.gameObject.activeSelf)
+                    {
+                        return;
+                    }
+                    // Fade the single notes
+                    notes.gameObject.GetComponent<SpriteRenderer>().color = new Color(notes.gameObject.GetComponent<SpriteRenderer>().color.r, notes.gameObject.GetComponent<SpriteRenderer>().color.g, notes.gameObject.GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
+                }
+            }
+
             transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(transform.GetChild(1).GetComponent<SpriteRenderer>().color.r, transform.GetChild(1).GetComponent<SpriteRenderer>().color.g, transform.GetChild(1).GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
 
         }
@@ -407,6 +401,19 @@ public class LaneHandler : MonoBehaviour
             GetComponent<LineRenderer>().startColor = new Color(GetComponent<LineRenderer>().startColor.r, GetComponent<LineRenderer>().startColor.g, GetComponent<LineRenderer>().startColor.b, m_currentAlpha);
             GetComponent<LineRenderer>().endColor = new Color(GetComponent<LineRenderer>().endColor.r, GetComponent<LineRenderer>().endColor.g, GetComponent<LineRenderer>().endColor.b, m_currentAlpha);
 
+            if (m_laneEventFade.m_fadeNotes)
+            {
+                foreach (Transform notes in transform.GetChild(2))
+                {
+                    if (!notes.gameObject.activeSelf)
+                    {
+                        return;
+                    }
+                    // Fade the single notes
+                    notes.gameObject.GetComponent<SpriteRenderer>().color = new Color(notes.gameObject.GetComponent<SpriteRenderer>().color.r, notes.gameObject.GetComponent<SpriteRenderer>().color.g, notes.gameObject.GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
+                }
+            }
+
             transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(transform.GetChild(1).GetComponent<SpriteRenderer>().color.r, transform.GetChild(1).GetComponent<SpriteRenderer>().color.g, transform.GetChild(1).GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
 
         }
@@ -424,6 +431,7 @@ public class LaneHandler : MonoBehaviour
                 {
                     NoteHandler note = (transform.GetChild(2).GetComponent<ObjectPooler>().GetPooledNote("Single Note")).GetComponent<NoteHandler>();
                     note.Initialize(GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
+                    note.m_canHit = false;
 
                     if (note != null)
                     {
@@ -470,8 +478,15 @@ public class LaneHandler : MonoBehaviour
 
         if (GameManager.Instance)
         {
-            if (m_notes.Peek().m_noteData.m_beat < GameManager.Instance.m_trackPosInBeats)
+            if (m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 0                               &&
+                m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < GameManager.Instance.m_hitWindow)
             {
+                m_notes.Peek().m_canHit = true;
+            }
+            else if (m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 6)
+            {
+                Debug.Log("MISS");
+                m_notes.Peek().m_canHit = false;
                 m_notes.Peek().gameObject.SetActive(false);
                 m_notes.Dequeue();
             }

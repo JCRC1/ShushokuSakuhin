@@ -54,6 +54,15 @@ public class LevelEditorManager : MonoBehaviour
     [HideInInspector]
     public float m_trackPosInBeats;
 
+    //the number of beats in each loop
+    public float m_beatsPerLoop;
+    //the total number of loops completed since the looping clip first started
+    public int m_completedLoops = 0;
+    //The current position of the song within the loop in beats.
+    public float m_loopPosInBeats;
+    //The current relative position of the song within the loop measured between 0 and 1.
+    public float m_loopPosInAnalog;
+
     // Attached AudioSource
     [HideInInspector]
     public AudioSource m_audioSource;
@@ -76,7 +85,7 @@ public class LevelEditorManager : MonoBehaviour
         string filePath = EditorUtility.OpenFolderPanel("Save chart", "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources", "");
         string json = JsonUtility.ToJson(m_chartData, true);
 
-        File.WriteAllText(filePath + "/" + m_chartData.m_trackName + "_Chart.txt", json);
+        File.WriteAllText(filePath + "/" + m_chartData.m_trackName + "_" + m_chartData.m_trackDifficulty  + "_Chart.txt", json);
     }
 
     private void Update()
@@ -198,6 +207,12 @@ public class LevelEditorManager : MonoBehaviour
         m_trackPos = (float)(m_audioSource.time - m_chartData.m_trackOffset);
         // How many beats since we started
         m_trackPosInBeats = m_trackPos / m_secPerBeat;
+
+        if (m_trackPosInBeats >= (m_completedLoops + 1) * m_beatsPerLoop)
+            m_completedLoops++;
+        m_loopPosInBeats = m_trackPosInBeats - m_completedLoops * m_beatsPerLoop;
+
+        m_loopPosInAnalog = m_loopPosInBeats / m_beatsPerLoop;
 
         // Sort the lists so its nice and tidy
         for (int i = 0; i < m_chartData.m_lane.Count; i++ )
