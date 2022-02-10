@@ -51,15 +51,17 @@ public class LaneHandler : MonoBehaviour
         m_currentAlpha = m_startAlpha;
         m_currentLength = m_startLength;
 
-        if (m_identifier % 2 == 0)
-        {
-            GetComponent<LineRenderer>().startColor = Color.red;
-            GetComponent<LineRenderer>().endColor = Color.red;
-        }
-        else
+
+        // Red is Even, Blue is Odd
+        if (m_identifier % 2 != 0)
         {
             GetComponent<LineRenderer>().startColor = Color.blue;
             GetComponent<LineRenderer>().endColor = Color.blue;
+        }
+        else
+        {
+            GetComponent<LineRenderer>().startColor = Color.red;
+            GetComponent<LineRenderer>().endColor = Color.red;
         }
     }
 

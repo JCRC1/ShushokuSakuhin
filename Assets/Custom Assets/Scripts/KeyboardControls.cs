@@ -36,12 +36,12 @@ public class KeyboardControls : MonoBehaviour
             {
                 LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_identifier % 2 != 0)
+                if (lane.m_identifier % 2 == 0)
                 {
                     continue;
                 }
 
-                //lane.GetComponent<SpriteRenderer>().color =
+                lane.GetComponent<LineRenderer>().material.SetColor("_Color", lane.GetComponent<LineRenderer>().material.color * Mathf.Pow(2, 1));
 
                 if (lane.m_notes.Count <= 0)
                 {
@@ -69,7 +69,7 @@ public class KeyboardControls : MonoBehaviour
                     default:
                         break;
                 }
-            }
+            }            
         }
 
         // Odd
@@ -84,10 +84,12 @@ public class KeyboardControls : MonoBehaviour
             {
                 LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_identifier % 2 == 0)
+                if (lane.m_identifier % 2 != 0)
                 {
                     continue;
                 }
+
+                lane.GetComponent<LineRenderer>().material.SetColor("_Color", lane.GetComponent<LineRenderer>().material.color * Mathf.Pow(2, 1));
 
                 if (lane.m_notes.Count <= 0)
                 {
@@ -118,5 +120,46 @@ public class KeyboardControls : MonoBehaviour
             }
         }
 
+
+        for (int i = 0; i < m_evenLaneKeybind.Length; i++)
+        {
+            if (!Input.GetKeyUp(m_evenLaneKeybind[i]))
+            {
+                continue;
+            }
+
+            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            {
+                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+
+                if (lane.m_identifier % 2 == 0)
+                {
+                    continue;
+                }
+
+                lane.GetComponent<LineRenderer>().material.SetColor("_Color", lane.GetComponent<LineRenderer>().material.color / Mathf.Pow(2, 1));
+            }
+        }
+
+
+        for (int i = 0; i < m_oddLaneKeybind.Length; i++)
+        {
+            if (!Input.GetKeyUp(m_oddLaneKeybind[i]))
+            {
+                continue;
+            }
+
+            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            {
+                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+
+                if (lane.m_identifier % 2 != 0)
+                {
+                    continue;
+                }
+
+                lane.GetComponent<LineRenderer>().material.SetColor("_Color", lane.GetComponent<LineRenderer>().material.color / Mathf.Pow(2, 1));
+            }
+        }
     }
 }
