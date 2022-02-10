@@ -41,17 +41,33 @@ public class KeyboardControls : MonoBehaviour
                     continue;
                 }
 
+                //lane.GetComponent<SpriteRenderer>().color =
+
                 if (lane.m_notes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (lane.m_notes.Peek().m_canHit)
+                switch (lane.m_notes.Peek().m_noteState)
                 {
-                    Debug.Log("HIT EVEN");
-                    ScoreController.Instance.AddScoreOnHit();
-                    lane.m_notes.Peek().gameObject.SetActive(false);
-                    lane.m_notes.Dequeue();
+                    case NoteHandler.NoteState.NONE:
+                        break;
+                    case NoteHandler.NoteState.PERFECT:
+                        Debug.Log("HIT PERFECT EVEN");
+                        ScoreController.Instance.AddPerfectHit();
+                        lane.m_notes.Peek().gameObject.SetActive(false);
+                        lane.m_notes.Dequeue();
+                        break;
+                    case NoteHandler.NoteState.GOOD:
+                        Debug.Log("HIT GOOD EVEN");
+                        ScoreController.Instance.AddGoodHit();
+                        lane.m_notes.Peek().gameObject.SetActive(false);
+                        lane.m_notes.Dequeue();
+                        break;
+                    case NoteHandler.NoteState.MISS:
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -78,12 +94,26 @@ public class KeyboardControls : MonoBehaviour
                     continue;
                 }
 
-                if (lane.m_notes.Peek().m_canHit)
+                switch (lane.m_notes.Peek().m_noteState)
                 {
-                    Debug.Log("HIT ODD");
-                    ScoreController.Instance.AddScoreOnHit();
-                    lane.m_notes.Peek().gameObject.SetActive(false);
-                    lane.m_notes.Dequeue();
+                    case NoteHandler.NoteState.NONE:
+                        break;
+                    case NoteHandler.NoteState.PERFECT:
+                        Debug.Log("HIT PERFECT EVEN");
+                        ScoreController.Instance.AddPerfectHit();
+                        lane.m_notes.Peek().gameObject.SetActive(false);
+                        lane.m_notes.Dequeue();
+                        break;
+                    case NoteHandler.NoteState.GOOD:
+                        Debug.Log("HIT GOOD EVEN");
+                        ScoreController.Instance.AddGoodHit();
+                        lane.m_notes.Peek().gameObject.SetActive(false);
+                        lane.m_notes.Dequeue();
+                        break;
+                    case NoteHandler.NoteState.MISS:
+                        break;
+                    default:
+                        break;
                 }
             }
         }

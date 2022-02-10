@@ -28,27 +28,30 @@ public class GameManager : MonoBehaviour
     // Indexes
     [HideInInspector]
     public List<int> m_nextNoteIndex;
-    //[HideInInspector]
+    [HideInInspector]
     public List<int> m_currentMovementIndex;
-    //[HideInInspector]
+    [HideInInspector]
     public List<int> m_currentRotationIndex;
-    //[HideInInspector]
+    [HideInInspector]
     public List<int> m_currentFadeIndex;
-    //[HideInInspector]
+    [HideInInspector]
     public List<int> m_currentLengthIndex;
 
     // Total lanes
     [HideInInspector]
     public int m_totalLanes;
+    //[HideInInspector]
     public int m_totalNotes;
     // Beats to show in advance
     public float m_beatsToShow = 4;
     // Seconds between each beat
     [HideInInspector]
     public float m_secPerBeat;
+
     public float m_hitWindow;
 
     // Position of track in seconds
+    [HideInInspector]
     public float m_trackPos;
     // Position of track in beats
     [HideInInspector]
@@ -87,6 +90,15 @@ public class GameManager : MonoBehaviour
             TrackUpdate();
             LaneEventSpawn();
         }
+
+        if (m_finalized)
+        {
+            for (int i = 0; i < m_lanes.Count; i++)
+            {
+                m_lanes[i].SetActive(false);
+                m_audioSource.Stop();
+            }
+        }
     }
 
     private void Initialize()
@@ -120,6 +132,7 @@ public class GameManager : MonoBehaviour
 
         m_audioSource.clip = Resources.Load<AudioClip>(m_chartData.m_trackAudioPath);
         m_audioSource.Play();
+        Invoke("Finalize", m_audioSource.clip.length);
         m_initialized = true;
     }
 
@@ -162,12 +175,6 @@ public class GameManager : MonoBehaviour
         m_loopPosInBeats = m_trackPosInBeats - m_completedLoops * m_beatsPerLoop;
 
         m_loopPosInAnalog = m_loopPosInBeats / m_beatsPerLoop;
-
-        if (m_trackPos == m_audioSource.clip.length)
-        {
-            m_finalized = true;
-            m_initialized = false;
-        }
     }
 
     private void LaneEventSpawn()
@@ -299,5 +306,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
+    }
+
+    private void Finalize()
+    {
+        m_finalized = true;
+        m_initialized = false;
     }
 }

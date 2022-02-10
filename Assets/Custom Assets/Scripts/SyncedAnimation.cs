@@ -6,7 +6,6 @@ public class SyncedAnimation : MonoBehaviour
 {
     //The animator controller attached to this GameObject
     public Animator animator;
-
     //Records the animation state or animation that the Animator is currently in
     public AnimatorStateInfo animatorStateInfo;
 
@@ -29,19 +28,28 @@ public class SyncedAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (LevelEditorManager.Instance)
+        if (!GameManager.Instance.m_finalized)
         {
-            //Start playing the current animation from wherever the current conductor loop is
-            animator.Play(currentState, -1, LevelEditorManager.Instance.m_loopPosInAnalog);
-            //Set the speed to 0 so it will only change frames when you next update it
-            animator.speed = 0;
+            if (LevelEditorManager.Instance)
+            {
+                //Start playing the current animation from wherever the current conductor loop is
+                animator.Play(currentState, -1, LevelEditorManager.Instance.m_loopPosInAnalog);
+                //Set the speed to 0 so it will only change frames when you next update it
+                animator.speed = 0;
+            }
+            else
+            {
+                //Start playing the current animation from wherever the current conductor loop is
+                animator.Play(currentState, -1, GameManager.Instance.m_loopPosInAnalog);
+                //Set the speed to 0 so it will only change frames when you next update it
+                animator.speed = 0;
+            }
         }
         else
         {
-            //Start playing the current animation from wherever the current conductor loop is
-            animator.Play(currentState, -1, GameManager.Instance.m_loopPosInAnalog);
-            //Set the speed to 0 so it will only change frames when you next update it
-            animator.speed = 0;
+            animator.Play("FlashesDownEnd");
+            animator.speed = 1;
+            animator.SetTrigger("Finalized");
         }
     }
 }

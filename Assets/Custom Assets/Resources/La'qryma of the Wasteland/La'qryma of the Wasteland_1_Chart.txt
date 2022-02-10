@@ -1,6 +1,6 @@
 {
     "m_trackAudioPath": "La'qryma of the Wasteland/La'qryma of the Wasteland",
-    "m_trackCoverArtPath": "La'qryma of the Wasteland/La'qryma of the Wasteland.jpg",
+    "m_trackCoverArtPath": "La'qryma of the Wasteland/La'qryma of the Wasteland",
     "m_trackName": "La'qryma of the Wasteland",
     "m_trackArtist": "DJ Noriken",
     "m_trackDifficulty": 1,
@@ -20,10 +20,10 @@
                     "m_beat": 10.0
                 },
                 {
-                    "m_beat": 15.0
+                    "m_beat": 14.0
                 },
                 {
-                    "m_beat": 19.0
+                    "m_beat": 18.0
                 }
             ],
             "m_laneEventsMovement": [
@@ -134,10 +134,10 @@
                     "m_beat": 6.0
                 },
                 {
-                    "m_beat": 15.0
+                    "m_beat": 14.0
                 },
                 {
-                    "m_beat": 19.0
+                    "m_beat": 18.0
                 }
             ],
             "m_laneEventsMovement": [

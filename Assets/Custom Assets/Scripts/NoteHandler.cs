@@ -8,10 +8,19 @@ public class NoteHandler : MonoBehaviour
     private Transform m_start;
     private Transform m_end;
 
-    public bool m_canHit;
+    public enum NoteState
+    { 
+        NONE,
+        PERFECT,
+        GOOD,
+        MISS
+    }
+
+    public NoteState m_noteState;
 
     public void Initialize(NoteData _noteData, Transform _start, Transform _end)
     {
+        m_noteState = NoteState.NONE;
         m_noteData = _noteData;
         m_start = _start;
         m_end = _end;
