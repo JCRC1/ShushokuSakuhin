@@ -437,13 +437,13 @@ public class LaneHandler : MonoBehaviour
         if (GameManager.Instance)
         {
             // First check if the current index is less than the total count of notes
-            if (m_nextNoteIndex < GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes.Count)
+            if (m_nextNoteIndex < GameManager.Instance.m_chartData.m_lane[m_identifier].m_singleNote.Count)
             {
                 // Check if the track position in beats has surpassed the beat of the notes to spawn, and if so, spawn them
-                if (GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex].m_beat < GameManager.Instance.m_trackPosInBeats + GameManager.Instance.m_beatsToShow)
+                if (GameManager.Instance.m_chartData.m_lane[m_identifier].m_singleNote[m_nextNoteIndex].m_beat < GameManager.Instance.m_trackPosInBeats + GameManager.Instance.m_beatsToShow)
                 {
                     NoteHandler note = (transform.GetChild(2).GetComponent<ObjectPooler>().GetPooledNote("Single Note")).GetComponent<NoteHandler>();
-                    note.Initialize(GameManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
+                    note.Initialize(GameManager.Instance.m_chartData.m_lane[m_identifier].m_singleNote[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
 
                     if (note != null)
                     {
@@ -460,13 +460,13 @@ public class LaneHandler : MonoBehaviour
             // First check if the current index is less than the total count of notes
             if (LevelEditorManager.Instance.m_initialized)
             {
-                if (m_nextNoteIndex < LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes.Count)
+                if (m_nextNoteIndex < LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_singleNote.Count)
                 {
                     // Check if the track position in beats has surpassed the beat of the notes to spawn, and if so, spawn them
-                    if (LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex].m_beat < LevelEditorManager.Instance.m_trackPosInBeats + LevelEditorManager.Instance.m_beatsToShow)
+                    if (LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_singleNote[m_nextNoteIndex].m_beat < LevelEditorManager.Instance.m_trackPosInBeats + LevelEditorManager.Instance.m_beatsToShow)
                     {
                         NoteHandler note = (transform.GetChild(2).GetComponent<ObjectPooler>().GetPooledNote("Single Note")).GetComponent<NoteHandler>();
-                        note.Initialize(LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_notes[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
+                        note.Initialize(LevelEditorManager.Instance.m_chartData.m_lane[m_identifier].m_singleNote[m_nextNoteIndex], transform.GetChild(0), transform.GetChild(1));
 
                         if (note != null)
                         {
@@ -490,13 +490,13 @@ public class LaneHandler : MonoBehaviour
 
         if (GameManager.Instance)
         {
-            if (m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > GameManager.Instance.m_hitWindow &&
+            if (m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 2 * GameManager.Instance.m_hitWindow &&
                 m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 10 * GameManager.Instance.m_hitWindow)
             {
                 m_notes.Peek().m_noteState = NoteHandler.NoteState.GOOD;
             }
             else if (m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 0                               &&
-                     m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < GameManager.Instance.m_hitWindow)
+                     m_notes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 2 * GameManager.Instance.m_hitWindow)
             {
                 m_notes.Peek().m_noteState = NoteHandler.NoteState.PERFECT;
             }

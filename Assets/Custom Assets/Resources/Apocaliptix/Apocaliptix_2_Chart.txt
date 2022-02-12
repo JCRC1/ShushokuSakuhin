@@ -15,7 +15,11 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_notes": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 64.5
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": -4.0,
@@ -102,7 +106,11 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_notes": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 40.5
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 32.0,
@@ -153,7 +161,11 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_notes": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 48.5
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 40.0,
@@ -204,7 +216,11 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_notes": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 56.5
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 48.0,

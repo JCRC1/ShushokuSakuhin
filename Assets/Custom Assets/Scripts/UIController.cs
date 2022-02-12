@@ -62,6 +62,16 @@ public class UIController : MonoBehaviour
 
         m_accuracy.text = (((ScoreController.Instance.m_goodHitCount * 0.5f) + ScoreController.Instance.m_perfectHitCount) / GameManager.Instance.m_totalNotes * 100.0f).ToString("00.00") + "%";
 
+        m_scoreThisTime.text = ScoreController.Instance.m_currentScore.ToString("0000000");
+
+        // Check high score 
+        if (ScoreController.Instance.m_currentScore > PlayerPrefs.GetInt(GameManager.Instance.m_chartData.m_trackName + "_" + GameManager.Instance.m_chartData.m_trackDifficulty + "_HiScore"))
+        {
+            PlayerPrefs.SetInt(GameManager.Instance.m_chartData.m_trackName + "_" + GameManager.Instance.m_chartData.m_trackDifficulty + "_HiScore", int.Parse(m_scoreThisTime.text));
+        }
+
+        m_hiScore.text = PlayerPrefs.GetInt(GameManager.Instance.m_chartData.m_trackName + "_" + GameManager.Instance.m_chartData.m_trackDifficulty + "_HiScore").ToString("0000000");
+
         if (GameManager.Instance.m_finalized)
         {
             for (int i = 0; i < m_UIAnimator.Length; i++)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NoteHandler : MonoBehaviour
 {
-    public NoteData m_noteData;
+    public SingleNoteData m_noteData;
     private Transform m_start;
     private Transform m_end;
 
@@ -18,7 +18,7 @@ public class NoteHandler : MonoBehaviour
 
     public NoteState m_noteState;
 
-    public void Initialize(NoteData _noteData, Transform _start, Transform _end)
+    public void Initialize(SingleNoteData _noteData, Transform _start, Transform _end)
     {
         m_noteState = NoteState.NONE;
         m_noteData = _noteData;

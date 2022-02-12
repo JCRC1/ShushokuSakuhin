@@ -6,7 +6,6 @@ public class KeyboardControls : MonoBehaviour
 {
     public static KeyboardControls Instance;
 
-
     /// <summary>
     /// The Red Lanes
     /// </summary>
@@ -17,9 +16,20 @@ public class KeyboardControls : MonoBehaviour
     /// </summary>
     public KeyCode[] m_evenLaneKeybind;
 
+    public AudioClip m_hitSound;
+    private AudioSource m_hitSource;
+
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        m_hitSource = gameObject.AddComponent<AudioSource>();
+        m_hitSource.volume = 0.05f;
+        m_hitSource.playOnAwake = false;
+        m_hitSource.clip = m_hitSound;
     }
 
     private void Update()
@@ -53,13 +63,15 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
-                        Debug.Log("HIT PERFECT EVEN");
+                        Debug.Log("HIT PERFECT EVEN"); 
+                        m_hitSource.Play();
                         ScoreController.Instance.AddPerfectHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
                         Debug.Log("HIT GOOD EVEN");
+                        m_hitSource.Play();
                         ScoreController.Instance.AddGoodHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();
@@ -102,12 +114,14 @@ public class KeyboardControls : MonoBehaviour
                         break;
                     case NoteHandler.NoteState.PERFECT:
                         Debug.Log("HIT PERFECT EVEN");
+                        m_hitSource.Play();
                         ScoreController.Instance.AddPerfectHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
                         Debug.Log("HIT GOOD EVEN");
+                        m_hitSource.Play();
                         ScoreController.Instance.AddGoodHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();

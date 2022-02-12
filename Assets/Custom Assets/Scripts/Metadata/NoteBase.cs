@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class NoteBase
 {
-
+    public float m_beat;
 }

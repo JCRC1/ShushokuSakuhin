@@ -20,11 +20,10 @@ public class RotateBackgroundCircle : MonoBehaviour
             {
                 gameObject.transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 360, GameManager.Instance.m_loopPosInAnalog));
             }
-        }
-
-        if (GameManager.Instance.m_finalized)
-        {
-            GetComponent<Animator>().SetTrigger("Finalized");
+            if (GameManager.Instance.m_finalized)
+            {
+                GetComponent<Animator>().SetTrigger("Finalized");
+            }
         }
     }
 }

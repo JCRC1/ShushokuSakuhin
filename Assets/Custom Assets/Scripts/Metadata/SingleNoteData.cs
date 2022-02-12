@@ -6,7 +6,7 @@ using UnityEngine;
 /// NoteData class contains all metadata of a note
 /// </summary>
 [System.Serializable]
-public class NoteData
+public class SingleNoteData : NoteBase
 {
-    public float       m_beat;
+
 }

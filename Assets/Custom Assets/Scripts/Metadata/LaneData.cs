@@ -14,7 +14,7 @@ public class LaneData
     public float                        m_initialLength = 10.0f;
 
     // Notes on this lane
-    public List<NoteData>               m_notes;
+    public List<SingleNoteData>               m_singleNote;
 
     // Lane events
     public List<LaneEventMovement>      m_laneEventsMovement;

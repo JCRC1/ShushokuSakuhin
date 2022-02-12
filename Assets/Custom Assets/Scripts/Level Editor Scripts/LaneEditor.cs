@@ -85,6 +85,7 @@ public class LaneEditor : MonoBehaviour
                         {
                             // It is now selected
                             m_selectedLane = m_hit.collider.GetComponent<LaneHandler>();
+                            m_defaultCol = m_selectedLane.GetComponent<LineRenderer>().startColor;
                         }
                     }
                 }
