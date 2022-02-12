@@ -19,6 +19,8 @@ public class KeyboardControls : MonoBehaviour
     public AudioClip m_hitSound;
     private AudioSource m_hitSource;
 
+    private ObjectPooler m_pooler;
+
     private void Awake()
     {
         Instance = this;
@@ -30,6 +32,8 @@ public class KeyboardControls : MonoBehaviour
         m_hitSource.volume = 0.05f;
         m_hitSource.playOnAwake = false;
         m_hitSource.clip = m_hitSound;
+
+        m_pooler = GetComponent<ObjectPooler>();
     }
 
     private void Update()
@@ -58,6 +62,8 @@ public class KeyboardControls : MonoBehaviour
                     continue;
                 }
 
+                GameObject ripple = m_pooler.GetPooledNote("Ripple");
+
                 switch (lane.m_notes.Peek().m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
@@ -65,6 +71,11 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.PERFECT:
                         Debug.Log("HIT PERFECT EVEN"); 
                         m_hitSource.Play();
+
+                        ripple.SetActive(true);
+                        ripple.transform.position = lane.transform.GetChild(1).position;
+                        ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
+
                         ScoreController.Instance.AddPerfectHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();
@@ -72,6 +83,11 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.GOOD:
                         Debug.Log("HIT GOOD EVEN");
                         m_hitSource.Play();
+
+                        ripple.SetActive(true);
+                        ripple.transform.position = lane.transform.GetChild(1).position;
+                        ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
+
                         ScoreController.Instance.AddGoodHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();
@@ -108,6 +124,8 @@ public class KeyboardControls : MonoBehaviour
                     continue;
                 }
 
+                GameObject ripple = m_pooler.GetPooledNote("Ripple");
+
                 switch (lane.m_notes.Peek().m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
@@ -115,6 +133,11 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.PERFECT:
                         Debug.Log("HIT PERFECT EVEN");
                         m_hitSource.Play();
+
+                        ripple.SetActive(true);
+                        ripple.transform.position = lane.transform.GetChild(1).position;
+                        ripple.GetComponent<ParticleSystem>().startColor = Color.red;
+
                         ScoreController.Instance.AddPerfectHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();
@@ -122,6 +145,11 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.GOOD:
                         Debug.Log("HIT GOOD EVEN");
                         m_hitSource.Play();
+
+                        ripple.SetActive(true);
+                        ripple.transform.position = lane.transform.GetChild(1).position;
+                        ripple.GetComponent<ParticleSystem>().startColor = Color.red;
+
                         ScoreController.Instance.AddGoodHit();
                         lane.m_notes.Peek().gameObject.SetActive(false);
                         lane.m_notes.Dequeue();
