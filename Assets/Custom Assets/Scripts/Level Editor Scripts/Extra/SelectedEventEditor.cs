@@ -61,7 +61,7 @@ public class SelectedEventEditor : MonoBehaviour
 
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventMovement = chart.m_lane[lane].m_laneEventsMovement[movIndex - 1];
             }
-            else if (LevelEditorManager.Instance.m_currentMovementIndex[lane] == 0 || movIndex == 0)
+            else if (LevelEditorManager.Instance.m_currentMovementIndex[lane] == 0 && movIndex == 0)
             {
                 correspondingLane.transform.position = chart.m_lane[lane].m_initialPosition;
 
@@ -100,7 +100,7 @@ public class SelectedEventEditor : MonoBehaviour
                 correspondingLane.transform.rotation = Quaternion.Euler(0.0f, 0.0f, chart.m_lane[lane].m_laneEventsRotation[rotIndex - 1].m_targetRotation);
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventRotation = chart.m_lane[lane].m_laneEventsRotation[rotIndex - 1];
             }
-            else if (LevelEditorManager.Instance.m_currentRotationIndex[lane] == 0 || rotIndex == 0)
+            else if (LevelEditorManager.Instance.m_currentRotationIndex[lane] == 0 && rotIndex == 0)
             {
                 correspondingLane.transform.rotation = Quaternion.Euler(0.0f, 0.0f, chart.m_lane[lane].m_initialRotation);
 
@@ -141,7 +141,7 @@ public class SelectedEventEditor : MonoBehaviour
 
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventFade = chart.m_lane[lane].m_laneEventFade[fadeIndex - 1];
             }
-            else if (LevelEditorManager.Instance.m_currentFadeIndex[lane] == 0 || fadeIndex == 0)
+            else if (LevelEditorManager.Instance.m_currentFadeIndex[lane] == 0 && fadeIndex == 0)
             {
                 correspondingLane.GetComponent<LineRenderer>().startColor = new Color(correspondingLane.GetComponent<LineRenderer>().startColor.r, correspondingLane.GetComponent<LineRenderer>().startColor.g, correspondingLane.GetComponent<LineRenderer>().startColor.b, chart.m_lane[lane].m_initialAlpha);
                 correspondingLane.GetComponent<LineRenderer>().endColor = new Color(correspondingLane.GetComponent<LineRenderer>().endColor.r, correspondingLane.GetComponent<LineRenderer>().endColor.g, correspondingLane.GetComponent<LineRenderer>().endColor.b, chart.m_lane[lane].m_initialAlpha);
@@ -181,7 +181,7 @@ public class SelectedEventEditor : MonoBehaviour
                 correspondingLane.transform.GetChild(0).localPosition = new Vector2(chart.m_lane[lane].m_laneEventLength[lengthIndex - 1].m_targetLength, 0);
                 correspondingLane.GetComponent<LaneHandler>().m_laneEventLength = chart.m_lane[lane].m_laneEventLength[lengthIndex - 1];
             }
-            else if (LevelEditorManager.Instance.m_currentLengthIndex[lane] == 0 || lengthIndex == 0)
+            else if (LevelEditorManager.Instance.m_currentLengthIndex[lane] == 0 && lengthIndex == 0)
             {
                 correspondingLane.transform.GetChild(0).localPosition = new Vector2(chart.m_lane[lane].m_initialLength, 0);
 
