@@ -84,7 +84,7 @@ public class LevelEditorManager : MonoBehaviour
     public void ConfirmNewChart()
     {
         var bp = new BrowserProperties();
-        bp.initialDir = "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources";
+        bp.initialDir = "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Resources";
         bp.filter = "txt files (*.txt)|*.txt";
         bp.filterIndex = 0;
 

@@ -110,11 +110,11 @@ public class GameManager : MonoBehaviour
         string json;
         if (m_manualMode)
         {
-            json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Custom Assets/Resources/" + m_path);
+            json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Resources/" + m_path);
         }
         else
         {
-            json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Custom Assets/Resources/" + ChartLevelSelect.m_levelPath);
+            json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Resources/" + ChartLevelSelect.m_levelPath);
         }
         JsonUtility.FromJsonOverwrite(json, m_chartData);
 

@@ -45,6 +45,7 @@ public class ScoreController : MonoBehaviour
         if (m_currentCombo > 2)
         {
             m_UICombo.gameObject.SetActive(true);
+            m_UICombo.GetComponent<Animator>().SetTrigger("ComboUp");
         }
         else
         {

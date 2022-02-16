@@ -1,6 +1,6 @@
 {
     "m_trackAudioPath": "Apocaliptix/Apocaliptix",
-    "m_trackCoverArtPath": "Apocaliptix/Apocaliptix",
+    "m_trackCoverArtPath": "Apocaliptix/Apocaliptix_Image",
     "m_trackName": "Apocaliptix",
     "m_trackArtist": "Juggernaut.",
     "m_trackDifficulty": 0,

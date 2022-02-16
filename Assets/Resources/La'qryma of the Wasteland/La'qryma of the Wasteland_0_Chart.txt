@@ -1,6 +1,6 @@
 {
     "m_trackAudioPath": "La'qryma of the Wasteland/La'qryma of the Wasteland",
-    "m_trackCoverArtPath": "La'qryma of the Wasteland/La'qryma of the Wasteland",
+    "m_trackCoverArtPath": "La'qryma of the Wasteland/La'qryma of the Wasteland_Image",
     "m_trackName": "La'qryma of the Wasteland",
     "m_trackArtist": "DJ Noriken",
     "m_trackDifficulty": 1,
