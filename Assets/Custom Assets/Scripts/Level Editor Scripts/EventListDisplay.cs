@@ -6,7 +6,6 @@ using System.Linq;
 
 public class EventListDisplay : MonoBehaviour
 {
-    [System.Serializable]
     public class MovItem
     {
         public List<GameObject> m_objects;

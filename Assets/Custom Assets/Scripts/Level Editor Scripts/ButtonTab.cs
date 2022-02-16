@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 /// Tab button manager.
 /// </summary>
 [RequireComponent(typeof(Image))]
-public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+public class ButtonTab : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     // Reference to tab group this tab belongs to
     public TabGroup m_tabGroup;

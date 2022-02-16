@@ -17,6 +17,7 @@ public class ScoreController : MonoBehaviour
     public int m_missCount;
 
     public Text m_UIScore;
+    public Text m_UICombo;
 
     public float m_scorePerNote;
 
@@ -40,7 +41,15 @@ public class ScoreController : MonoBehaviour
     private void Update()
     {
         m_UIScore.text = Mathf.RoundToInt(m_currentScore).ToString("0000000");
-
+        m_UICombo.text = m_currentCombo.ToString();
+        if (m_currentCombo > 2)
+        {
+            m_UICombo.gameObject.SetActive(true);
+        }
+        else
+        {
+            m_UICombo.gameObject.SetActive(false);
+        }
         m_currentScore = m_scorePerPerfect * m_perfectHitCount + m_scorePerGood * m_goodHitCount;
 
         // Check max combo
@@ -52,12 +61,20 @@ public class ScoreController : MonoBehaviour
 
     public void AddGoodHit()
     {
+        if (m_UICombo.gameObject.activeSelf)
+        {
+            m_UICombo.GetComponent<Animator>().SetTrigger("ComboUp");
+        }
         m_goodHitCount++;
         m_currentCombo++;
     }
 
     public void AddPerfectHit()
     {
+        if (m_UICombo.gameObject.activeSelf)
+        {
+            m_UICombo.GetComponent<Animator>().SetTrigger("ComboUp");
+        }
         m_perfectHitCount++;
         m_currentCombo++;
     }

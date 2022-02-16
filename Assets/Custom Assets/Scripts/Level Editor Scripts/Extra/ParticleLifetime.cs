@@ -5,6 +5,7 @@ using UnityEngine;
 public class ParticleLifetime : MonoBehaviour
 {
     public float m_lifeTime = 2.0f;
+    public Transform m_follow;
 
     float timer = 0.0f;
 
@@ -26,5 +27,8 @@ public class ParticleLifetime : MonoBehaviour
             gameObject.SetActive(false);
             timer = 0.0f;
         }
+
+        if(m_follow != null)
+            transform.position = m_follow.position;
     }
 }

@@ -15,6 +15,7 @@ public class LaneData
 
     // Notes on this lane
     public List<SingleNoteData>               m_singleNote;
+    public List<HoldNoteData>                 m_holdNote;
 
     // Lane events
     public List<LaneEventMovement>      m_laneEventsMovement;

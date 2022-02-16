@@ -20,6 +20,16 @@
                     "m_beat": 60.5
                 }
             ],
+            "m_holdNote": [
+                {
+                    "m_beat": 5.0,
+                    "m_duration": 4.0
+                },
+                {
+                    "m_beat": 89.0,
+                    "m_duration": 2.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": -4.0,
@@ -111,6 +121,12 @@
                     "m_beat": 40.5
                 }
             ],
+            "m_holdNote": [
+                {
+                    "m_beat": 87.0,
+                    "m_duration": 2.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 32.0,
@@ -164,6 +180,12 @@
             "m_singleNote": [
                 {
                     "m_beat": 48.5
+                }
+            ],
+            "m_holdNote": [
+                {
+                    "m_beat": 89.0,
+                    "m_duration": 2.0
                 }
             ],
             "m_laneEventsMovement": [
@@ -221,6 +243,12 @@
                     "m_beat": 56.5
                 }
             ],
+            "m_holdNote": [
+                {
+                    "m_beat": 87.0,
+                    "m_duration": 2.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 48.0,
@@ -260,6 +288,78 @@
                     "m_duration": 0.5,
                     "m_easeType": 2,
                     "m_targetLength": 10.0
+                }
+            ]
+        },
+        {
+            "m_initialPosition": {
+                "x": 7.0,
+                "y": 12.0
+            },
+            "m_initialRotation": 90.0,
+            "m_initialAlpha": 1.0,
+            "m_initialLength": 10.0,
+            "m_singleNote": [
+                {
+                    "m_beat": 82.0
+                }
+            ],
+            "m_holdNote": [],
+            "m_laneEventsMovement": [
+                {
+                    "m_beat": 78.0,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "m_beat": 78.5,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "m_beat": 79.0,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": 0.0,
+                        "y": -1.0
+                    }
+                },
+                {
+                    "m_beat": 79.5,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": 0.0,
+                        "y": -2.0
+                    }
+                },
+                {
+                    "m_beat": 80.0,
+                    "m_duration": 2.0,
+                    "m_easeType": 3,
+                    "m_targetPosition": {
+                        "x": 0.0,
+                        "y": -9.0
+                    }
+                }
+            ],
+            "m_laneEventsRotation": [],
+            "m_laneEventFade": [],
+            "m_laneEventLength": [
+                {
+                    "m_beat": 76.0,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetLength": 0.0
                 }
             ]
         }

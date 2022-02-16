@@ -49,6 +49,9 @@ MonoBehaviour:
   - noteToPool: {fileID: 1499816178328720486, guid: 18233e59c13f3e14095452e5220b15b5, type: 3}
     poolAmount: 10
     shouldExpand: 1
+  - noteToPool: {fileID: 1499816178328720486, guid: 4a89f4a81a8bbb54fa9da0e08b3eda49, type: 3}
+    poolAmount: 10
+    shouldExpand: 1
 --- !u!1 &7632251748279742534
 GameObject:
   m_ObjectHideFlags: 0

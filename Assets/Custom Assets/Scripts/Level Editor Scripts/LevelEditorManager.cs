@@ -175,6 +175,7 @@ public class LevelEditorManager : MonoBehaviour
         newLane.m_laneEventFade = new List<LaneEventFade>();
         newLane.m_laneEventLength = new List<LaneEventLength>();
         newLane.m_singleNote = new List<SingleNoteData>();
+        newLane.m_holdNote = new List<HoldNoteData>();
 
         m_lanes.Add(Instantiate(m_lanePrefab, newLane.m_initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, newLane.m_initialRotation))));
 

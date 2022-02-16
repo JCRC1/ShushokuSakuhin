@@ -19,6 +19,7 @@ public class RoundBeatDisplay : MonoBehaviour
             if (m_toggles[i].isOn)
             {
                 Seekbar.Instance.m_currentBeatText[1].text = (Mathf.Round(LevelEditorManager.Instance.m_trackPosInBeats * Mathf.Pow(2.0f, i)) / Mathf.Pow(2.0f, i)).ToString();
+                Seekbar.Instance.m_currentBeatText[2].text = (Mathf.Round(LevelEditorManager.Instance.m_trackPosInBeats * Mathf.Pow(2.0f, i)) / Mathf.Pow(2.0f, i)).ToString();
             }
         }
     }

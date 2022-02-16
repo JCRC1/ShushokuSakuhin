@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using AnotherFileBrowser.Windows;
 
 public class ChartMetadataBuilder : MonoBehaviour
 {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3381008858907228667}
   - component: {fileID: 833853569895591656}
   m_Layer: 0
-  m_Name: Note
+  m_Name: SingleNote
   m_TagString: Single Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,6 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74853da618668e045a89ca7952d2d5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_start: {fileID: 0}
+  m_end: {fileID: 0}
+  m_noteState: 0
   m_noteData:
     m_beat: 0
-  m_noteState: 0

@@ -9,6 +9,8 @@ TagManager:
   - EditorCamera
   - MGizmo
   - Single Note
+  - Hold Note
+  - Ripple
   layers:
   - Default
   - TransparentFX

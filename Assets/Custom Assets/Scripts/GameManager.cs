@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public bool m_manualMode;
     //----------------------------
     // Chart information
     //----------------------------
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < m_lanes.Count; i++)
             {
                 m_lanes[i].SetActive(false);
-                AudioListener.pause = true;
+                m_audioSource.Stop();
             }
         }
     }
@@ -106,8 +107,15 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         m_chartData = new ChartData();
-
-        string json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Custom Assets/Resources/" + ChartLevelSelect.m_levelPath);
+        string json;
+        if (m_manualMode)
+        {
+            json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Custom Assets/Resources/" + m_path);
+        }
+        else
+        {
+            json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Custom Assets/Resources/" + ChartLevelSelect.m_levelPath);
+        }
         JsonUtility.FromJsonOverwrite(json, m_chartData);
 
         // Initialize lanes and index array
@@ -124,7 +132,7 @@ public class GameManager : MonoBehaviour
             {
                 InitLoadedLane(m_chartData.m_lane[i]);
 
-                m_totalNotes += m_chartData.m_lane[i].m_singleNote.Count;
+                m_totalNotes += m_chartData.m_lane[i].m_singleNote.Count + m_chartData.m_lane[i].m_holdNote.Count;
             }
         }
 
@@ -135,7 +143,7 @@ public class GameManager : MonoBehaviour
         m_audioSource.clip = Resources.Load<AudioClip>(m_chartData.m_trackAudioPath);
         m_dspSongTime = (float)AudioSettings.dspTime;
         m_audioSource.Play();
-        Invoke("Finalize", m_audioSource.clip.length);
+        Invoke("EndGame", m_audioSource.clip.length);
         m_initialized = true;
     }
 

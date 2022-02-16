@@ -37,6 +37,7 @@ public class LevelLoader : MonoBehaviour
     {
         for (int i = 0; i < m_animatorsToTrigger.Length; i++)
         {
+            m_animatorsToTrigger[i].enabled = true;
             m_animatorsToTrigger[i].SetTrigger("Start");
         }
 
