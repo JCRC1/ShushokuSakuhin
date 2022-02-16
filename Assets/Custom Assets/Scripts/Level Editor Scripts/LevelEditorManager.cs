@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using AnotherFileBrowser.Windows;
 using TMPro;
 
 /// <summary>
@@ -82,10 +83,17 @@ public class LevelEditorManager : MonoBehaviour
 
     public void ConfirmNewChart()
     {
-        string filePath = EditorUtility.OpenFolderPanel("Save chart", "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources", "");
-        string json = JsonUtility.ToJson(m_chartData, true);
+        var bp = new BrowserProperties();
+        bp.initialDir = "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources";
+        bp.filter = "txt files (*.txt)|*.txt";
+        bp.filterIndex = 0;
 
-        File.WriteAllText(filePath + "/" + m_chartData.m_trackName + "_" + m_chartData.m_trackDifficulty  + "_Chart.txt", json);
+        new FileBrowser().SaveFileBrowser(bp, m_chartData.m_trackName + "_" + m_chartData.m_trackDifficulty + "_Chart.txt", ".txt", path =>
+        {
+            //Do something with path(string)
+            string json = JsonUtility.ToJson(m_chartData, true);
+            File.WriteAllText(path, json);
+        });
     }
 
     private void Update()

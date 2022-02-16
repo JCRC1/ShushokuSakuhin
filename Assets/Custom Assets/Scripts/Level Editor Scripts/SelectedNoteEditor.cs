@@ -41,10 +41,10 @@ public class SelectedNoteEditor : MonoBehaviour
             Destroy(item);
 
             // Remove from Lane's note queue
-            List<SingleNoteHandler> noteList = new List<SingleNoteHandler>(LevelEditorManager.Instance.m_lanes[noteIndex].GetComponent<LaneHandler>().m_singleNotes);
+            List<SingleNoteHandler> noteList = new List<SingleNoteHandler>(LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_singleNotes);
             noteList[noteIndex].gameObject.SetActive(false);
             noteList.RemoveAt(noteIndex);
-            LevelEditorManager.Instance.m_lanes[noteIndex].GetComponent<LaneHandler>().m_singleNotes = new Queue<SingleNoteHandler>(noteList);
+            LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_singleNotes = new Queue<SingleNoteHandler>(noteList);
         }
         else if (m_selectedHoldNote)
         {
@@ -66,10 +66,10 @@ public class SelectedNoteEditor : MonoBehaviour
             Destroy(item);
 
             // Remove from Lane's note queue
-            List<HoldNoteHandler> noteList = new List<HoldNoteHandler>(LevelEditorManager.Instance.m_lanes[noteIndex].GetComponent<LaneHandler>().m_holdNotes);
+            List<HoldNoteHandler> noteList = new List<HoldNoteHandler>(LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_holdNotes);
             noteList[noteIndex].gameObject.SetActive(false);
             noteList.RemoveAt(noteIndex);
-            LevelEditorManager.Instance.m_lanes[noteIndex].GetComponent<LaneHandler>().m_holdNotes = new Queue<HoldNoteHandler>(noteList);
+            LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_holdNotes = new Queue<HoldNoteHandler>(noteList);
         }
     }
 

@@ -15,43 +15,53 @@ public class ChartMetadataBuilder : MonoBehaviour
 
     public void TrackPathLoad()
     {
-#if UNITY_EDITOR
-        string filePath = EditorUtility.OpenFilePanel("Load track", "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources", "");
-        string temp = filePath.Replace("C:/Unity Projects/ShushokuSakuhin/Assets/Custom Assets/Resources/", "");
-        string temp2 = temp.Replace(".mp3", "");
+        var bp = new BrowserProperties();
+        bp.initialDir = "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources";
+        bp.filter = "mp3 files (*.mp3)|*.mp3|wav files (*.wav)|*.wav|All Files (*.*)|*.*";
+        bp.filterIndex = 0;
 
-        m_chartData.m_trackAudioPath = temp2;
-#endif
+        new FileBrowser().OpenFileBrowser(bp, path =>
+        {
+            //Do something with path(string)
+            string temp = path.Replace("C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources\\", "");
+            string temp2 = temp.Replace(".mp3", "");
+            string temp3 = temp2.Replace(".wav", "");
+
+            m_chartData.m_trackAudioPath = temp3;
+        });
     }
 
     public void OpenChart()
     {
-#if UNITY_EDITOR
-        string filePath = EditorUtility.OpenFilePanel("Load track", "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources", "");        
+        var bp = new BrowserProperties();
+        bp.initialDir = "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources";
+        bp.filter = "txt files (*.txt)|*.txt|All Files (*.*)|*.*";
+        bp.filterIndex = 0;
 
-        string json = File.ReadAllText(filePath);
-        JsonUtility.FromJsonOverwrite(json, LevelEditorManager.Instance.m_chartData);
-#endif
+        new FileBrowser().OpenFileBrowser(bp, path =>
+        {
+            //Do something with path(string)
+            string json = File.ReadAllText(path);
+            JsonUtility.FromJsonOverwrite(json, LevelEditorManager.Instance.m_chartData);
+        });
     }
 
     public void TrackCoverPathLoad()
     {
-#if UNITY_EDITOR
-        string filePath = EditorUtility.OpenFilePanel("Load track", "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources", "");
-        string temp = filePath.Replace("C:/Unity Projects/ShushokuSakuhin/Assets/Custom Assets/Resources/", "");
-        string temp2 = "";
+        var bp = new BrowserProperties();
+        bp.initialDir = "C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources";
+        bp.filter = "png files (*.png)|*.png|jpg files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+        bp.filterIndex = 0;
 
-        if (temp.Contains(".png"))
+        new FileBrowser().OpenFileBrowser(bp, path =>
         {
-            temp2 = temp.Replace(".png", "");
-        } 
-        else if (temp.Contains(".jpg"))
-        {
-            temp2 = temp.Replace(".jpg", "");
-        }
+            //Do something with path(string)
+            string temp = path.Replace("C:\\Unity Projects\\ShushokuSakuhin\\Assets\\Custom Assets\\Resources\\", "");
+            string temp2 = temp.Replace(".png", "");
+            string temp3 = temp2.Replace(".jpg", "");
 
-        m_chartData.m_trackCoverArtPath = temp2;
-#endif
+            m_chartData.m_trackCoverArtPath = temp3;
+        });
     }
 
     public void TrackNameAdd(Text name)

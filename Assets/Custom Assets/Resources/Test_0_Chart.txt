@@ -1,0 +1,10 @@
+{
+    "m_trackAudioPath": "60bpm",
+    "m_trackCoverArtPath": "",
+    "m_trackName": "Test",
+    "m_trackArtist": "a",
+    "m_trackDifficulty": 0,
+    "m_trackOffset": 0.0,
+    "m_trackBPM": 60.0,
+    "m_lane": []
+}
