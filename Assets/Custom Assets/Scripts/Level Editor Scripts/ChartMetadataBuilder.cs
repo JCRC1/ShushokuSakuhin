@@ -16,14 +16,14 @@ public class ChartMetadataBuilder : MonoBehaviour
     public void TrackPathLoad()
     {
         var bp = new BrowserProperties();
-        bp.initialDir = Application.dataPath + "\\Resources\\";
+        bp.initialDir = Application.dataPath.Replace("/", "\\") + "\\Resources\\";
         bp.filter = "mp3 files (*.mp3)|*.mp3|wav files (*.wav)|*.wav|All Files (*.*)|*.*";
         bp.filterIndex = 0;
 
         new FileBrowser().OpenFileBrowser(bp, path =>
         {
             //Do something with path(string)
-            string temp = path.Replace(Application.dataPath + "\\Resources\\", "");
+            string temp = path.Replace(Application.dataPath.Replace("/", "\\") + "\\Resources\\", "");
             string temp2 = temp.Replace(".mp3", "");
             string temp3 = temp2.Replace(".wav", "");
 
@@ -34,7 +34,7 @@ public class ChartMetadataBuilder : MonoBehaviour
     public void OpenChart()
     {
         var bp = new BrowserProperties();
-        bp.initialDir = Application.dataPath + "\\Resources\\";
+        bp.initialDir = Application.dataPath.Replace("/", "\\") + "\\Resources\\";
         bp.filter = "txt files (*.txt)|*.txt|All Files (*.*)|*.*";
         bp.filterIndex = 0;
 
@@ -49,7 +49,7 @@ public class ChartMetadataBuilder : MonoBehaviour
     public void TrackCoverPathLoad()
     {
         var bp = new BrowserProperties();
-        bp.initialDir = Application.dataPath + "\\Resources\\";
+        bp.initialDir = Application.dataPath.Replace("/", "\\") + "\\Resources\\";
         bp.filter = "png files (*.png)|*.png|jpg files (*.jpg)|*.jpg|All Files (*.*)|*.*";
         bp.filterIndex = 0;
 

@@ -50,6 +50,14 @@ public class LaneEditor : MonoBehaviour
         // Create a ray from the screen down to the world
         m_ray = m_worldCam.ScreenPointToRay(Input.mousePosition);
 
+        if (m_selectedLane)
+        {
+            if (m_selectedLane.m_identifier % 2 == 0)
+                m_defaultCol = Color.blue;
+            else
+                m_defaultCol = Color.red;
+        }
+
         if (!isOutside)
         {
             if (Input.GetKey(KeyCode.LeftAlt))
@@ -86,6 +94,11 @@ public class LaneEditor : MonoBehaviour
                             // It is now selected
                             m_selectedLane = m_hit.collider.GetComponent<LaneHandler>();
                             m_defaultCol = m_selectedLane.GetComponent<LineRenderer>().startColor;
+
+                            for (int i = 0; i < SelectedLaneDisplay.Instance.m_indexDisplay.Length; i++)
+                            {
+                                SelectedLaneDisplay.Instance.m_indexDisplay[i].text = m_selectedLane.m_identifier.ToString();
+                            }
                         }
                     }
                 }
@@ -100,6 +113,11 @@ public class LaneEditor : MonoBehaviour
                         {
                             m_selectedLane.GetComponent<LineRenderer>().startColor = m_defaultCol;
                             m_selectedLane.GetComponent<LineRenderer>().endColor = m_defaultCol;
+
+                            for (int i = 0; i < SelectedLaneDisplay.Instance.m_indexDisplay.Length; i++)
+                            {
+                                SelectedLaneDisplay.Instance.m_indexDisplay[i].text = "None";
+                            }
                             m_selectedLane = null;
                         }
                     }

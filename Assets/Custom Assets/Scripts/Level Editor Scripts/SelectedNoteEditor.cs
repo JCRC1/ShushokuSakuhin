@@ -37,6 +37,7 @@ public class SelectedNoteEditor : MonoBehaviour
             // Remove this from all the lists
             NoteListDisplay.Instance.m_singleNotes[lane].m_single.Remove(singleNote);
             NoteListDisplay.Instance.m_singleNotes[lane].m_objects.Remove(item);
+            NoteListDisplay.Instance.m_singleNoteIndex[lane]--;
             chart.m_lane[lane].m_singleNote.Remove(singleNote);
             Destroy(item);
 
@@ -62,6 +63,7 @@ public class SelectedNoteEditor : MonoBehaviour
             // Remove this from all the lists
             NoteListDisplay.Instance.m_holdNotes[lane].m_hold.Remove(holdNote);
             NoteListDisplay.Instance.m_holdNotes[lane].m_objects.Remove(item);
+            NoteListDisplay.Instance.m_holdNoteIndex[lane]--;
             chart.m_lane[lane].m_holdNote.Remove(holdNote);
             Destroy(item);
 

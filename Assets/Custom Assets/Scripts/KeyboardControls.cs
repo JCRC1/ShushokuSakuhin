@@ -18,7 +18,8 @@ public class KeyboardControls : MonoBehaviour
     public KeyCode[] m_evenLaneKeybind;
 
     public AudioClip m_hitSound;
-    private AudioSource m_hitSource;
+    [HideInInspector]
+    public AudioSource m_hitSource;
 
     private ObjectPooler m_pooler;
 

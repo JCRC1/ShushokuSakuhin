@@ -40,23 +40,26 @@ public class ScoreController : MonoBehaviour
 
     private void Update()
     {
-        m_UIScore.text = Mathf.RoundToInt(m_currentScore).ToString("0000000");
-        m_UICombo.text = m_currentCombo.ToString();
-        if (m_currentCombo > 2)
+        if (!GameManager.Instance.m_finalized)
         {
-            m_UICombo.gameObject.SetActive(true);
-            m_UICombo.GetComponent<Animator>().SetTrigger("ComboUp");
-        }
-        else
-        {
-            m_UICombo.gameObject.SetActive(false);
-        }
-        m_currentScore = m_scorePerPerfect * m_perfectHitCount + m_scorePerGood * m_goodHitCount;
+            m_UIScore.text = Mathf.RoundToInt(m_currentScore).ToString("0000000");
+            m_UICombo.text = m_currentCombo.ToString();
+            if (m_currentCombo > 2)
+            {
+                m_UICombo.gameObject.SetActive(true);
+                m_UICombo.GetComponent<Animator>().SetTrigger("ComboUp");
+            }
+            else
+            {
+                m_UICombo.gameObject.SetActive(false);
+            }
+            m_currentScore = m_scorePerPerfect * m_perfectHitCount + m_scorePerGood * m_goodHitCount;
 
-        // Check max combo
-        if (m_currentCombo > m_maxCombo)
-        {
-            m_maxCombo = m_currentCombo;
+            // Check max combo
+            if (m_currentCombo > m_maxCombo)
+            {
+                m_maxCombo = m_currentCombo;
+            }
         }
     }
 

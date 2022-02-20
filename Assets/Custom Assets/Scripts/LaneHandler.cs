@@ -392,7 +392,7 @@ public class LaneHandler : MonoBehaviour
                 {
                     if (!notes.gameObject.activeSelf)
                     {
-                        return;
+                        continue;
                     }
                     // Fade the single notes
                     notes.gameObject.GetComponent<SpriteRenderer>().color = new Color(notes.gameObject.GetComponent<SpriteRenderer>().color.r, notes.gameObject.GetComponent<SpriteRenderer>().color.g, notes.gameObject.GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
@@ -442,7 +442,7 @@ public class LaneHandler : MonoBehaviour
                 {
                     if (!notes.gameObject.activeSelf)
                     {
-                        return;
+                        continue;
                     }
                     // Fade the single notes
                     notes.gameObject.GetComponent<SpriteRenderer>().color = new Color(notes.gameObject.GetComponent<SpriteRenderer>().color.r, notes.gameObject.GetComponent<SpriteRenderer>().color.g, notes.gameObject.GetComponent<SpriteRenderer>().color.b, m_currentAlpha);

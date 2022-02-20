@@ -22,5 +22,8 @@ public class NoteHandler : MonoBehaviour
         m_noteState = NoteState.NONE;
         m_start = _start;
         m_end = _end;
+
+        transform.position = _start.position;
+        transform.rotation = _start.rotation;
     }
 }

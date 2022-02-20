@@ -12,6 +12,9 @@ public class HoldNoteHandler : NoteHandler
     public void InitializeHoldNote(HoldNoteData _noteData, Transform _start, Transform _end, int _laneItBelongs)
     {
         m_isHeld = false;
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+        GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 1f);
+        GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 1f);
         m_noteState = NoteState.NONE;
         m_noteData = _noteData;
         m_laneItBelongs = _laneItBelongs;
@@ -56,10 +59,12 @@ public class HoldNoteHandler : NoteHandler
                             break;
                         case NoteState.PERFECT:
                             ScoreController.Instance.AddPerfectHit();
+                            KeyboardControls.Instance.m_hitSource.Play();
                             transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
                             break;
                         case NoteState.GOOD:
                             ScoreController.Instance.AddGoodHit();
+                            KeyboardControls.Instance.m_hitSource.Play();
                             transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
                             break;
                         case NoteState.MISS:

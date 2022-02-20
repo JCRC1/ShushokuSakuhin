@@ -2008,7 +2008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fd63e3515b4e14e801a5f03c13a1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_selectedChartPath: La'qryma of the Wasteland\La'qryma of the Wasteland_0_Chart.txt
+  m_selectedChartPath: Apocaliptix\Apocaliptix_0_Chart.txt
   m_difficultySelected: 0
   m_trackHiScore: {fileID: 90372547}
 --- !u!4 &1049964283
@@ -2966,8 +2966,6 @@ MonoBehaviour:
   - {fileID: 419019451}
   - {fileID: 90372546}
   - {fileID: 116637591}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 23651727}
   m_transitionTime: 2
   m_sceneIndex: 2
