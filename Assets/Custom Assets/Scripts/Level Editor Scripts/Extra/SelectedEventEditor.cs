@@ -81,7 +81,6 @@ public class SelectedEventEditor : MonoBehaviour
             // Remove this from all the lists
             EventListDisplay.Instance.m_movements[lane].m_moves.Remove(laneEvent);
             EventListDisplay.Instance.m_movements[lane].m_objects.Remove(item);
-            EventListDisplay.Instance.m_movementIndex[lane]--;
             chart.m_lane[lane].m_laneEventsMovement.Remove(laneEvent);
             Destroy(item);
         }
@@ -121,7 +120,6 @@ public class SelectedEventEditor : MonoBehaviour
             // Remove this from all the lists
             EventListDisplay.Instance.m_rotations[lane].m_rots.Remove(laneEvent);
             EventListDisplay.Instance.m_rotations[lane].m_objects.Remove(item);
-            EventListDisplay.Instance.m_rotationIndex[lane]--;
             chart.m_lane[lane].m_laneEventsRotation.Remove(laneEvent);
             Destroy(item);
         }
@@ -164,7 +162,6 @@ public class SelectedEventEditor : MonoBehaviour
             // Remove this from all the lists
             EventListDisplay.Instance.m_fades[lane].m_fades.Remove(laneEvent);
             EventListDisplay.Instance.m_fades[lane].m_objects.Remove(item);
-            EventListDisplay.Instance.m_fadeIndex[lane]--;
             chart.m_lane[lane].m_laneEventFade.Remove(laneEvent);
             Destroy(item);
         }
@@ -204,7 +201,6 @@ public class SelectedEventEditor : MonoBehaviour
             // Remove this from all the lists
             EventListDisplay.Instance.m_lengths[lane].m_lengths.Remove(laneEvent);
             EventListDisplay.Instance.m_lengths[lane].m_objects.Remove(item);
-            EventListDisplay.Instance.m_lengthIndex[lane]--;
             chart.m_lane[lane].m_laneEventLength.Remove(laneEvent);
             Destroy(item);
         }

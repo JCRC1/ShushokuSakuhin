@@ -14,10 +14,13 @@ public class MoveEventEditor : MonoBehaviour
     public InputField m_duration;
     public Dropdown m_easeType;
 
+    public SelectedEventEditor m_holder;
+
     public void SetMoveEvent(SelectedEventEditor _holder)
     {
         if (_holder.m_selectedMovementEvent != null)
         {
+            m_holder = _holder;
             m_selectedEvent = _holder.m_selectedMovementEvent.m_heldLaneEvent;
 
             m_eventLane.text = _holder.m_selectedMovementEvent.m_laneID.ToString();
@@ -36,5 +39,7 @@ public class MoveEventEditor : MonoBehaviour
         m_selectedEvent.m_targetPosition.y = float.Parse(m_targetY.text);
         m_selectedEvent.m_duration = float.Parse(m_duration.text);
         m_selectedEvent.m_easeType = (LaneEvent.EaseType)m_easeType.value;
+
+        EventListDisplay.Instance.EditEvent(m_selectedEvent, m_holder.m_selectedMovementEvent);
     }
 }

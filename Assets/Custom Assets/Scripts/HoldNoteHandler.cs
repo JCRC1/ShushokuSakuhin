@@ -100,8 +100,16 @@ public class HoldNoteHandler : NoteHandler
                                     }
                                 }
                             }
-
                             m_noteState = NoteState.MISS;
+
+                            ScoreController.Instance.m_currentCombo = 0;
+                            ScoreController.Instance.m_missCount++;
+
+                            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+                            GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 0.5f);
+                            GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
+
+                            transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
                             m_isHeld = false;
                         }
                     }
@@ -131,7 +139,16 @@ public class HoldNoteHandler : NoteHandler
                                 }
                             }
                             m_noteState = NoteState.MISS;
-                            m_isHeld = false;
+
+                            ScoreController.Instance.m_currentCombo = 0;
+                            ScoreController.Instance.m_missCount++;
+
+                            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+                            GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 0.5f);
+                            GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
+
+                            transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
+                            m_isHeld = false; 
                         }
                     }
                 }

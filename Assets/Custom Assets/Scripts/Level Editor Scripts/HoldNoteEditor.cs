@@ -11,10 +11,14 @@ public class HoldNoteEditor : MonoBehaviour
     public InputField m_noteBeat;
     public InputField m_noteDuration;
 
+    public SelectedNoteEditor m_holder;
+
     public void SetNote(SelectedNoteEditor _holder)
     {
         if (_holder.m_selectedHoldNote != null)
         {
+            m_holder = _holder;
+
             m_selectedNote = _holder.m_selectedHoldNote.m_heldNote;
 
             m_noteLane.text = _holder.m_selectedHoldNote.m_laneID.ToString();
@@ -27,5 +31,7 @@ public class HoldNoteEditor : MonoBehaviour
     {
         m_selectedNote.m_beat = float.Parse(m_noteBeat.text);
         m_selectedNote.m_duration = float.Parse(m_noteDuration.text);
+
+        NoteListDisplay.Instance.EditNote(m_selectedNote, m_holder.m_selectedHoldNote);
     }
 }

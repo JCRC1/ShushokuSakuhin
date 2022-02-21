@@ -13,10 +13,13 @@ public class LengthEventEditor : MonoBehaviour
     public InputField m_duration;
     public Dropdown m_easeType;
 
+    public SelectedEventEditor m_holder;
+
     public void SetLengthEvent(SelectedEventEditor _holder)
     {
         if (_holder.m_selectedLengthEvent != null)
         {
+            m_holder = _holder;
             m_selectedEvent = _holder.m_selectedLengthEvent.m_heldLaneEvent;
 
             m_eventLane.text = _holder.m_selectedLengthEvent.m_laneID.ToString();
@@ -33,5 +36,7 @@ public class LengthEventEditor : MonoBehaviour
         m_selectedEvent.m_targetLength = float.Parse(m_targetLength.text);
         m_selectedEvent.m_duration = float.Parse(m_duration.text);
         m_selectedEvent.m_easeType = (LaneEvent.EaseType)m_easeType.value;
+
+        EventListDisplay.Instance.EditEvent(m_selectedEvent, m_holder.m_selectedLengthEvent);
     }
 }

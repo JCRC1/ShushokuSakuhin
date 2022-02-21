@@ -28,5 +28,8 @@ public class TempLaneInit : MonoBehaviour
         newLaneData.m_initialRotation = m_tempLaneData.m_initialRotation;
         newLaneData.m_initialAlpha = 1.0f;
         LevelEditorManager.Instance.InitEmptyLane(newLaneData);
+        
+        EventListDisplay.Instance.AddLaneToList();
+        NoteListDisplay.Instance.AddLaneToList();
     }
 }

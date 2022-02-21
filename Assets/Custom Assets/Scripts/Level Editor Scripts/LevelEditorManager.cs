@@ -143,7 +143,8 @@ public class LevelEditorManager : MonoBehaviour
         }
 
         m_initialized = true;
-
+        EventListDisplay.Instance.GenerateLoadedList();
+        Resources.FindObjectsOfTypeAll<NoteListDisplay>()[0].GenerateLoadedList();
         m_audioSource.Play();
     }
     public void InitLoadedLane(LaneData _laneData)
