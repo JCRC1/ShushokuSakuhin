@@ -9,8 +9,11 @@ public class HoldNoteHandler : NoteHandler
 
     public int m_laneItBelongs;
 
+    public KeyCode m_pressed;
+
     public void InitializeHoldNote(HoldNoteData _noteData, Transform _start, Transform _end, int _laneItBelongs)
     {
+        m_pressed = KeyCode.None;
         m_isHeld = false;
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 1f);
@@ -75,7 +78,15 @@ public class HoldNoteHandler : NoteHandler
                 // If while holding, we let our key up and we are not done then this note becomes miss
                 if (m_laneItBelongs % 2 == 0)
                 {
-                    if (GameManager.Instance.GetComponent<KeyboardControls>().EvenKeyUp())
+                    foreach (KeyCode key in KeyboardControls.Instance.m_evenLaneKeybind)
+                    {
+                        if (Input.GetKey(key))
+                        {
+                            m_pressed = key;
+                        }
+                    }
+
+                    if (Input.GetKeyUp(m_pressed))
                     {
                         if (m_noteData.m_beat + m_noteData.m_duration > GameManager.Instance.m_trackPosInBeats)
                         {
@@ -97,7 +108,15 @@ public class HoldNoteHandler : NoteHandler
                 } 
                 else if(m_laneItBelongs % 2 != 0)
                 {
-                    if (GameManager.Instance.GetComponent<KeyboardControls>().OddKeyUp())
+                    foreach (KeyCode key in KeyboardControls.Instance.m_oddLaneKeybind)
+                    {
+                        if (Input.GetKey(key))
+                        {
+                            m_pressed = key;
+                        }
+                    }
+
+                    if (Input.GetKeyUp(m_pressed))
                     {
                         if (m_noteData.m_beat + m_noteData.m_duration > GameManager.Instance.m_trackPosInBeats)
                         {

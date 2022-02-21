@@ -182,25 +182,27 @@ public class KeyboardControls : MonoBehaviour
                         break;
                     case NoteHandler.NoteState.PERFECT:
                         m_hitSource.Play();
+                        ScoreController.Instance.AddPerfectHit();
 
-                        ripple.SetActive(true);
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
 
-                        ScoreController.Instance.AddPerfectHit();
+                        ripple.SetActive(true);
+
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
                         m_hitSource.Play();
+                        ScoreController.Instance.AddGoodHit();
 
-                        ripple.SetActive(true);
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
 
-                        ScoreController.Instance.AddGoodHit();
+                        ripple.SetActive(true);
+
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
                         break;
@@ -238,25 +240,27 @@ public class KeyboardControls : MonoBehaviour
                         break;
                     case NoteHandler.NoteState.PERFECT:
                         m_hitSource.Play();
+                        ScoreController.Instance.AddPerfectHit();
 
-                        ripple.SetActive(true);
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
 
-                        ScoreController.Instance.AddPerfectHit();
+                        ripple.SetActive(true);
+
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
                         m_hitSource.Play();
+                        ScoreController.Instance.AddPerfectHit();
 
-                        ripple.SetActive(true);
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red;
                         ripple.GetComponent<ParticleSystem>().loop = false;
 
-                        ScoreController.Instance.AddGoodHit();
+                        ripple.SetActive(true);
+
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
                         break;
@@ -296,28 +300,60 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
-                        m_hitSource.Play();
+                        KeyCode pressed = KeyCode.None;
 
-                        ripple.SetActive(true);
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                        ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
-
-                        ripple.GetComponent<ParticleSystem>().loop = true;
-                        ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
-
+                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        {
+                            foreach (KeyCode key in m_evenLaneKeybind)
+                            {
+                                if (Input.GetKey(key))
+                                {
+                                    pressed = key;
+                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                }
+                            }
+                        }
                         lane.m_holdNotes.Peek().m_isHeld = true;
+
+                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        {
+                            m_hitSource.Play();
+
+                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
+                            ripple.GetComponent<ParticleSystem>().loop = true;
+                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+
+                            ripple.SetActive(true);
+                        }                        
                         break;
                     case NoteHandler.NoteState.GOOD:
-                        m_hitSource.Play();
+                        pressed = KeyCode.None;
 
-                        ripple.SetActive(true);
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                        ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
-
-                        ripple.GetComponent<ParticleSystem>().loop = true;
-                        ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
-
+                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        {
+                            foreach (KeyCode key in m_evenLaneKeybind)
+                            {
+                                if (Input.GetKey(key))
+                                {
+                                    pressed = key;
+                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                }
+                            }
+                        }
                         lane.m_holdNotes.Peek().m_isHeld = true;
+
+                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        {
+                            m_hitSource.Play();
+
+                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
+                            ripple.GetComponent<ParticleSystem>().loop = true;
+                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+
+                            ripple.SetActive(true);
+                        }
                         break;
                     case NoteHandler.NoteState.MISS:
                         break;
@@ -352,30 +388,60 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
-                        m_hitSource.Play();
+                        KeyCode pressed = KeyCode.None;
 
-                        ripple.SetActive(true);
-                        ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
-
-                        ripple.GetComponent<ParticleSystem>().loop = true;
-                        ripple.transform.position = lane.transform.GetChild(1).position;
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                        ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
-
+                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        {
+                            foreach (KeyCode key in m_oddLaneKeybind)
+                            {
+                                if (Input.GetKey(key))
+                                {
+                                    pressed = key;
+                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                }
+                            }
+                        }
                         lane.m_holdNotes.Peek().m_isHeld = true;
+
+                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        {
+                            m_hitSource.Play();
+
+                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
+                            ripple.GetComponent<ParticleSystem>().loop = true;
+                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+
+                            ripple.SetActive(true);
+                        }
                         break;
                     case NoteHandler.NoteState.GOOD:
-                        m_hitSource.Play();
+                        pressed = KeyCode.None;
 
-                        ripple.SetActive(true);
-                        ripple.GetComponent<ParticleSystem>().startColor = Color.red;
-
-                        ripple.GetComponent<ParticleSystem>().loop = true;
-                        ripple.transform.position = lane.transform.GetChild(1).position;
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                        ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
-
+                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        {
+                            foreach (KeyCode key in m_oddLaneKeybind)
+                            {
+                                if (Input.GetKey(key))
+                                {
+                                    pressed = key;
+                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                }
+                            }
+                        }
                         lane.m_holdNotes.Peek().m_isHeld = true;
+
+                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        {
+                            m_hitSource.Play();
+
+                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            ripple.GetComponent<ParticleSystem>().startColor = Color.red;
+                            ripple.GetComponent<ParticleSystem>().loop = true;
+                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+
+                            ripple.SetActive(true);
+                        }
                         break;
                     case NoteHandler.NoteState.MISS:
                         break;
