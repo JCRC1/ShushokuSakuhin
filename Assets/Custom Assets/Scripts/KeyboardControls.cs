@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class KeyboardControls : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class KeyboardControls : MonoBehaviour
     public AudioClip m_hitSound;
     [HideInInspector]
     public AudioSource m_hitSource;
+    public AudioMixerGroup m_sfxMixerGroup;
 
     private ObjectPooler m_pooler;
 
@@ -31,6 +33,7 @@ public class KeyboardControls : MonoBehaviour
     private void Start()
     {
         m_hitSource = gameObject.AddComponent<AudioSource>();
+        m_hitSource.outputAudioMixerGroup = m_sfxMixerGroup;
         m_hitSource.volume = 0.05f;
         m_hitSource.playOnAwake = false;
         m_hitSource.clip = m_hitSound;
@@ -175,6 +178,9 @@ public class KeyboardControls : MonoBehaviour
                 }
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
+                
+                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
+                GameObject goodText = m_pooler.GetPooledNote("GoodText");
 
                 switch (lane.m_singleNotes.Peek().m_noteState)
                 {
@@ -187,8 +193,11 @@ public class KeyboardControls : MonoBehaviour
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
-
                         ripple.SetActive(true);
+
+                        perfectText.transform.position = lane.transform.GetChild(1).position;
+                        perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        perfectText.SetActive(true);
 
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
@@ -200,8 +209,11 @@ public class KeyboardControls : MonoBehaviour
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
-
                         ripple.SetActive(true);
+
+                        goodText.transform.position = lane.transform.GetChild(1).position;
+                        goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        goodText.SetActive(true);
 
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
@@ -234,6 +246,9 @@ public class KeyboardControls : MonoBehaviour
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
 
+                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
+                GameObject goodText = m_pooler.GetPooledNote("GoodText");
+
                 switch (lane.m_singleNotes.Peek().m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
@@ -245,8 +260,11 @@ public class KeyboardControls : MonoBehaviour
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
-
                         ripple.SetActive(true);
+
+                        perfectText.transform.position = lane.transform.GetChild(1).position;
+                        perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        perfectText.SetActive(true);
 
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
@@ -258,8 +276,11 @@ public class KeyboardControls : MonoBehaviour
                         ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red;
                         ripple.GetComponent<ParticleSystem>().loop = false;
-
                         ripple.SetActive(true);
+
+                        goodText.transform.position = lane.transform.GetChild(1).position;
+                        goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        goodText.SetActive(true);
 
                         lane.m_singleNotes.Peek().gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
@@ -295,6 +316,9 @@ public class KeyboardControls : MonoBehaviour
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
 
+                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
+                GameObject goodText = m_pooler.GetPooledNote("GoodText");
+
                 switch (lane.m_holdNotes.Peek().m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
@@ -325,6 +349,10 @@ public class KeyboardControls : MonoBehaviour
                             ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
 
                             ripple.SetActive(true);
+
+                            perfectText.transform.position = lane.transform.GetChild(1).position;
+                            perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            perfectText.SetActive(true);
                         }                        
                         break;
                     case NoteHandler.NoteState.GOOD:
@@ -353,6 +381,10 @@ public class KeyboardControls : MonoBehaviour
                             ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
 
                             ripple.SetActive(true);
+
+                            goodText.transform.position = lane.transform.GetChild(1).position;
+                            goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            goodText.SetActive(true);
                         }
                         break;
                     case NoteHandler.NoteState.MISS:
@@ -383,6 +415,9 @@ public class KeyboardControls : MonoBehaviour
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
 
+                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
+                GameObject goodText = m_pooler.GetPooledNote("GoodText");
+
                 switch (lane.m_holdNotes.Peek().m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
@@ -413,6 +448,10 @@ public class KeyboardControls : MonoBehaviour
                             ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
 
                             ripple.SetActive(true);
+
+                            perfectText.transform.position = lane.transform.GetChild(1).position;
+                            perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            perfectText.SetActive(true);
                         }
                         break;
                     case NoteHandler.NoteState.GOOD:
@@ -441,6 +480,10 @@ public class KeyboardControls : MonoBehaviour
                             ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
 
                             ripple.SetActive(true);
+
+                            goodText.transform.position = lane.transform.GetChild(1).position;
+                            goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            goodText.SetActive(true);
                         }
                         break;
                     case NoteHandler.NoteState.MISS:

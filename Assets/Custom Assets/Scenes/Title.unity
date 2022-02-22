@@ -184,7 +184,7 @@ AudioSource:
   m_GameObject: {fileID: 82817286}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7411672146143108802, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.2
@@ -981,6 +981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_defaultBGM: {fileID: 8300000, guid: 1fad8e3cb3dfafb41bafd6d19587d6b8, type: 3}
   m_crossfadeTime: 2
+  m_bgmMixerGroup: {fileID: -4070982358696839402, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
   m_isPlayingTrack01: 0
 --- !u!4 &985576260
 Transform:

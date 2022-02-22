@@ -102,6 +102,11 @@ public class HoldNoteHandler : NoteHandler
                             }
                             m_noteState = NoteState.MISS;
 
+                            GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
+                            missText.transform.position = transform.parent.parent.GetChild(1).position;
+                            missText.GetComponent<ParticleLifetime>().m_follow = transform.parent.parent.GetChild(1);
+                            missText.SetActive(true);
+
                             ScoreController.Instance.m_currentCombo = 0;
                             ScoreController.Instance.m_missCount++;
 
@@ -139,6 +144,11 @@ public class HoldNoteHandler : NoteHandler
                                 }
                             }
                             m_noteState = NoteState.MISS;
+
+                            GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
+                            missText.transform.position = transform.parent.parent.GetChild(1).position;
+                            missText.GetComponent<ParticleLifetime>().m_follow = transform.parent.parent.GetChild(1);
+                            missText.SetActive(true);
 
                             ScoreController.Instance.m_currentCombo = 0;
                             ScoreController.Instance.m_missCount++;

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class PreviewTrack : MonoBehaviour
 {
     public AudioClip m_defaultBGM;
     public float m_crossfadeTime;
+    public AudioMixerGroup m_bgmMixerGroup;
 
     public bool m_isPlayingTrack01;
 
@@ -32,7 +34,9 @@ public class PreviewTrack : MonoBehaviour
     private void Start()
     {
         m_track01 = gameObject.AddComponent<AudioSource>();
+        m_track01.outputAudioMixerGroup = m_bgmMixerGroup;
         m_track02 = gameObject.AddComponent<AudioSource>();
+        m_track02.outputAudioMixerGroup = m_bgmMixerGroup;
 
         m_isPlayingTrack01 = true;
 

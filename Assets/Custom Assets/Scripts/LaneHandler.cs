@@ -571,9 +571,13 @@ public class LaneHandler : MonoBehaviour
             {
                 m_singleNotes.Peek().m_noteState = NoteHandler.NoteState.PERFECT;
             }
-            else if (m_singleNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 5)
+            else if (m_singleNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 4)
             {
-                Debug.Log("MISS");
+                GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
+                missText.transform.position = m_endPoint.position;
+                missText.GetComponent<ParticleLifetime>().m_follow = m_endPoint;
+                missText.SetActive(true);
+
                 ScoreController.Instance.m_currentCombo = 0;
                 ScoreController.Instance.m_missCount++;
                 m_singleNotes.Peek().m_noteState = NoteHandler.NoteState.MISS;
@@ -608,9 +612,13 @@ public class LaneHandler : MonoBehaviour
             {
                 m_holdNotes.Peek().m_noteState = NoteHandler.NoteState.PERFECT;
             }
-            else if (m_holdNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 5)
+            else if (m_holdNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 4)
             {
-                Debug.Log("MISS");
+                GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
+                missText.transform.position = m_endPoint.position;
+                missText.GetComponent<ParticleLifetime>().m_follow = m_endPoint;
+                missText.SetActive(true);
+
                 ScoreController.Instance.m_currentCombo = 0;
                 ScoreController.Instance.m_missCount++;
                 m_holdNotes.Peek().m_noteState = NoteHandler.NoteState.MISS;

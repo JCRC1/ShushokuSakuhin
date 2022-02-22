@@ -11,6 +11,9 @@ TagManager:
   - Single Note
   - Hold Note
   - Ripple
+  - MissText
+  - GoodText
+  - PerfectText
   layers:
   - Default
   - TransparentFX
