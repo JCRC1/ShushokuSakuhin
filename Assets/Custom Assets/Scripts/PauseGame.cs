@@ -30,14 +30,15 @@ public class PauseGame : MonoBehaviour
             else
             {
                 m_countDownObj.GetComponent<Animator>().Play("CountdownResume");
-                Invoke("PanelResume", 2);
-                Invoke("Unpause", 4);
+                Invoker.InvokeDelayed(PanelResume, 2);
+                Invoker.InvokeDelayed(Unpause, 4);
             }
         }
     }
 
     public void Pause()
     {
+        Time.timeScale = 0;
         GameManager.Instance.m_audioSource.Pause();
         m_pausePanel.SetActive(true);
         AudioListener.pause = true;
@@ -46,6 +47,7 @@ public class PauseGame : MonoBehaviour
 
     public void Unpause()
     {
+        Time.timeScale = 1;
         GameManager.Instance.m_audioSource.UnPause();
         m_pausePanel.SetActive(false);
         AudioListener.pause = false;
@@ -54,6 +56,7 @@ public class PauseGame : MonoBehaviour
 
     private void Restart()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         AudioListener.pause = false;
     }
@@ -61,20 +64,20 @@ public class PauseGame : MonoBehaviour
     public void FadeInToRestart()
     {
         m_fadeObj.GetComponent<Animator>().SetTrigger("Start");
-        Invoke("Restart", 2);
+        Invoker.InvokeDelayed(Restart, 2);
     }
 
     public void FadeInToMenu()
     {
         m_fadeObj.GetComponent<Animator>().SetTrigger("Start");
-        Invoke("ToMenu", 2);
+        Invoker.InvokeDelayed(ToMenu, 2);
     }
 
     public void CountDownToUnpause()
     {
         m_countDownObj.GetComponent<Animator>().Play("CountdownResume");
-        Invoke("PanelResume", 2);
-        Invoke("Unpause", 4);
+        Invoker.InvokeDelayed(PanelResume, 2);
+        Invoker.InvokeDelayed(Unpause, 4);
     }
 
     private void PanelResume()
@@ -84,6 +87,7 @@ public class PauseGame : MonoBehaviour
 
     private void ToMenu()
     {
+        Time.timeScale = 1;
         PreviewTrack.Instance.ReturnToDefault();
         SceneManager.LoadScene(1);
         AudioListener.pause = false;
