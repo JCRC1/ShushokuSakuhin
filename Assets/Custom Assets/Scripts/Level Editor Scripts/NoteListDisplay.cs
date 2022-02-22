@@ -64,7 +64,6 @@ public class NoteListDisplay : MonoBehaviour
                     m_singleNotes[i].m_single.Add(note);
                 }
                 m_singleNotes[i].m_objects[j].GetComponent<SingleNoteHolder>().m_laneID = i;
-                m_singleNotes[i].m_objects[j].GetComponent<SingleNoteHolder>().m_indexOfThis = j;
             }
 
             // Rotations
@@ -91,7 +90,6 @@ public class NoteListDisplay : MonoBehaviour
                     m_holdNotes[i].m_hold.Add(note);
                 }
                 m_holdNotes[i].m_objects[j].GetComponent<HoldNoteHolder>().m_laneID = i;
-                m_holdNotes[i].m_objects[j].GetComponent<HoldNoteHolder>().m_indexOfThis = j;
             }
         }
 
@@ -182,7 +180,6 @@ public class NoteListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_singleNoteDisplayTemplate, transform);
         obj.GetComponent<SingleNoteHolder>().m_laneID = _lane;
-        obj.GetComponent<SingleNoteHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_singleNote.IndexOf(_newNote);
         obj.SetActive(true);
 
         m_singleNotes[_lane].m_objects.Add(obj);
@@ -209,7 +206,6 @@ public class NoteListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_holdNoteDisplayTemplate, transform);
         obj.GetComponent<HoldNoteHolder>().m_laneID = _lane;
-        obj.GetComponent<HoldNoteHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_holdNote.IndexOf(_newNote);
         obj.SetActive(true);
 
         m_holdNotes[_lane].m_objects.Add(obj);

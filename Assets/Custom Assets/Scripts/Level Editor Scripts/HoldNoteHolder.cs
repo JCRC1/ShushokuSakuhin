@@ -8,4 +8,9 @@ public class HoldNoteHolder : MonoBehaviour
     public int m_laneID;
     public int m_indexOfThis;
     public HoldNoteData m_heldNote;
+
+    private void Update()
+    {
+        m_indexOfThis = NoteListDisplay.Instance.m_holdNotes[m_laneID].m_hold.IndexOf(m_heldNote);
+    }
 }

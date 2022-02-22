@@ -8,4 +8,9 @@ public class LengthEventHolder : MonoBehaviour
     public int m_laneID;
     public int m_indexOfThis;
     public LaneEventLength m_heldLaneEvent;
+
+    private void Update()
+    {
+        m_indexOfThis = EventListDisplay.Instance.m_lengths[m_laneID].m_lengths.IndexOf(m_heldLaneEvent);
+    }
 }

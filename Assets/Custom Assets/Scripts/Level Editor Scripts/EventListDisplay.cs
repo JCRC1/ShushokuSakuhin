@@ -92,7 +92,6 @@ public class EventListDisplay : MonoBehaviour
                     m_movements[i].m_moves.Add(move);
                 }
                 m_movements[i].m_objects[j].GetComponent<MoveEventHolder>().m_laneID = i;
-                m_movements[i].m_objects[j].GetComponent<MoveEventHolder>().m_indexOfThis = j;
             }
 
             // Rotations
@@ -119,7 +118,6 @@ public class EventListDisplay : MonoBehaviour
                     m_rotations[i].m_rots.Add(rot);
                 }
                 m_rotations[i].m_objects[j].GetComponent<RotEventHolder>().m_laneID = i;
-                m_rotations[i].m_objects[j].GetComponent<RotEventHolder>().m_indexOfThis = j;
             }
 
             // Fades
@@ -146,7 +144,6 @@ public class EventListDisplay : MonoBehaviour
                     m_fades[i].m_fades.Add(fade);
                 }
                 m_fades[i].m_objects[j].GetComponent<FadeEventHolder>().m_laneID = i;
-                m_fades[i].m_objects[j].GetComponent<FadeEventHolder>().m_indexOfThis = j;
             }
 
             // Lengths
@@ -173,7 +170,6 @@ public class EventListDisplay : MonoBehaviour
                     m_lengths[i].m_lengths.Add(len);
                 }
                 m_lengths[i].m_objects[j].GetComponent<LengthEventHolder>().m_laneID = i;
-                m_lengths[i].m_objects[j].GetComponent<LengthEventHolder>().m_indexOfThis = j;
             }
         }
 
@@ -362,7 +358,6 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_movementTemplate, transform);
         obj.GetComponent<MoveEventHolder>().m_laneID = _lane;
-        obj.GetComponent<MoveEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventsMovement.IndexOf(_newEvent);
         obj.SetActive(true);
 
         m_movements[_lane].m_objects.Add(obj);
@@ -401,7 +396,6 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_rotationTemplate, transform);
         obj.GetComponent<RotEventHolder>().m_laneID = _lane;
-        obj.GetComponent<RotEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventsRotation.IndexOf(_newEvent);
         obj.SetActive(true);
 
         m_rotations[_lane].m_objects.Add(obj);
@@ -436,7 +430,6 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_fadeTemplate, transform);
         obj.GetComponent<FadeEventHolder>().m_laneID = _lane;
-        obj.GetComponent<FadeEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventFade.IndexOf(_newEvent);
         obj.SetActive(true);
 
         m_fades[_lane].m_objects.Add(obj);
@@ -471,7 +464,6 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_lengthTemplate, transform);
         obj.GetComponent<LengthEventHolder>().m_laneID = _lane;
-        obj.GetComponent<LengthEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventLength.IndexOf(_newEvent);
         obj.SetActive(true);
 
         m_lengths[_lane].m_objects.Add(obj);

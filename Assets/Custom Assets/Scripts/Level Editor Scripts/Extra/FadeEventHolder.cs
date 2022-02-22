@@ -8,4 +8,9 @@ public class FadeEventHolder : MonoBehaviour
     public int m_laneID;
     public int m_indexOfThis;
     public LaneEventFade m_heldLaneEvent;
+
+    private void Update()
+    {
+        m_indexOfThis = EventListDisplay.Instance.m_fades[m_laneID].m_fades.IndexOf(m_heldLaneEvent);
+    }
 }
