@@ -191,7 +191,7 @@ public class NoteListDisplay : MonoBehaviour
         obj.GetComponent<SingleNoteHolder>().m_laneID = _lane;
         obj.SetActive(true);
 
-        m_singleNotes[_lane].m_objects.Add(obj);
+        m_singleNotes[_lane].m_objects.Insert(obj.GetComponent<SingleNoteHolder>().m_indexOfThis, obj);
 
         obj.GetComponent<SingleNoteHolder>().m_heldNote = _newNote;
         m_singleNotes[_lane].m_single.Insert(obj.GetComponent<SingleNoteHolder>().m_indexOfThis, _newNote);
@@ -217,7 +217,7 @@ public class NoteListDisplay : MonoBehaviour
         obj.GetComponent<HoldNoteHolder>().m_laneID = _lane;
         obj.SetActive(true);
 
-        m_holdNotes[_lane].m_objects.Add(obj);
+        m_holdNotes[_lane].m_objects.Insert(obj.GetComponent<HoldNoteHolder>().m_indexOfThis, obj);
 
         obj.GetComponent<HoldNoteHolder>().m_heldNote = _newNote;
         m_holdNotes[_lane].m_hold.Insert(obj.GetComponent<HoldNoteHolder>().m_indexOfThis, _newNote);

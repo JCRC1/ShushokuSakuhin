@@ -358,9 +358,10 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_movementTemplate, transform);
         obj.GetComponent<MoveEventHolder>().m_laneID = _lane;
+        obj.GetComponent<MoveEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventsMovement.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_movements[_lane].m_objects.Add(obj);
+        m_movements[_lane].m_objects.Insert(obj.GetComponent<MoveEventHolder>().m_indexOfThis, obj);
 
         obj.GetComponent<MoveEventHolder>().m_heldLaneEvent = _newEvent;
         m_movements[_lane].m_moves.Insert(obj.GetComponent<MoveEventHolder>().m_indexOfThis, _newEvent);
@@ -396,9 +397,10 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_rotationTemplate, transform);
         obj.GetComponent<RotEventHolder>().m_laneID = _lane;
+        obj.GetComponent<RotEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventsRotation.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_rotations[_lane].m_objects.Add(obj);
+        m_rotations[_lane].m_objects.Insert(obj.GetComponent<RotEventHolder>().m_indexOfThis, obj);
 
         obj.GetComponent<RotEventHolder>().m_heldLaneEvent = _newEvent;
         m_rotations[_lane].m_rots.Insert(obj.GetComponent<RotEventHolder>().m_indexOfThis, _newEvent);
@@ -430,9 +432,10 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_fadeTemplate, transform);
         obj.GetComponent<FadeEventHolder>().m_laneID = _lane;
+        obj.GetComponent<FadeEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventFade.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_fades[_lane].m_objects.Add(obj);
+        m_fades[_lane].m_objects.Insert(obj.GetComponent<FadeEventHolder>().m_indexOfThis, obj);
 
         obj.GetComponent<FadeEventHolder>().m_heldLaneEvent = _newEvent;
         m_fades[_lane].m_fades.Insert(obj.GetComponent<FadeEventHolder>().m_indexOfThis, _newEvent);
@@ -464,9 +467,10 @@ public class EventListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_lengthTemplate, transform);
         obj.GetComponent<LengthEventHolder>().m_laneID = _lane;
+        obj.GetComponent<LengthEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventLength.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_lengths[_lane].m_objects.Add(obj);
+        m_lengths[_lane].m_objects.Insert(obj.GetComponent<LengthEventHolder>().m_indexOfThis, obj);
 
         obj.GetComponent<LengthEventHolder>().m_heldLaneEvent = _newEvent;
         m_lengths[_lane].m_lengths.Insert(obj.GetComponent<LengthEventHolder>().m_indexOfThis, _newEvent);
