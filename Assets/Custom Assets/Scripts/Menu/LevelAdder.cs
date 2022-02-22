@@ -72,8 +72,6 @@ public class LevelAdder : MonoBehaviour
             {
                 GameObject levelInfo = Instantiate(m_levelInfoTemplate, m_levelInfoContainer.transform);
                 Image trackImage = levelInfo.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
-                if(i == 0)
-                    levelInfo.SetActive(true);
 
                 trackImage.sprite = Resources.Load<Sprite>(chartDir.GetFiles("*Image*")[0].FullName.Replace(Application.dataPath.Replace("/", "\\") + "\\Resources\\", "").Replace(".png", "").Replace(".jpg", ""));
 

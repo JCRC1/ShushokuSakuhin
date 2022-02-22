@@ -56,7 +56,7 @@ public class ChartMetadataBuilder : MonoBehaviour
         new FileBrowser().OpenFileBrowser(bp, path =>
         {
             //Do something with path(string)
-            string temp = path.Replace(Application.dataPath + "\\Resources\\", "");
+            string temp = path.Replace(Application.dataPath.Replace("/", "\\") + "\\Resources\\", "");
             string temp2 = temp.Replace(".png", "");
             string temp3 = temp2.Replace(".jpg", "");
 
