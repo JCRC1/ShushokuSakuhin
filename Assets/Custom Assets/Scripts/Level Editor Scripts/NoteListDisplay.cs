@@ -6,6 +6,7 @@ using System.Linq;
 
 public class NoteListDisplay : MonoBehaviour
 {
+    [System.Serializable]
     public class SingleNoteItem
     {
         public List<GameObject> m_objects;
@@ -13,6 +14,7 @@ public class NoteListDisplay : MonoBehaviour
         public bool m_created;
     }
 
+    [System.Serializable]
     public class HoldNoteItem
     {
         public List<GameObject> m_objects;
@@ -31,6 +33,13 @@ public class NoteListDisplay : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void Initialized()
+    {
+        Instance = this;
+        m_singleNotes = new List<SingleNoteItem>();
+        m_holdNotes =  new List<HoldNoteItem>();
     }
 
     public void GenerateLoadedList()

@@ -30,6 +30,15 @@ public class TempLaneInit : MonoBehaviour
         LevelEditorManager.Instance.InitEmptyLane(newLaneData);
         
         EventListDisplay.Instance.AddLaneToList();
-        NoteListDisplay.Instance.AddLaneToList();
+
+        if(NoteListDisplay.Instance)
+        {
+            NoteListDisplay.Instance.AddLaneToList();
+        }
+        else
+        {
+            Resources.FindObjectsOfTypeAll<NoteListDisplay>()[0].Initialized();
+            Resources.FindObjectsOfTypeAll<NoteListDisplay>()[0].AddLaneToList();
+        }        
     }
 }

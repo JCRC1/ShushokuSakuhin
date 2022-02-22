@@ -124,6 +124,7 @@ public class LevelEditorManager : MonoBehaviour
 
         m_audioSource.Play();
 
+        Resources.FindObjectsOfTypeAll<NoteListDisplay>()[0].Initialized();
         m_initialized = true;
     }
 
