@@ -398,6 +398,13 @@ public class LaneHandler : MonoBehaviour
                     }
                     // Fade the single notes
                     notes.gameObject.GetComponent<SpriteRenderer>().color = new Color(notes.gameObject.GetComponent<SpriteRenderer>().color.r, notes.gameObject.GetComponent<SpriteRenderer>().color.g, notes.gameObject.GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
+                    if (notes.gameObject.GetComponent<LineRenderer>())
+                    {
+                        Color nLineRendererCol = notes.gameObject.GetComponent<LineRenderer>().startColor;
+
+                        notes.gameObject.GetComponent<LineRenderer>().startColor = new Color(nLineRendererCol.r, nLineRendererCol.g, nLineRendererCol.b, m_currentAlpha);
+                        notes.gameObject.GetComponent<LineRenderer>().endColor = new Color(nLineRendererCol.r, nLineRendererCol.g, nLineRendererCol.b, m_currentAlpha);
+                    }
                 }
             }
 
@@ -448,6 +455,14 @@ public class LaneHandler : MonoBehaviour
                     }
                     // Fade the single notes
                     notes.gameObject.GetComponent<SpriteRenderer>().color = new Color(notes.gameObject.GetComponent<SpriteRenderer>().color.r, notes.gameObject.GetComponent<SpriteRenderer>().color.g, notes.gameObject.GetComponent<SpriteRenderer>().color.b, m_currentAlpha);
+                    
+                    if (notes.gameObject.GetComponent<LineRenderer>())
+                    {
+                        Color nLineRendererCol = notes.gameObject.GetComponent<LineRenderer>().startColor;
+
+                        notes.gameObject.GetComponent<LineRenderer>().startColor = new Color(nLineRendererCol.r, nLineRendererCol.g, nLineRendererCol.b, m_currentAlpha);
+                        notes.gameObject.GetComponent<LineRenderer>().endColor = new Color(nLineRendererCol.r, nLineRendererCol.g, nLineRendererCol.b, m_currentAlpha);
+                    }
                 }
             }
 
