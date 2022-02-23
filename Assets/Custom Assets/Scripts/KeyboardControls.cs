@@ -166,13 +166,21 @@ public class KeyboardControls : MonoBehaviour
             {
                 LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
 
-                // If this is odd, move on
-                if (lane.m_identifier % 2 != 0)
+                // Check if there is even notes enqueued
+                if (lane.m_singleNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (lane.m_singleNotes.Count <= 0)
+                if (!lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>())
+                {
+                    continue;
+                }
+
+                SingleNoteHandler currentSingleNote = lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>();
+
+                // If this is odd, move on
+                if (lane.m_identifier % 2 != 0)
                 {
                     continue;
                 }
@@ -182,7 +190,7 @@ public class KeyboardControls : MonoBehaviour
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
 
-                switch (lane.m_singleNotes.Peek().m_noteState)
+                switch (currentSingleNote.m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
@@ -199,8 +207,9 @@ public class KeyboardControls : MonoBehaviour
                         perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         perfectText.SetActive(true);
 
-                        lane.m_singleNotes.Peek().gameObject.SetActive(false);
+                        currentSingleNote.gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
+                        lane.m_allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
                         m_hitSource.Play();
@@ -215,8 +224,9 @@ public class KeyboardControls : MonoBehaviour
                         goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         goodText.SetActive(true);
 
-                        lane.m_singleNotes.Peek().gameObject.SetActive(false);
+                        currentSingleNote.gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
+                        lane.m_allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.MISS:
                         break;
@@ -233,13 +243,22 @@ public class KeyboardControls : MonoBehaviour
             {
                 LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
 
-                // If this is even, move on
-                if (lane.m_identifier % 2 == 0)
+                // Check if there are even notes in this lane
+                if (lane.m_singleNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (lane.m_singleNotes.Count <= 0)
+                if (!lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>())
+                {
+                    continue;
+                }
+
+                SingleNoteHandler currentSingleNote = lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>();
+
+
+                // If this is even, move on
+                if (lane.m_identifier % 2 == 0)
                 {
                     continue;
                 }
@@ -249,7 +268,7 @@ public class KeyboardControls : MonoBehaviour
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
 
-                switch (lane.m_singleNotes.Peek().m_noteState)
+                switch (currentSingleNote.m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
@@ -266,8 +285,9 @@ public class KeyboardControls : MonoBehaviour
                         perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         perfectText.SetActive(true);
 
-                        lane.m_singleNotes.Peek().gameObject.SetActive(false);
+                        currentSingleNote.gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
+                        lane.m_allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
                         m_hitSource.Play();
@@ -282,8 +302,9 @@ public class KeyboardControls : MonoBehaviour
                         goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
                         goodText.SetActive(true);
 
-                        lane.m_singleNotes.Peek().gameObject.SetActive(false);
+                        currentSingleNote.gameObject.SetActive(false);
                         lane.m_singleNotes.Dequeue();
+                        lane.m_allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.MISS:
                         break;
@@ -303,13 +324,20 @@ public class KeyboardControls : MonoBehaviour
             {
                 LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
 
-                // If this is odd, move on
-                if (lane.m_identifier % 2 != 0)
+                if (lane.m_holdNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (lane.m_holdNotes.Count <= 0)
+                if (!lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>())
+                {
+                    continue;
+                }
+
+                HoldNoteHandler currentHoldNote = lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>();
+
+                // If this is odd, move on
+                if (lane.m_identifier % 2 != 0)
                 {
                     continue;
                 }
@@ -319,27 +347,27 @@ public class KeyboardControls : MonoBehaviour
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
 
-                switch (lane.m_holdNotes.Peek().m_noteState)
+                switch (currentHoldNote.m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
                         KeyCode pressed = KeyCode.None;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        if (currentHoldNote.m_pressed == KeyCode.None)
                         {
                             foreach (KeyCode key in m_evenLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                    currentHoldNote.m_pressed = pressed;
                                 }
                             }
                         }
-                        lane.m_holdNotes.Peek().m_isHeld = true;
+                        currentHoldNote.m_isHeld = true;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        if (currentHoldNote.m_pressed == pressed)
                         {
                             m_hitSource.Play();
 
@@ -358,20 +386,20 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.GOOD:
                         pressed = KeyCode.None;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        if (currentHoldNote.m_pressed == KeyCode.None)
                         {
                             foreach (KeyCode key in m_evenLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                    currentHoldNote.m_pressed = pressed;
                                 }
                             }
                         }
-                        lane.m_holdNotes.Peek().m_isHeld = true;
+                        currentHoldNote.m_isHeld = true;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        if (currentHoldNote.m_pressed == pressed)
                         {
                             m_hitSource.Play();
 
@@ -402,13 +430,20 @@ public class KeyboardControls : MonoBehaviour
             {
                 LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
 
-                // If this is even, move on
-                if (lane.m_identifier % 2 == 0)
+                if (lane.m_holdNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (lane.m_holdNotes.Count <= 0)
+                if (!lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>())
+                {
+                    continue;
+                }
+
+                HoldNoteHandler currentHoldNote = lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>();
+
+                // If this is odd, move on
+                if (lane.m_identifier % 2 == 0)
                 {
                     continue;
                 }
@@ -418,27 +453,27 @@ public class KeyboardControls : MonoBehaviour
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
 
-                switch (lane.m_holdNotes.Peek().m_noteState)
+                switch (currentHoldNote.m_noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
                         KeyCode pressed = KeyCode.None;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        if (currentHoldNote.m_pressed == KeyCode.None)
                         {
                             foreach (KeyCode key in m_oddLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                    currentHoldNote.m_pressed = pressed;
                                 }
                             }
                         }
-                        lane.m_holdNotes.Peek().m_isHeld = true;
+                        currentHoldNote.m_isHeld = true;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        if (currentHoldNote.m_pressed == pressed)
                         {
                             m_hitSource.Play();
 
@@ -457,20 +492,20 @@ public class KeyboardControls : MonoBehaviour
                     case NoteHandler.NoteState.GOOD:
                         pressed = KeyCode.None;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == KeyCode.None)
+                        if (currentHoldNote.m_pressed == KeyCode.None)
                         {
                             foreach (KeyCode key in m_oddLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    lane.m_holdNotes.Peek().m_pressed = pressed;
+                                    currentHoldNote.m_pressed = pressed;
                                 }
                             }
                         }
-                        lane.m_holdNotes.Peek().m_isHeld = true;
+                        currentHoldNote.m_isHeld = true;
 
-                        if (lane.m_holdNotes.Peek().m_pressed == pressed)
+                        if (currentHoldNote.m_pressed == pressed)
                         {
                             m_hitSource.Play();
 

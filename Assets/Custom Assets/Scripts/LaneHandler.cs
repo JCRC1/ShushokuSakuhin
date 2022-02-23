@@ -51,6 +51,7 @@ public class LaneHandler : MonoBehaviour
     // Holds a reference in a queue to all the notes of this lane
     public Queue<SingleNoteHandler> m_singleNotes;
     public Queue<HoldNoteHandler> m_holdNotes;
+    public Queue<GameObject> m_allNotes;
     public int m_nextSingleNoteIndex;
     public int m_nextHoldNoteIndex;
 
@@ -64,6 +65,7 @@ public class LaneHandler : MonoBehaviour
 
         m_singleNotes = new Queue<SingleNoteHandler>();
         m_holdNotes = new Queue<HoldNoteHandler>();
+        m_allNotes = new Queue<GameObject>();
 
         m_nextSingleNoteIndex = 0;
         m_nextHoldNoteIndex = 0;
@@ -473,6 +475,7 @@ public class LaneHandler : MonoBehaviour
                     }
 
                     m_singleNotes.Enqueue(note.GetComponent<SingleNoteHandler>());
+                    m_allNotes.Enqueue(note.gameObject);
                     m_nextSingleNoteIndex++;
                 }
             }
@@ -521,7 +524,8 @@ public class LaneHandler : MonoBehaviour
                         note.gameObject.SetActive(true);
                     }
 
-                    m_holdNotes.Enqueue(note.GetComponent<HoldNoteHandler>());
+                    m_holdNotes.Enqueue(note.GetComponent<HoldNoteHandler>()); 
+                    m_allNotes.Enqueue(note.gameObject);
                     m_nextHoldNoteIndex++;
                 }
             }
@@ -561,17 +565,24 @@ public class LaneHandler : MonoBehaviour
 
         if (GameManager.Instance)
         {
-            if (m_singleNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 2 * GameManager.Instance.m_hitWindow &&
-                m_singleNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 10 * GameManager.Instance.m_hitWindow)
+            if (!m_allNotes.Peek().GetComponent<SingleNoteHandler>())
             {
-                m_singleNotes.Peek().m_noteState = NoteHandler.NoteState.GOOD;
+                return;
             }
-            else if (m_singleNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 0                               &&
-                     m_singleNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 2 * GameManager.Instance.m_hitWindow)
+
+            SingleNoteHandler note = m_allNotes.Peek().GetComponent<SingleNoteHandler>();
+
+            if (note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 2 * GameManager.Instance.m_hitWindow &&
+                note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 4 * GameManager.Instance.m_hitWindow)
             {
-                m_singleNotes.Peek().m_noteState = NoteHandler.NoteState.PERFECT;
+                note.m_noteState = NoteHandler.NoteState.GOOD;
             }
-            else if (m_singleNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 4)
+            else if (note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 0                               &&
+                     note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 2 * GameManager.Instance.m_hitWindow)
+            {
+                note.m_noteState = NoteHandler.NoteState.PERFECT;
+            }
+            else if (note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 4)
             {
                 GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
                 missText.transform.position = m_endPoint.position;
@@ -580,9 +591,10 @@ public class LaneHandler : MonoBehaviour
 
                 ScoreController.Instance.m_currentCombo = 0;
                 ScoreController.Instance.m_missCount++;
-                m_singleNotes.Peek().m_noteState = NoteHandler.NoteState.MISS;
-                m_singleNotes.Peek().gameObject.SetActive(false);
+                note.m_noteState = NoteHandler.NoteState.MISS;
+                note.gameObject.SetActive(false);
                 m_singleNotes.Dequeue();
+                m_allNotes.Dequeue();
             }
         }
     }
@@ -597,22 +609,29 @@ public class LaneHandler : MonoBehaviour
 
         if (GameManager.Instance)
         {
-            if (m_holdNotes.Peek().m_isHeld)
+            if (!m_allNotes.Peek().GetComponent<HoldNoteHandler>())
             {
                 return;
             }
 
-            if (m_holdNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 2 * GameManager.Instance.m_hitWindow &&
-                m_holdNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 10 * GameManager.Instance.m_hitWindow)
+            HoldNoteHandler note = m_allNotes.Peek().GetComponent<HoldNoteHandler>();
+
+            if (note.m_isHeld)
             {
-                m_holdNotes.Peek().m_noteState = NoteHandler.NoteState.GOOD;
+                return;
             }
-            else if (m_holdNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 0 &&
-                     m_holdNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 2 * GameManager.Instance.m_hitWindow)
+
+            if (note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 2 * GameManager.Instance.m_hitWindow &&
+                note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 4 * GameManager.Instance.m_hitWindow)
             {
-                m_holdNotes.Peek().m_noteState = NoteHandler.NoteState.PERFECT;
+                note.m_noteState = NoteHandler.NoteState.GOOD;
             }
-            else if (m_holdNotes.Peek().m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 4)
+            else if (note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats > 0 &&
+                     note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < 2 * GameManager.Instance.m_hitWindow)
+            {
+                note.m_noteState = NoteHandler.NoteState.PERFECT;
+            }
+            else if (note.m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats < -GameManager.Instance.m_hitWindow * 4)
             {
                 GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
                 missText.transform.position = m_endPoint.position;
@@ -621,13 +640,14 @@ public class LaneHandler : MonoBehaviour
 
                 ScoreController.Instance.m_currentCombo = 0;
                 ScoreController.Instance.m_missCount++;
-                m_holdNotes.Peek().m_noteState = NoteHandler.NoteState.MISS;
+                note.m_noteState = NoteHandler.NoteState.MISS;
 
-                m_holdNotes.Peek().GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
-                m_holdNotes.Peek().GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 0.5f);
-                m_holdNotes.Peek().GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
+                note.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+                note.GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 0.5f);
+                note.GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
 
                 m_holdNotes.Dequeue();
+                m_allNotes.Dequeue();
             }
         }
     }

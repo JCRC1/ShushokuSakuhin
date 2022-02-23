@@ -64,11 +64,13 @@ public class HoldNoteHandler : NoteHandler
                             ScoreController.Instance.AddPerfectHit();
                             KeyboardControls.Instance.m_hitSource.Play();
                             transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
                             break;
                         case NoteState.GOOD:
                             ScoreController.Instance.AddGoodHit();
                             KeyboardControls.Instance.m_hitSource.Play();
                             transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
                             break;
                         case NoteState.MISS:
                             break;
@@ -115,6 +117,7 @@ public class HoldNoteHandler : NoteHandler
                             GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
 
                             transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
                             m_isHeld = false;
                         }
                     }
@@ -158,6 +161,7 @@ public class HoldNoteHandler : NoteHandler
                             GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
 
                             transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
                             m_isHeld = false; 
                         }
                     }
