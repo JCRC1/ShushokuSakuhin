@@ -16,6 +16,11 @@ public class CreateLaneEvent: MonoBehaviour
     private GameObject m_dummyLane;
     private float m_timeOfStart;
 
+    public LaneEventMovement   m_tempMovement;
+    public LaneEventRotation   m_tempRotation;
+    public LaneEventFade       m_tempFade;
+    public LaneEventLength     m_tempLength;
+
     private void Start()
     {
         m_dummyLane = Instantiate(m_dummyLanePrefab);
@@ -38,27 +43,27 @@ public class CreateLaneEvent: MonoBehaviour
     {
         m_dummyLane.GetComponent<DummyLaneMovement>().EndUseM();
 
-        LaneEventMovement newMovement = new LaneEventMovement();
+        m_tempMovement = new LaneEventMovement();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newMovement.m_beat);
-        float.TryParse(SelectedLaneDisplay.Instance.m_movementDurationDisplay.text, out newMovement.m_duration);
-        float.TryParse(SelectedLaneDisplay.Instance.m_moveToXDisplay.text, out newMovement.m_targetPosition.x);
-        float.TryParse(SelectedLaneDisplay.Instance.m_moveToYDisplay.text, out newMovement.m_targetPosition.y);
-        newMovement.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_movementEaseSelect.value;
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out m_tempMovement.m_beat);
+        float.TryParse(SelectedLaneDisplay.Instance.m_movementDurationDisplay.text, out m_tempMovement.m_duration);
+        float.TryParse(SelectedLaneDisplay.Instance.m_moveToXDisplay.text, out m_tempMovement.m_targetPosition.x);
+        float.TryParse(SelectedLaneDisplay.Instance.m_moveToYDisplay.text, out m_tempMovement.m_targetPosition.y);
+        m_tempMovement.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_movementEaseSelect.value;
 
-        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsMovement.Add(newMovement);
+        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsMovement.Add(m_tempMovement);
         LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsMovement = LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsMovement.OrderBy(lst => lst.m_beat).ToList();
         m_creatingMovement = false;
         m_dummyLane.SetActive(false);
 
-        EventListDisplay.Instance.AddEventToList(newMovement, LaneEditor.Instance.m_selectedLane.m_identifier);
+        EventListDisplay.Instance.AddEventToList(m_tempMovement, LaneEditor.Instance.m_selectedLane.m_identifier);
     }
 
     public void CancelMovementButton()
     {
-        int selected = LaneEditor.Instance.m_selectedLane.m_identifier;
-        EndMovementButton(); 
-        LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsMovement.Remove(LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsMovement[LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsMovement.Count - 1]);
+        m_creatingLength = false;
+        m_dummyLane.GetComponent<DummyLaneMovement>().EndUseM();
+        m_dummyLane.SetActive(false);
     }
 
     public void CreateRotationButton()
@@ -77,27 +82,27 @@ public class CreateLaneEvent: MonoBehaviour
     {
         m_dummyLane.GetComponent<DummyLaneMovement>().EndUseR();
 
-        LaneEventRotation newRotation = new LaneEventRotation();
+        m_tempRotation = new LaneEventRotation();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newRotation.m_beat);
-        float.TryParse(SelectedLaneDisplay.Instance.m_rotationDurationDisplay.text, out newRotation.m_duration);
-        float.TryParse(SelectedLaneDisplay.Instance.m_angleDisplay.text, out newRotation.m_targetRotation);
-        newRotation.m_pivotAtEnd = SelectedLaneDisplay.Instance.m_pivotToggle.isOn;
-        newRotation.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_rotationEaseSelect.value;
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out m_tempRotation.m_beat);
+        float.TryParse(SelectedLaneDisplay.Instance.m_rotationDurationDisplay.text, out m_tempRotation.m_duration);
+        float.TryParse(SelectedLaneDisplay.Instance.m_angleDisplay.text, out m_tempRotation.m_targetRotation);
+        m_tempRotation.m_pivotAtEnd = SelectedLaneDisplay.Instance.m_pivotToggle.isOn;
+        m_tempRotation.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_rotationEaseSelect.value;
 
-        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsRotation.Add(newRotation);
+        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsRotation.Add(m_tempRotation);
         LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsRotation = LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventsRotation.OrderBy(lst => lst.m_beat).ToList();
 
         m_creatingRotation = false;
         m_dummyLane.SetActive(false);
 
-        EventListDisplay.Instance.AddEventToList(newRotation, LaneEditor.Instance.m_selectedLane.m_identifier);
+        EventListDisplay.Instance.AddEventToList(m_tempRotation, LaneEditor.Instance.m_selectedLane.m_identifier);
     }
     public void CancelRotationButton()
     {
-        int selected = LaneEditor.Instance.m_selectedLane.m_identifier;
-        EndRotationButton();
-        LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsRotation.Remove(LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsRotation[LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventsRotation.Count - 1]);
+        m_creatingLength = false;
+        m_dummyLane.GetComponent<DummyLaneMovement>().EndUseR();
+        m_dummyLane.SetActive(false);
     }
 
     public void CreateFadeButton()
@@ -109,26 +114,24 @@ public class CreateLaneEvent: MonoBehaviour
 
     public void EndFadeButton()
     {
-        LaneEventFade newFade = new LaneEventFade();
+        m_tempFade = new LaneEventFade();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newFade.m_beat);
-        float.TryParse(SelectedLaneDisplay.Instance.m_fadeDurationDisplay.text, out newFade.m_duration);
-        float.TryParse(SelectedLaneDisplay.Instance.m_targetAlphaDisplay.text, out newFade.m_targetAlpha);
-        newFade.m_fadeNotes = SelectedLaneDisplay.Instance.m_fadeNotesToggle.isOn;
-        newFade.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_fadeEaseSelect.value;
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out m_tempFade.m_beat);
+        float.TryParse(SelectedLaneDisplay.Instance.m_fadeDurationDisplay.text, out m_tempFade.m_duration);
+        float.TryParse(SelectedLaneDisplay.Instance.m_targetAlphaDisplay.text, out m_tempFade.m_targetAlpha);
+        m_tempFade.m_fadeNotes = SelectedLaneDisplay.Instance.m_fadeNotesToggle.isOn;
+        m_tempFade.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_fadeEaseSelect.value;
 
-        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventFade.Add(newFade);
+        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventFade.Add(m_tempFade);
         LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventFade = LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventFade.OrderBy(lst => lst.m_beat).ToList();
 
         m_creatingFade = false;
 
-        EventListDisplay.Instance.AddEventToList(newFade, LaneEditor.Instance.m_selectedLane.m_identifier);
+        EventListDisplay.Instance.AddEventToList(m_tempFade, LaneEditor.Instance.m_selectedLane.m_identifier);
     }
     public void CancelFadeButton()
     {
-        int selected = LaneEditor.Instance.m_selectedLane.m_identifier;
-        EndFadeButton();
-        LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventFade.Remove(LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventFade[LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventFade.Count - 1]);
+        m_creatingLength = false;
     }
 
 
@@ -150,27 +153,27 @@ public class CreateLaneEvent: MonoBehaviour
     {
         m_dummyLane.GetComponent<DummyLaneMovement>().EndUseL();
 
-        LaneEventLength newLength = new LaneEventLength();
+        m_tempLength = new LaneEventLength();
 
-        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out newLength.m_beat);
-        float.TryParse(SelectedLaneDisplay.Instance.m_lengthDurationDisplay.text, out newLength.m_duration);
-        float.TryParse(SelectedLaneDisplay.Instance.m_targetLengthDisplay.text, out newLength.m_targetLength);
-        newLength.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_lengthEaseSelect.value;
+        float.TryParse(Seekbar.Instance.m_currentBeatText[0].text, out m_tempLength.m_beat);
+        float.TryParse(SelectedLaneDisplay.Instance.m_lengthDurationDisplay.text, out m_tempLength.m_duration);
+        float.TryParse(SelectedLaneDisplay.Instance.m_targetLengthDisplay.text, out m_tempLength.m_targetLength);
+        m_tempLength.m_easeType = (LaneEvent.EaseType)SelectedLaneDisplay.Instance.m_lengthEaseSelect.value;
 
-        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventLength.Add(newLength);
+        LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventLength.Add(m_tempLength);
         LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventLength = LevelEditorManager.Instance.m_chartData.m_lane[LaneEditor.Instance.m_selectedLane.m_identifier].m_laneEventLength.OrderBy(lst => lst.m_beat).ToList();
 
         m_creatingLength = false;
         m_dummyLane.SetActive(false);
 
-        EventListDisplay.Instance.AddEventToList(newLength, LaneEditor.Instance.m_selectedLane.m_identifier);
+        EventListDisplay.Instance.AddEventToList(m_tempLength, LaneEditor.Instance.m_selectedLane.m_identifier);
     }
 
     public void CancelLengthButton()
     {
-        int selected = LaneEditor.Instance.m_selectedLane.m_identifier;
-        EndLengthButton();
-        LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventLength.Remove(LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventLength[LevelEditorManager.Instance.m_chartData.m_lane[selected].m_laneEventLength.Count - 1]);
+        m_creatingLength = false;
+        m_dummyLane.GetComponent<DummyLaneMovement>().EndUseL();
+        m_dummyLane.SetActive(false);
     }
 
     public void SetPositionX(Text _text)

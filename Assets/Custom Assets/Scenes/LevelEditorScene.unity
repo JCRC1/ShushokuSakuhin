@@ -2320,6 +2320,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_worldCam: {fileID: 84495127}
   m_dummyLanePrefab: {fileID: 7632251748279742534, guid: 5e1e261f2111fb14281935161e1c1f7f, type: 3}
+  m_tempMovement:
+    m_beat: 0
+    m_duration: 0
+    m_easeType: 0
+    m_targetPosition: {x: 0, y: 0}
+  m_tempRotation:
+    m_beat: 0
+    m_duration: 0
+    m_easeType: 0
+    m_targetRotation: 0
+    m_pivotAtEnd: 0
+  m_tempFade:
+    m_beat: 0
+    m_duration: 0
+    m_easeType: 0
+    m_targetAlpha: 1
+    m_fadeNotes: 0
+  m_tempLength:
+    m_beat: 0
+    m_duration: 0
+    m_easeType: 0
+    m_targetLength: 0
 --- !u!114 &84495131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19618,6 +19640,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_singleNoteDisplayTemplate: {fileID: 1273915327}
   m_holdNoteDisplayTemplate: {fileID: 1976027204}
+  m_singleNotes: []
+  m_holdNotes: []
 --- !u!114 &745061239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22920,7 +22944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &860564094
 RectTransform:
   m_ObjectHideFlags: 0

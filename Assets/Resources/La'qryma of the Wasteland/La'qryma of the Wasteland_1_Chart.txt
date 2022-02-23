@@ -377,6 +377,69 @@
                         "x": -13.5,
                         "y": -9.0
                     }
+                },
+                {
+                    "m_beat": 244.5,
+                    "m_duration": 14.0,
+                    "m_easeType": 3,
+                    "m_targetPosition": {
+                        "x": 4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 259.5,
+                    "m_duration": 1.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 276.5,
+                    "m_duration": 0.25,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -3.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 277.0,
+                    "m_duration": 2.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 280.5,
+                    "m_duration": 0.25,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -2.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 281.0,
+                    "m_duration": 2.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 286.5,
+                    "m_duration": 2.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": 4.5,
+                        "y": -9.0
+                    }
                 }
             ],
             "m_laneEventsRotation": [
@@ -1136,6 +1199,15 @@
                         "x": 4.5,
                         "y": -9.0
                     }
+                },
+                {
+                    "m_beat": 244.5,
+                    "m_duration": 14.0,
+                    "m_easeType": 3,
+                    "m_targetPosition": {
+                        "x": -13.5,
+                        "y": -9.0
+                    }
                 }
             ],
             "m_laneEventsRotation": [
@@ -1420,6 +1492,54 @@
                     "m_duration": 1.0,
                     "m_easeType": 2,
                     "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 264.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 265.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 266.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 267.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 272.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 273.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 274.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 275.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 10.0
                 }
             ]
         },
@@ -1667,6 +1787,15 @@
                         "x": -4.5,
                         "y": -9.0
                     }
+                },
+                {
+                    "m_beat": 244.5,
+                    "m_duration": 14.0,
+                    "m_easeType": 3,
+                    "m_targetPosition": {
+                        "x": 13.5,
+                        "y": -9.0
+                    }
                 }
             ],
             "m_laneEventsRotation": [
@@ -1881,6 +2010,54 @@
                     "m_beat": 225.5,
                     "m_duration": 1.0,
                     "m_easeType": 2,
+                    "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 260.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 261.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 262.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 263.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 268.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 269.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 10.0
+                },
+                {
+                    "m_beat": 270.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
+                    "m_targetLength": 12.0
+                },
+                {
+                    "m_beat": 271.5,
+                    "m_duration": 0.5,
+                    "m_easeType": 0,
                     "m_targetLength": 10.0
                 }
             ]
@@ -2109,6 +2286,69 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 13.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 244.5,
+                    "m_duration": 14.0,
+                    "m_easeType": 3,
+                    "m_targetPosition": {
+                        "x": -4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 258.5,
+                    "m_duration": 2.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": 4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 276.5,
+                    "m_duration": 0.25,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": 3.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 277.0,
+                    "m_duration": 2.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": 4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 280.5,
+                    "m_duration": 0.25,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": 2.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 281.0,
+                    "m_duration": 2.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": 4.5,
+                        "y": -9.0
+                    }
+                },
+                {
+                    "m_beat": 286.5,
+                    "m_duration": 2.0,
+                    "m_easeType": 2,
+                    "m_targetPosition": {
+                        "x": -4.5,
                         "y": -9.0
                     }
                 }
