@@ -189,6 +189,7 @@ public class NoteListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_singleNoteDisplayTemplate, transform);
         obj.GetComponent<SingleNoteHolder>().m_laneID = _lane;
+        obj.GetComponent<SingleNoteHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_singleNote.IndexOf(_newNote);
         obj.SetActive(true);
 
         m_singleNotes[_lane].m_objects.Insert(obj.GetComponent<SingleNoteHolder>().m_indexOfThis, obj);
@@ -215,6 +216,7 @@ public class NoteListDisplay : MonoBehaviour
     {
         GameObject obj = Instantiate(m_holdNoteDisplayTemplate, transform);
         obj.GetComponent<HoldNoteHolder>().m_laneID = _lane;
+        obj.GetComponent<HoldNoteHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_holdNote.IndexOf(_newNote);
         obj.SetActive(true);
 
         m_holdNotes[_lane].m_objects.Insert(obj.GetComponent<HoldNoteHolder>().m_indexOfThis, obj);
