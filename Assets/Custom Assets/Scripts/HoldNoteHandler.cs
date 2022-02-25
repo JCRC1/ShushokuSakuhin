@@ -56,6 +56,7 @@ public class HoldNoteHandler : NoteHandler
                 // Check if it has reached the end and calculate score
                 if (m_noteData.m_beat + m_noteData.m_duration < GameManager.Instance.m_trackPosInBeats)
                 {
+                    Debug.Log("Fine to let go");
                     switch (m_noteState)
                     {
                         case NoteState.NONE:

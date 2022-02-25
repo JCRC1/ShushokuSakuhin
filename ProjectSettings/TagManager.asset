@@ -14,6 +14,7 @@ TagManager:
   - MissText
   - GoodText
   - PerfectText
+  - RippleGood
   layers:
   - Default
   - TransparentFX

@@ -84,6 +84,9 @@ public class LaneHandler : MonoBehaviour
             GetComponent<LineRenderer>().startColor = Color.red;
             GetComponent<LineRenderer>().endColor = Color.red;
         }
+
+        // Set the rendering order of the sprites
+        GetComponent<LineRenderer>().sortingOrder = 10 + m_identifier;
     }
 
     // Assign lane event to this object

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7533791000236341882}
   - component: {fileID: 4762134490918783348}
   m_Layer: 0
-  m_Name: Ripple
+  m_Name: Ripple Perfect
   m_TagString: Ripple
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4793,7 +4793,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 100
   m_RenderMode: 0
   m_SortMode: 3
   m_MinParticleSize: 0

@@ -186,7 +186,8 @@ public class KeyboardControls : MonoBehaviour
                 }
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
-                
+                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
+
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
 
@@ -215,10 +216,10 @@ public class KeyboardControls : MonoBehaviour
                         m_hitSource.Play();
                         ScoreController.Instance.AddGoodHit();
 
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                        ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
-                        ripple.GetComponent<ParticleSystem>().loop = false;
-                        ripple.SetActive(true);
+                        rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        rippleG.GetComponent<ParticleSystem>().startColor = Color.blue;
+                        rippleG.GetComponent<ParticleSystem>().loop = false;
+                        rippleG.SetActive(true);
 
                         goodText.transform.position = lane.transform.GetChild(1).position;
                         goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
@@ -264,6 +265,7 @@ public class KeyboardControls : MonoBehaviour
                 }
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
+                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
 
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
@@ -293,10 +295,10 @@ public class KeyboardControls : MonoBehaviour
                         m_hitSource.Play();
                         ScoreController.Instance.AddPerfectHit();
 
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                        ripple.GetComponent<ParticleSystem>().startColor = Color.red;
-                        ripple.GetComponent<ParticleSystem>().loop = false;
-                        ripple.SetActive(true);
+                        rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        rippleG.GetComponent<ParticleSystem>().startColor = Color.red;
+                        rippleG.GetComponent<ParticleSystem>().loop = false;
+                        rippleG.SetActive(true);
 
                         goodText.transform.position = lane.transform.GetChild(1).position;
                         goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
@@ -343,6 +345,7 @@ public class KeyboardControls : MonoBehaviour
                 }
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
+                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
 
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
@@ -403,12 +406,12 @@ public class KeyboardControls : MonoBehaviour
                         {
                             m_hitSource.Play();
 
-                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                            ripple.GetComponent<ParticleSystem>().startColor = Color.blue;
-                            ripple.GetComponent<ParticleSystem>().loop = true;
-                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+                            rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            rippleG.GetComponent<ParticleSystem>().startColor = Color.blue;
+                            rippleG.GetComponent<ParticleSystem>().loop = true;
+                            rippleG.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
 
-                            ripple.SetActive(true);
+                            rippleG.SetActive(true);
 
                             goodText.transform.position = lane.transform.GetChild(1).position;
                             goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
@@ -449,6 +452,7 @@ public class KeyboardControls : MonoBehaviour
                 }
 
                 GameObject ripple = m_pooler.GetPooledNote("Ripple");
+                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
 
                 GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
                 GameObject goodText = m_pooler.GetPooledNote("GoodText");
@@ -509,12 +513,12 @@ public class KeyboardControls : MonoBehaviour
                         {
                             m_hitSource.Play();
 
-                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
-                            ripple.GetComponent<ParticleSystem>().startColor = Color.red;
-                            ripple.GetComponent<ParticleSystem>().loop = true;
-                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+                            rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            rippleG.GetComponent<ParticleSystem>().startColor = Color.red;
+                            rippleG.GetComponent<ParticleSystem>().loop = true;
+                            rippleG.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
 
-                            ripple.SetActive(true);
+                            rippleG.SetActive(true);
 
                             goodText.transform.position = lane.transform.GetChild(1).position;
                             goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);

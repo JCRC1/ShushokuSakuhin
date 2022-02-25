@@ -53,6 +53,7 @@ MonoBehaviour:
     m_duration: 0
   m_isHeld: 0
   m_laneItBelongs: 0
+  m_pressed: 0
 --- !u!120 &8297605581420998520
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -92,7 +93,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 12
+  m_SortingOrder: 79
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -190,7 +191,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 13
+  m_SortingOrder: 80
   m_Sprite: {fileID: 21300000, guid: 636fd7a107728f14b869bb8f65e56383, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
