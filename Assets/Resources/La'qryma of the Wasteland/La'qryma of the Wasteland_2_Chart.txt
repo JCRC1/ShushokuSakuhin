@@ -20,7 +20,20 @@
                     "m_beat": 4.5
                 }
             ],
-            "m_holdNote": [],
+            "m_holdNote": [
+                {
+                    "m_beat": 311.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 319.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 326.5,
+                    "m_duration": 5.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 4.5,
@@ -363,7 +376,28 @@
                     "m_beat": 4.5
                 }
             ],
-            "m_holdNote": [],
+            "m_holdNote": [
+                {
+                    "m_beat": 304.5,
+                    "m_duration": 2.0
+                },
+                {
+                    "m_beat": 310.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 318.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 324.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 334.0,
+                    "m_duration": 5.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 4.5,
@@ -580,12 +614,181 @@
                 },
                 {
                     "m_beat": 35.5
+                },
+                {
+                    "m_beat": 64.5
+                },
+                {
+                    "m_beat": 71.0
+                },
+                {
+                    "m_beat": 71.5
+                },
+                {
+                    "m_beat": 72.0
+                },
+                {
+                    "m_beat": 75.0
+                },
+                {
+                    "m_beat": 75.5
+                },
+                {
+                    "m_beat": 76.0
+                },
+                {
+                    "m_beat": 79.0
+                },
+                {
+                    "m_beat": 79.5
+                },
+                {
+                    "m_beat": 80.0
+                },
+                {
+                    "m_beat": 84.5
+                },
+                {
+                    "m_beat": 85.0
+                },
+                {
+                    "m_beat": 85.5
+                },
+                {
+                    "m_beat": 86.0
+                },
+                {
+                    "m_beat": 122.5
+                },
+                {
+                    "m_beat": 123.0
+                },
+                {
+                    "m_beat": 123.5
+                },
+                {
+                    "m_beat": 124.0
+                },
+                {
+                    "m_beat": 138.5
+                },
+                {
+                    "m_beat": 139.0
+                },
+                {
+                    "m_beat": 139.5
+                },
+                {
+                    "m_beat": 140.0
+                },
+                {
+                    "m_beat": 160.5
+                },
+                {
+                    "m_beat": 163.5
+                },
+                {
+                    "m_beat": 175.0
+                },
+                {
+                    "m_beat": 175.5
+                },
+                {
+                    "m_beat": 183.5
+                },
+                {
+                    "m_beat": 228.5
+                },
+                {
+                    "m_beat": 229.0
+                },
+                {
+                    "m_beat": 229.5
+                },
+                {
+                    "m_beat": 230.0
+                },
+                {
+                    "m_beat": 260.5
+                },
+                {
+                    "m_beat": 261.5
+                },
+                {
+                    "m_beat": 274.5
+                },
+                {
+                    "m_beat": 275.5
+                },
+                {
+                    "m_beat": 286.5
+                },
+                {
+                    "m_beat": 287.25
+                },
+                {
+                    "m_beat": 288.0
+                },
+                {
+                    "m_beat": 288.5
                 }
             ],
             "m_holdNote": [
                 {
                     "m_beat": 33.5,
                     "m_duration": 1.5
+                },
+                {
+                    "m_beat": 68.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 82.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 96.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 124.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 135.5,
+                    "m_duration": 2.5
+                },
+                {
+                    "m_beat": 140.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 151.5,
+                    "m_duration": 4.0
+                },
+                {
+                    "m_beat": 176.0,
+                    "m_duration": 2.0
+                },
+                {
+                    "m_beat": 184.0,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 218.5,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 230.25,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 250.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 348.5,
+                    "m_duration": 3.0
                 }
             ],
             "m_laneEventsMovement": [
@@ -716,6 +919,15 @@
                     }
                 },
                 {
+                    "m_beat": 101.5,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": 7.0,
+                        "y": -12.75
+                    }
+                },
+                {
                     "m_beat": 112.5,
                     "m_duration": 0.0,
                     "m_easeType": 1,
@@ -766,7 +978,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -775,7 +987,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": -7.25,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -784,7 +996,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -793,7 +1005,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": 7.25,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -802,7 +1014,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -1193,12 +1405,90 @@
                 },
                 {
                     "m_beat": 35.5
+                },
+                {
+                    "m_beat": 60.5
+                },
+                {
+                    "m_beat": 61.0
+                },
+                {
+                    "m_beat": 61.5
+                },
+                {
+                    "m_beat": 62.0
+                },
+                {
+                    "m_beat": 65.0
+                },
+                {
+                    "m_beat": 69.5
+                },
+                {
+                    "m_beat": 86.5
+                },
+                {
+                    "m_beat": 87.0
+                },
+                {
+                    "m_beat": 87.5
+                },
+                {
+                    "m_beat": 88.0
+                },
+                {
+                    "m_beat": 92.75
+                },
+                {
+                    "m_beat": 93.25
+                },
+                {
+                    "m_beat": 93.75
+                },
+                {
+                    "m_beat": 94.25
                 }
             ],
             "m_holdNote": [
                 {
                     "m_beat": 32.5,
                     "m_duration": 2.5
+                },
+                {
+                    "m_beat": 62.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 70.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 72.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 74.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 76.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 78.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 80.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 82.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 96.5,
+                    "m_duration": 3.0
                 }
             ],
             "m_laneEventsMovement": [
@@ -1325,6 +1615,15 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 7.0,
+                        "y": -2.5
+                    }
+                },
+                {
+                    "m_beat": 101.3499984741211,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": 20.0,
                         "y": -2.5
                     }
                 },
@@ -1462,19 +1761,207 @@
             "m_initialLength": 10.0,
             "m_singleNote": [
                 {
-                    "m_beat": 27.0
-                },
-                {
-                    "m_beat": 27.5
-                },
-                {
-                    "m_beat": 28.0
-                },
-                {
                     "m_beat": 35.5
+                },
+                {
+                    "m_beat": 56.5
+                },
+                {
+                    "m_beat": 57.0
+                },
+                {
+                    "m_beat": 57.5
+                },
+                {
+                    "m_beat": 58.0
+                },
+                {
+                    "m_beat": 65.5
+                },
+                {
+                    "m_beat": 69.5
+                },
+                {
+                    "m_beat": 73.0
+                },
+                {
+                    "m_beat": 73.5
+                },
+                {
+                    "m_beat": 74.0
+                },
+                {
+                    "m_beat": 77.0
+                },
+                {
+                    "m_beat": 77.5
+                },
+                {
+                    "m_beat": 78.0
+                },
+                {
+                    "m_beat": 81.0
+                },
+                {
+                    "m_beat": 81.5
+                },
+                {
+                    "m_beat": 82.0
+                },
+                {
+                    "m_beat": 88.5
+                },
+                {
+                    "m_beat": 89.0
+                },
+                {
+                    "m_beat": 89.5
+                },
+                {
+                    "m_beat": 90.0
+                },
+                {
+                    "m_beat": 92.5
+                },
+                {
+                    "m_beat": 93.0
+                },
+                {
+                    "m_beat": 93.5
+                },
+                {
+                    "m_beat": 94.0
+                },
+                {
+                    "m_beat": 114.5
+                },
+                {
+                    "m_beat": 115.0
+                },
+                {
+                    "m_beat": 115.5
+                },
+                {
+                    "m_beat": 116.0
+                },
+                {
+                    "m_beat": 128.5
+                },
+                {
+                    "m_beat": 146.5
+                },
+                {
+                    "m_beat": 147.0
+                },
+                {
+                    "m_beat": 147.5
+                },
+                {
+                    "m_beat": 148.0
+                },
+                {
+                    "m_beat": 160.5
+                },
+                {
+                    "m_beat": 163.5
+                },
+                {
+                    "m_beat": 167.5
+                },
+                {
+                    "m_beat": 232.5
+                },
+                {
+                    "m_beat": 233.0
+                },
+                {
+                    "m_beat": 233.5
+                },
+                {
+                    "m_beat": 234.0
+                },
+                {
+                    "m_beat": 262.5
+                },
+                {
+                    "m_beat": 263.5
+                },
+                {
+                    "m_beat": 272.5
+                },
+                {
+                    "m_beat": 273.5
+                },
+                {
+                    "m_beat": 284.5
+                },
+                {
+                    "m_beat": 286.5
+                },
+                {
+                    "m_beat": 287.25
+                },
+                {
+                    "m_beat": 288.0
+                },
+                {
+                    "m_beat": 288.5
                 }
             ],
-            "m_holdNote": [],
+            "m_holdNote": [
+                {
+                    "m_beat": 58.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 82.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 96.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 116.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 142.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 148.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 168.0,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 216.5,
+                    "m_duration": 8.0
+                },
+                {
+                    "m_beat": 234.25,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 248.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 294.0,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 343.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 348.5,
+                    "m_duration": 3.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 6.5,
@@ -1585,6 +2072,15 @@
                     }
                 },
                 {
+                    "m_beat": 101.5,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": -19.5,
+                        "y": -2.5
+                    }
+                },
+                {
                     "m_beat": 112.5,
                     "m_duration": 0.0,
                     "m_easeType": 1,
@@ -1635,7 +2131,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -1644,7 +2140,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": -7.25,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -1653,7 +2149,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -1662,7 +2158,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": 7.25,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -1671,7 +2167,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": 9.0
+                        "y": 8.0
                     }
                 },
                 {
@@ -2005,19 +2501,190 @@
             "m_initialLength": 10.0,
             "m_singleNote": [
                 {
-                    "m_beat": 23.0
-                },
-                {
-                    "m_beat": 23.5
-                },
-                {
-                    "m_beat": 24.0
-                },
-                {
                     "m_beat": 35.5
+                },
+                {
+                    "m_beat": 36.5
+                },
+                {
+                    "m_beat": 37.0
+                },
+                {
+                    "m_beat": 37.5
+                },
+                {
+                    "m_beat": 38.0
+                },
+                {
+                    "m_beat": 40.5
+                },
+                {
+                    "m_beat": 41.0
+                },
+                {
+                    "m_beat": 41.5
+                },
+                {
+                    "m_beat": 42.0
+                },
+                {
+                    "m_beat": 44.5
+                },
+                {
+                    "m_beat": 45.0
+                },
+                {
+                    "m_beat": 45.5
+                },
+                {
+                    "m_beat": 46.0
+                },
+                {
+                    "m_beat": 48.5
+                },
+                {
+                    "m_beat": 49.0
+                },
+                {
+                    "m_beat": 49.5
+                },
+                {
+                    "m_beat": 50.0
+                },
+                {
+                    "m_beat": 52.5
+                },
+                {
+                    "m_beat": 53.0
+                },
+                {
+                    "m_beat": 53.5
+                },
+                {
+                    "m_beat": 54.0
+                },
+                {
+                    "m_beat": 66.0
+                },
+                {
+                    "m_beat": 90.5
+                },
+                {
+                    "m_beat": 91.0
+                },
+                {
+                    "m_beat": 91.5
+                },
+                {
+                    "m_beat": 92.0
+                },
+                {
+                    "m_beat": 223.5
+                },
+                {
+                    "m_beat": 228.5
+                },
+                {
+                    "m_beat": 231.75
+                },
+                {
+                    "m_beat": 232.25
+                },
+                {
+                    "m_beat": 249.5
+                },
+                {
+                    "m_beat": 252.5
+                },
+                {
+                    "m_beat": 253.5
+                },
+                {
+                    "m_beat": 254.5
+                },
+                {
+                    "m_beat": 255.5
+                },
+                {
+                    "m_beat": 261.5
+                },
+                {
+                    "m_beat": 273.5
+                },
+                {
+                    "m_beat": 275.5
                 }
             ],
-            "m_holdNote": [],
+            "m_holdNote": [
+                {
+                    "m_beat": 38.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 42.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 46.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 50.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 54.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 68.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 70.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 72.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 74.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 76.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 78.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 80.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 82.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 96.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 258.5,
+                    "m_duration": 2.0
+                },
+                {
+                    "m_beat": 280.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 348.5,
+                    "m_duration": 3.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 10.5,
@@ -2080,6 +2747,15 @@
                     "m_targetPosition": {
                         "x": -7.0,
                         "y": -9.5
+                    }
+                },
+                {
+                    "m_beat": 101.5,
+                    "m_duration": 0.0,
+                    "m_easeType": 0,
+                    "m_targetPosition": {
+                        "x": -7.0,
+                        "y": -12.25
                     }
                 },
                 {
@@ -2261,8 +2937,111 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_singleNote": [],
-            "m_holdNote": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 205.5
+                },
+                {
+                    "m_beat": 206.0
+                },
+                {
+                    "m_beat": 206.5
+                },
+                {
+                    "m_beat": 207.0
+                },
+                {
+                    "m_beat": 207.5
+                },
+                {
+                    "m_beat": 208.0
+                },
+                {
+                    "m_beat": 236.5
+                },
+                {
+                    "m_beat": 237.0
+                },
+                {
+                    "m_beat": 237.5
+                },
+                {
+                    "m_beat": 238.0
+                },
+                {
+                    "m_beat": 264.5
+                },
+                {
+                    "m_beat": 265.5
+                },
+                {
+                    "m_beat": 270.5
+                },
+                {
+                    "m_beat": 271.5
+                },
+                {
+                    "m_beat": 285.5
+                },
+                {
+                    "m_beat": 286.5
+                },
+                {
+                    "m_beat": 287.25
+                },
+                {
+                    "m_beat": 288.0
+                },
+                {
+                    "m_beat": 288.5
+                },
+                {
+                    "m_beat": 346.5
+                },
+                {
+                    "m_beat": 347.0
+                },
+                {
+                    "m_beat": 347.5
+                },
+                {
+                    "m_beat": 348.0
+                }
+            ],
+            "m_holdNote": [
+                {
+                    "m_beat": 208.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 214.5,
+                    "m_duration": 10.0
+                },
+                {
+                    "m_beat": 238.25,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 246.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 295.5,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 302.5,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 336.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 348.5,
+                    "m_duration": 3.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 203.5,
@@ -2412,8 +3191,120 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_singleNote": [],
-            "m_holdNote": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 106.5
+                },
+                {
+                    "m_beat": 107.0
+                },
+                {
+                    "m_beat": 107.5
+                },
+                {
+                    "m_beat": 108.0
+                },
+                {
+                    "m_beat": 154.5
+                },
+                {
+                    "m_beat": 155.0
+                },
+                {
+                    "m_beat": 155.5
+                },
+                {
+                    "m_beat": 156.0
+                },
+                {
+                    "m_beat": 160.5
+                },
+                {
+                    "m_beat": 163.5
+                },
+                {
+                    "m_beat": 171.5
+                },
+                {
+                    "m_beat": 191.5
+                },
+                {
+                    "m_beat": 222.5
+                },
+                {
+                    "m_beat": 228.5
+                },
+                {
+                    "m_beat": 235.75
+                },
+                {
+                    "m_beat": 236.25
+                },
+                {
+                    "m_beat": 247.5
+                },
+                {
+                    "m_beat": 256.5
+                },
+                {
+                    "m_beat": 263.5
+                },
+                {
+                    "m_beat": 271.5
+                },
+                {
+                    "m_beat": 285.0
+                },
+                {
+                    "m_beat": 286.0
+                }
+            ],
+            "m_holdNote": [
+                {
+                    "m_beat": 108.5,
+                    "m_duration": 4.0
+                },
+                {
+                    "m_beat": 118.0,
+                    "m_duration": 7.0
+                },
+                {
+                    "m_beat": 134.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 141.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 156.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 164.5,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 172.0,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 192.0,
+                    "m_duration": 2.0
+                },
+                {
+                    "m_beat": 276.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 280.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 348.5,
+                    "m_duration": 3.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 99.5,
@@ -2484,7 +3375,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -2493,7 +3384,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": 7.25,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -2502,7 +3393,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -2511,7 +3402,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": -7.25,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -2520,7 +3411,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -2716,8 +3607,209 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_singleNote": [],
-            "m_holdNote": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 197.5
+                },
+                {
+                    "m_beat": 198.0
+                },
+                {
+                    "m_beat": 198.5
+                },
+                {
+                    "m_beat": 199.0
+                },
+                {
+                    "m_beat": 199.5
+                },
+                {
+                    "m_beat": 240.5
+                },
+                {
+                    "m_beat": 241.0
+                },
+                {
+                    "m_beat": 241.5
+                },
+                {
+                    "m_beat": 242.0
+                },
+                {
+                    "m_beat": 266.5
+                },
+                {
+                    "m_beat": 267.5
+                },
+                {
+                    "m_beat": 268.5
+                },
+                {
+                    "m_beat": 269.5
+                },
+                {
+                    "m_beat": 286.5
+                },
+                {
+                    "m_beat": 287.25
+                },
+                {
+                    "m_beat": 288.0
+                },
+                {
+                    "m_beat": 288.5
+                },
+                {
+                    "m_beat": 298.5
+                },
+                {
+                    "m_beat": 299.0
+                },
+                {
+                    "m_beat": 299.5
+                },
+                {
+                    "m_beat": 300.0
+                },
+                {
+                    "m_beat": 306.5
+                },
+                {
+                    "m_beat": 307.0
+                },
+                {
+                    "m_beat": 307.5
+                },
+                {
+                    "m_beat": 308.0
+                },
+                {
+                    "m_beat": 330.5
+                },
+                {
+                    "m_beat": 331.0
+                },
+                {
+                    "m_beat": 331.5
+                },
+                {
+                    "m_beat": 332.0
+                },
+                {
+                    "m_beat": 338.5
+                },
+                {
+                    "m_beat": 339.0
+                },
+                {
+                    "m_beat": 339.5
+                },
+                {
+                    "m_beat": 340.0
+                },
+                {
+                    "m_beat": 356.5
+                },
+                {
+                    "m_beat": 358.5
+                },
+                {
+                    "m_beat": 359.0
+                },
+                {
+                    "m_beat": 359.5
+                },
+                {
+                    "m_beat": 360.0
+                },
+                {
+                    "m_beat": 360.5
+                },
+                {
+                    "m_beat": 362.5
+                },
+                {
+                    "m_beat": 363.0
+                },
+                {
+                    "m_beat": 363.5
+                },
+                {
+                    "m_beat": 364.0
+                },
+                {
+                    "m_beat": 364.5
+                },
+                {
+                    "m_beat": 366.5
+                },
+                {
+                    "m_beat": 367.0
+                },
+                {
+                    "m_beat": 367.5
+                },
+                {
+                    "m_beat": 368.0
+                },
+                {
+                    "m_beat": 368.5
+                }
+            ],
+            "m_holdNote": [
+                {
+                    "m_beat": 200.0,
+                    "m_duration": 4.0
+                },
+                {
+                    "m_beat": 212.5,
+                    "m_duration": 12.0
+                },
+                {
+                    "m_beat": 242.25,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 244.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 292.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 300.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 308.5,
+                    "m_duration": 6.0
+                },
+                {
+                    "m_beat": 316.5,
+                    "m_duration": 7.0
+                },
+                {
+                    "m_beat": 332.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 340.5,
+                    "m_duration": 5.0
+                },
+                {
+                    "m_beat": 348.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 370.5,
+                    "m_duration": 1.5
+                },
+                {
+                    "m_beat": 372.5,
+                    "m_duration": 16.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 195.5,
@@ -2905,8 +3997,174 @@
             "m_initialRotation": 0.0,
             "m_initialAlpha": 1.0,
             "m_initialLength": 10.0,
-            "m_singleNote": [],
-            "m_holdNote": [],
+            "m_singleNote": [
+                {
+                    "m_beat": 102.0
+                },
+                {
+                    "m_beat": 102.5
+                },
+                {
+                    "m_beat": 131.5
+                },
+                {
+                    "m_beat": 132.0
+                },
+                {
+                    "m_beat": 142.5
+                },
+                {
+                    "m_beat": 143.5
+                },
+                {
+                    "m_beat": 144.0
+                },
+                {
+                    "m_beat": 160.5
+                },
+                {
+                    "m_beat": 163.5
+                },
+                {
+                    "m_beat": 179.5
+                },
+                {
+                    "m_beat": 187.5
+                },
+                {
+                    "m_beat": 220.5
+                },
+                {
+                    "m_beat": 221.5
+                },
+                {
+                    "m_beat": 228.5
+                },
+                {
+                    "m_beat": 239.75
+                },
+                {
+                    "m_beat": 240.25
+                },
+                {
+                    "m_beat": 245.5
+                },
+                {
+                    "m_beat": 257.5
+                },
+                {
+                    "m_beat": 265.5
+                },
+                {
+                    "m_beat": 267.5
+                },
+                {
+                    "m_beat": 269.5
+                },
+                {
+                    "m_beat": 356.5
+                },
+                {
+                    "m_beat": 357.0
+                },
+                {
+                    "m_beat": 357.5
+                },
+                {
+                    "m_beat": 358.0
+                },
+                {
+                    "m_beat": 358.5
+                },
+                {
+                    "m_beat": 360.5
+                },
+                {
+                    "m_beat": 361.0
+                },
+                {
+                    "m_beat": 361.5
+                },
+                {
+                    "m_beat": 362.0
+                },
+                {
+                    "m_beat": 362.5
+                },
+                {
+                    "m_beat": 364.5
+                },
+                {
+                    "m_beat": 365.0
+                },
+                {
+                    "m_beat": 365.5
+                },
+                {
+                    "m_beat": 366.0
+                },
+                {
+                    "m_beat": 366.5
+                },
+                {
+                    "m_beat": 368.5
+                },
+                {
+                    "m_beat": 369.0
+                },
+                {
+                    "m_beat": 369.5
+                },
+                {
+                    "m_beat": 370.0
+                }
+            ],
+            "m_holdNote": [
+                {
+                    "m_beat": 110.0,
+                    "m_duration": 4.0
+                },
+                {
+                    "m_beat": 126.0,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 132.5,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 144.5,
+                    "m_duration": 2.0
+                },
+                {
+                    "m_beat": 150.0,
+                    "m_duration": 1.0
+                },
+                {
+                    "m_beat": 180.0,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 188.0,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 258.5,
+                    "m_duration": 2.0
+                },
+                {
+                    "m_beat": 280.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 348.5,
+                    "m_duration": 3.0
+                },
+                {
+                    "m_beat": 372.5,
+                    "m_duration": 16.0
+                }
+            ],
             "m_laneEventsMovement": [
                 {
                     "m_beat": 99.5,
@@ -2977,7 +4235,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -2986,7 +4244,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": 7.25,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -2995,7 +4253,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -3004,7 +4262,7 @@
                     "m_easeType": 2,
                     "m_targetPosition": {
                         "x": -7.25,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {
@@ -3013,7 +4271,7 @@
                     "m_easeType": 3,
                     "m_targetPosition": {
                         "x": 0.0,
-                        "y": -9.0
+                        "y": -8.0
                     }
                 },
                 {

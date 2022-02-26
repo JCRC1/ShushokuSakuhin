@@ -3923,7 +3923,7 @@ MonoBehaviour:
   m_currentLengthIndex: 
   m_totalLanes: 0
   m_totalNotes: 0
-  m_beatsToShow: 4
+  m_beatsToShow: 3
   m_secPerBeat: 0
   m_hitWindow: 0.125
   m_trackPos: 0
