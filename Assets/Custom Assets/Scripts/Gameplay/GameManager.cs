@@ -1,17 +1,18 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     // Singleton GameManager
     private static GameManager _instance;
+
     public static GameManager Instance
     {
         get
         {
-            if (_instance == null && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 2)
+            if (_instance == null && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 2 /*Make sure we only ever do this check in the Game Scene*/)
             {
                 Debug.LogError("GameManager is NULL");
             }
@@ -35,9 +36,15 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ChartData chartData;
     [HideInInspector] public AudioSource audioSource;
 
+    [Header("GameState")]
+    public GameState gameState;
+
+    public static event Action<GameState> OnGameStateChanged;
+
     [Header("Chart Information")]
     [Tooltip("Path of chart from Resources")]
     public string path;
+
     [Tooltip("Toggle between using the loaded path from the menu or the one written on the editor")]
     public bool manualMode;
 
@@ -46,12 +53,14 @@ public class GameManager : MonoBehaviour
 
     // Lane Information
     [HideInInspector] public List<GameObject> lanes;
+
     [HideInInspector] public int totalLanes;
     [HideInInspector] public int totalNotes;
 
     // Indexes, these are lists of intergers, each for the corresponding lane
     // These keep track of what is the current event/note index
     [HideInInspector] public List<int> nextNoteIndex;
+
     [HideInInspector] public List<int> currentMovementIndex;
     [HideInInspector] public List<int> currentRotationIndex;
     [HideInInspector] public List<int> currentFadeIndex;
@@ -60,20 +69,23 @@ public class GameManager : MonoBehaviour
     [Header("Timing Information")]
     [Tooltip("Beats ahead of the song that the notes should start spawning from")]
     public float beatsToShow = 4;
+
     [Tooltip("The window of time, in beats, for the player to hit the notes with PERFECT timing")]
     public float hitWindow;
+
     [Tooltip("This is for animation timing. The amount of beats one animation loop should last")]
-    public float beatsPerLoop; 
+    public float beatsPerLoop;
 
     // Timing information
     [HideInInspector] public float secPerBeat;
+
     [HideInInspector] public float trackPos;            // In seconds
     [HideInInspector] public float trackPosInBeats;     // In beats
     private float dspSongTime;                          // Current timing of the song in dspTime
 
-
     // Animation timing information
     [HideInInspector] public int completedLoops = 0;    // The total number of loops completed since the looping clip first started
+
     [HideInInspector] public float loopPosInBeats;      //The current position of the song within the loop in beats.
     [HideInInspector] public float loopPosInAnalog;     //The current relative position of the song within the loop measured between 0 and 1.
 
@@ -82,28 +94,54 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
+        ChangeGameState(GameState.GameState_Init);
     }
 
     private void Update()
     {
-        if (initialized)
-        {
-            TrackUpdate();
-            LaneEventSpawn();
-        }
+        UpdateGameState();
+    }
 
-        if (finalized)
+    private void GameInit()
+    {
+        LoadChart();
+        InitLanes();
+        InitPlay();
+
+        ChangeGameState(GameState.GameState_Update);
+    }
+
+    private void InitPlay()
+    {
+        audioSource = GetComponent<AudioSource>();
+        secPerBeat = 60.0f / chartData.trackBPM;
+
+        audioSource.clip = Resources.Load<AudioClip>(chartData.trackAudioPath);
+        dspSongTime = (float)AudioSettings.dspTime;
+        audioSource.Play();
+        Invoke("ChartEnd", audioSource.clip.length);        // <<<< Gonna need to find a way to make this play better with the game states, maybe use a coroutine?
+    }
+
+    private void InitLanes()
+    {
+        // Initialize lanes and index array
+        totalLanes = 0;
+        lanes = new List<GameObject>();
+        nextNoteIndex = new List<int>();
+        currentMovementIndex = new List<int>();
+        currentRotationIndex = new List<int>();
+        currentFadeIndex = new List<int>();
+        currentLengthIndex = new List<int>();
+
+        for (int i = 0; i < chartData.lane.Count; i++)
         {
-            for (int i = 0; i < lanes.Count; i++)
-            {
-                lanes[i].SetActive(false);
-                audioSource.Stop();
-            }
+            InitLoadedLane(chartData.lane[i]);
+
+            totalNotes += chartData.lane[i].singleNote.Count + chartData.lane[i].holdNote.Count;
         }
     }
 
-    private void Initialize()
+    private void LoadChart()
     {
         chartData = new ChartData();
         string json;
@@ -116,34 +154,6 @@ public class GameManager : MonoBehaviour
             json = File.ReadAllText("C:/Unity Projects/ShushokuSakuhin/Assets/Resources/" + ChartLevelSelect.levelPath);
         }
         JsonUtility.FromJsonOverwrite(json, chartData);
-
-        // Initialize lanes and index array
-        {
-            totalLanes = 0;
-            lanes = new List<GameObject>();
-            nextNoteIndex = new List<int>();
-            currentMovementIndex = new List<int>();
-            currentRotationIndex = new List<int>();
-            currentFadeIndex = new List<int>();
-            currentLengthIndex = new List<int>();
-
-        for (int i = 0; i < chartData.lane.Count; i++)
-            {
-                InitLoadedLane(chartData.lane[i]);
-
-                totalNotes += chartData.lane[i].singleNote.Count + chartData.lane[i].holdNote.Count;
-            }
-        }
-
-        audioSource = GetComponent<AudioSource>();
-
-        secPerBeat = 60.0f / chartData.trackBPM;
-
-        audioSource.clip = Resources.Load<AudioClip>(chartData.trackAudioPath);
-        dspSongTime = (float)AudioSettings.dspTime;
-        audioSource.Play();
-        Invoke("EndGame", audioSource.clip.length);
-        initialized = true;
     }
 
     public void InitLoadedLane(LaneData _laneData)
@@ -174,18 +184,20 @@ public class GameManager : MonoBehaviour
 
     private void TrackUpdate()
     {
-        secPerBeat = 60.0f / chartData.trackBPM;
-        // How many seconds since we started
-        //trackPos = (float)(audioSource.time - chartData.trackOffset);
+        // This is to keep track of BPM Changes
+        // Currently BPM is set on start
+        // secPerBeat = 60.0f / chartData.trackBPM;
 
+        // How many seconds since we started
         trackPos = (float)(AudioSettings.dspTime - dspSongTime - chartData.trackOffset);
         // How many beats since we started
         trackPosInBeats = trackPos / secPerBeat;
 
         if (trackPosInBeats >= (completedLoops + 1) * beatsPerLoop)
+        {
             completedLoops++;
+        }
         loopPosInBeats = trackPosInBeats - completedLoops * beatsPerLoop;
-
         loopPosInAnalog = loopPosInBeats / beatsPerLoop;
     }
 
@@ -193,136 +205,193 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < chartData.lane.Count; i++)
         {
-            // Lane Events
+            MovementEventSpawn(i);
+            RotationEventSpawn(i);
+            FadeEventSpawn(i);
+            LengthChangeEventSpawn(i);
+        }
+    }
+
+    private void LengthChangeEventSpawn(int index)
+    {
+        // Length
+        if (currentLengthIndex[index] <= 0)
+        {
+            currentLengthIndex[index] = 0;
+        }
+
+        // First check if the current index is less than the total count of events
+        if (currentLengthIndex[index] < chartData.lane[index].laneEventLength.Count)
+        {
+            if (chartData.lane[index].laneEventLength[currentLengthIndex[index]].beat < trackPosInBeats)
             {
-                // Make sure these don't go negative or else Unity has a cry
-                if (currentMovementIndex[i] <= 0)
+                if (currentLengthIndex[index] < 1)
                 {
-                    currentMovementIndex[i] = 0;
+                    float l = chartData.lane[index].initialLength;
+                    lanes[index].GetComponent<LaneHandler>().InitializeLength(chartData.lane[index].laneEventLength[currentLengthIndex[index]], l);
+
+                    currentLengthIndex[index]++;
                 }
-
-                // First check if the current index is less than the total count of events
-                if (currentMovementIndex[i] < chartData.lane[i].laneEventsMovement.Count)
+                else
                 {
-                    if (chartData.lane[i].laneEventsMovement[currentMovementIndex[i]].beat < trackPosInBeats)
-                    {
-                        if (currentMovementIndex[i] < 1)
-                        {
-                            lanes[i].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[i].laneEventsMovement[currentMovementIndex[i]], chartData.lane[i].initialPosition);
+                    float l = chartData.lane[index].laneEventLength[currentLengthIndex[index] - 1].targetLength;
 
-                            currentMovementIndex[i]++;
-                        }
-                        else
-                        {
-                            lanes[i].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[i].laneEventsMovement[currentMovementIndex[i]], chartData.lane[i].laneEventsMovement[currentMovementIndex[i] - 1].targetPosition);
+                    lanes[index].GetComponent<LaneHandler>().InitializeLength(chartData.lane[index].laneEventLength[currentLengthIndex[index]], l);
 
-                            currentMovementIndex[i]++;
-                        }
-                    }
-                }
-
-                if (currentRotationIndex[i] <= 0)
-                {
-                    currentRotationIndex[i] = 0;
-                }
-
-                // First check if the current index is less than the total count of events
-                if (currentRotationIndex[i] < chartData.lane[i].laneEventsRotation.Count)
-                {
-                    if (chartData.lane[i].laneEventsRotation[currentRotationIndex[i]].beat < trackPosInBeats)
-                    {
-                        if (currentRotationIndex[i] < 1)
-                        {
-                            float z = chartData.lane[i].initialRotation;
-                            lanes[i].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[i].laneEventsRotation[currentRotationIndex[i]], z);
-
-                            currentRotationIndex[i]++;
-                        }
-                        else
-                        {
-                            float z = chartData.lane[i].laneEventsRotation[currentRotationIndex[i] - 1].targetRotation;
-
-                            if (z >= 360)
-                            {
-                                z %= 360;
-                            }
-                            lanes[i].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[i].laneEventsRotation[currentRotationIndex[i]], z);
-
-                            currentRotationIndex[i]++;
-                        }
-                    }
-                }
-
-                // Fade
-                if (currentFadeIndex[i] <= 0)
-                {
-                    currentFadeIndex[i] = 0;
-                }
-
-                // First check if the current index is less than the total count of events
-                if (currentFadeIndex[i] < chartData.lane[i].laneEventFade.Count)
-                {
-                    if (chartData.lane[i].laneEventFade[currentFadeIndex[i]].beat < trackPosInBeats)
-                    {
-                        if (currentFadeIndex[i] < 1)
-                        {
-                            float a = chartData.lane[i].initialAlpha;
-                            lanes[i].GetComponent<LaneHandler>().InitializeFade(chartData.lane[i].laneEventFade[currentFadeIndex[i]], a);
-
-                            currentFadeIndex[i]++;
-                        }
-                        else
-                        {
-                            float a = chartData.lane[i].laneEventFade[currentFadeIndex[i] - 1].targetAlpha;
-
-                            if (a >= 1)
-                                a = 1;
-                            else if (a <= 0)
-                                a = 0;
-
-                            lanes[i].GetComponent<LaneHandler>().InitializeFade(chartData.lane[i].laneEventFade[currentFadeIndex[i]], a);
-
-                            currentFadeIndex[i]++;
-                        }
-                    }
-                }
-
-                // Length
-                if (currentLengthIndex[i] <= 0)
-                {
-                    currentLengthIndex[i] = 0;
-                }
-
-                // First check if the current index is less than the total count of events
-                if (currentLengthIndex[i] < chartData.lane[i].laneEventLength.Count)
-                {
-                    if (chartData.lane[i].laneEventLength[currentLengthIndex[i]].beat < trackPosInBeats)
-                    {
-                        if (currentLengthIndex[i] < 1)
-                        {
-                            float l = chartData.lane[i].initialLength;
-                            lanes[i].GetComponent<LaneHandler>().InitializeLength(chartData.lane[i].laneEventLength[currentLengthIndex[i]], l);
-
-                            currentLengthIndex[i]++;
-                        }
-                        else
-                        {
-                            float l = chartData.lane[i].laneEventLength[currentLengthIndex[i] - 1].targetLength;
-
-                            lanes[i].GetComponent<LaneHandler>().InitializeLength(chartData.lane[i].laneEventLength[currentLengthIndex[i]], l);
-
-                            currentLengthIndex[i]++;
-                        }
-                    }
+                    currentLengthIndex[index]++;
                 }
             }
         }
-
     }
 
-    private void EndGame()
+    private void FadeEventSpawn(int index)
     {
+        // Fade
+        if (currentFadeIndex[index] <= 0)
+        {
+            currentFadeIndex[index] = 0;
+        }
+
+        // First check if the current index is less than the total count of events
+        if (currentFadeIndex[index] < chartData.lane[index].laneEventFade.Count)
+        {
+            if (chartData.lane[index].laneEventFade[currentFadeIndex[index]].beat < trackPosInBeats)
+            {
+                if (currentFadeIndex[index] < 1)
+                {
+                    float a = chartData.lane[index].initialAlpha;
+                    lanes[index].GetComponent<LaneHandler>().InitializeFade(chartData.lane[index].laneEventFade[currentFadeIndex[index]], a);
+
+                    currentFadeIndex[index]++;
+                }
+                else
+                {
+                    float a = chartData.lane[index].laneEventFade[currentFadeIndex[index] - 1].targetAlpha;
+
+                    if (a >= 1)
+                        a = 1;
+                    else if (a <= 0)
+                        a = 0;
+
+                    lanes[index].GetComponent<LaneHandler>().InitializeFade(chartData.lane[index].laneEventFade[currentFadeIndex[index]], a);
+
+                    currentFadeIndex[index]++;
+                }
+            }
+        }
+    }
+
+    private void RotationEventSpawn(int index)
+    {
+        if (currentRotationIndex[index] <= 0)
+        {
+            currentRotationIndex[index] = 0;
+        }
+
+        // First check if the current index is less than the total count of events
+        if (currentRotationIndex[index] < chartData.lane[index].laneEventsRotation.Count)
+        {
+            if (chartData.lane[index].laneEventsRotation[currentRotationIndex[index]].beat < trackPosInBeats)
+            {
+                if (currentRotationIndex[index] < 1)
+                {
+                    float z = chartData.lane[index].initialRotation;
+                    lanes[index].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[index].laneEventsRotation[currentRotationIndex[index]], z);
+
+                    currentRotationIndex[index]++;
+                }
+                else
+                {
+                    float z = chartData.lane[index].laneEventsRotation[currentRotationIndex[index] - 1].targetRotation;
+
+                    if (z >= 360)
+                    {
+                        z %= 360;
+                    }
+                    lanes[index].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[index].laneEventsRotation[currentRotationIndex[index]], z);
+
+                    currentRotationIndex[index]++;
+                }
+            }
+        }
+    }
+
+    private void MovementEventSpawn(int index)
+    {
+        // Make sure these don't go negative or else Unity has a cry
+        if (currentMovementIndex[index] <= 0)
+        {
+            currentMovementIndex[index] = 0;
+        }
+
+        // First check if the current index is less than the total count of events
+        if (currentMovementIndex[index] < chartData.lane[index].laneEventsMovement.Count)
+        {
+            if (chartData.lane[index].laneEventsMovement[currentMovementIndex[index]].beat < trackPosInBeats)
+            {
+                if (currentMovementIndex[index] < 1)
+                {
+                    lanes[index].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[index].laneEventsMovement[currentMovementIndex[index]], chartData.lane[index].initialPosition);
+
+                    currentMovementIndex[index]++;
+                }
+                else
+                {
+                    lanes[index].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[index].laneEventsMovement[currentMovementIndex[index]], chartData.lane[index].laneEventsMovement[currentMovementIndex[index] - 1].targetPosition);
+
+                    currentMovementIndex[index]++;
+                }
+            }
+        }
+    }
+
+    private void ChangeGameState(GameState newState)
+    {
+        gameState = newState;
+        OnGameStateChanged?.Invoke(newState);   // Invoke all functions subscribed to this event if any
+    }
+
+    private void UpdateGameState()
+    {
+        switch (gameState)
+        {
+            case GameState.GameState_Init:
+                GameInit();
+                break;
+
+            case GameState.GameState_Update:
+                GameUpdate();
+                break;
+
+            case GameState.GameState_Fin:
+                GameFin();
+                break;
+
+            case GameState.GameState_Pause:
+                break;
+        }
+    }
+
+    private void GameFin()
+    {
+        for (int i = 0; i < lanes.Count; i++)
+        {
+            lanes[i].SetActive(false);
+            audioSource.Stop();
+        }
+
         finalized = true;
         initialized = false;
+    }
+
+    private void GameUpdate()
+    {
+        TrackUpdate();
+        LaneEventSpawn();
+    }
+
+    private void ChartEnd()
+    {
+        ChangeGameState(GameState.GameState_Fin);
     }
 }
