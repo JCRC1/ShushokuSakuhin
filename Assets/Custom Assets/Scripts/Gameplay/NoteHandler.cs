@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NoteHandler : MonoBehaviour
 {
-    public Transform m_start;
-    public Transform m_end;
+    public Transform start;
+    public Transform end;
 
     public enum NoteState
     {
@@ -15,13 +15,13 @@ public class NoteHandler : MonoBehaviour
         MISS
     }
 
-    public NoteState m_noteState;
+    public NoteState noteState;
 
     public virtual void Initialize(Transform _start, Transform _end)
     {
-        m_noteState = NoteState.NONE;
-        m_start = _start;
-        m_end = _end;
+        noteState = NoteState.NONE;
+        start = _start;
+        end = _end;
 
         transform.position = _start.position;
         transform.rotation = _start.rotation;

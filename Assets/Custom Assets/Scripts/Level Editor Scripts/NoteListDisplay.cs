@@ -9,26 +9,26 @@ public class NoteListDisplay : MonoBehaviour
     [System.Serializable]
     public class SingleNoteItem
     {
-        public List<GameObject> m_objects;
-        public List<SingleNoteData> m_single;
-        public bool m_created;
+        public List<GameObject> objects;
+        public List<SingleNoteData> single;
+        public bool created;
     }
 
     [System.Serializable]
     public class HoldNoteItem
     {
-        public List<GameObject> m_objects;
-        public List<HoldNoteData> m_hold;
-        public bool m_created;
+        public List<GameObject> objects;
+        public List<HoldNoteData> hold;
+        public bool created;
     }
 
     public static NoteListDisplay Instance;
 
-    public GameObject m_singleNoteDisplayTemplate;
-    public GameObject m_holdNoteDisplayTemplate;
+    public GameObject singleNoteDisplayTemplate;
+    public GameObject holdNoteDisplayTemplate;
 
-    public List<SingleNoteItem> m_singleNotes;
-    public List<HoldNoteItem> m_holdNotes;
+    public List<SingleNoteItem> singleNotes;
+    public List<HoldNoteItem> holdNotes;
 
     private void Awake()
     {
@@ -38,67 +38,67 @@ public class NoteListDisplay : MonoBehaviour
     public void Initialized()
     {
         Instance = this;
-        m_singleNotes = new List<SingleNoteItem>();
-        m_holdNotes =  new List<HoldNoteItem>();
+        singleNotes = new List<SingleNoteItem>();
+        holdNotes =  new List<HoldNoteItem>();
     }
 
     public void GenerateLoadedList()
     {
-        m_singleNotes = new List<SingleNoteItem>();
-        m_holdNotes = new List<HoldNoteItem>();
+        singleNotes = new List<SingleNoteItem>();
+        holdNotes = new List<HoldNoteItem>();
         // For each note type in each lane, create an item
-        for (int i = 0; i < LevelEditorManager.Instance.m_chartData.m_lane.Count; i++)
+        for (int i = 0; i < LevelEditorManager.Instance.chartData.lane.Count; i++)
         {
             // Single Notes
-            if (m_singleNotes.Count < LevelEditorManager.Instance.m_chartData.m_lane.Count)
+            if (singleNotes.Count < LevelEditorManager.Instance.chartData.lane.Count)
             {
                 SingleNoteItem item = new SingleNoteItem();
-                item.m_objects = new List<GameObject>();
-                item.m_single = new List<SingleNoteData>();
-                item.m_created = true;
-                m_singleNotes.Add(item);
+                item.objects = new List<GameObject>();
+                item.single = new List<SingleNoteData>();
+                item.created = true;
+                singleNotes.Add(item);
             }
 
-            for (int j = 0; j < LevelEditorManager.Instance.m_chartData.m_lane[i].m_singleNote.Count; j++)
+            for (int j = 0; j < LevelEditorManager.Instance.chartData.lane[i].singleNote.Count; j++)
             {
-                if (m_singleNotes[i].m_single.Count < LevelEditorManager.Instance.m_chartData.m_lane[i].m_singleNote.Count)
+                if (singleNotes[i].single.Count < LevelEditorManager.Instance.chartData.lane[i].singleNote.Count)
                 {
-                    GameObject obj = Instantiate(m_singleNoteDisplayTemplate, transform);
+                    GameObject obj = Instantiate(singleNoteDisplayTemplate, transform);
                     obj.SetActive(true);
-                    m_singleNotes[i].m_objects.Add(obj);
+                    singleNotes[i].objects.Add(obj);
 
-                    SingleNoteData note = LevelEditorManager.Instance.m_chartData.m_lane[i].m_singleNote[j];
+                    SingleNoteData note = LevelEditorManager.Instance.chartData.lane[i].singleNote[j];
 
-                    obj.GetComponent<SingleNoteHolder>().m_heldNote = note;
-                    m_singleNotes[i].m_single.Add(note);
+                    obj.GetComponent<SingleNoteHolder>().heldNote = note;
+                    singleNotes[i].single.Add(note);
                 }
-                m_singleNotes[i].m_objects[j].GetComponent<SingleNoteHolder>().m_laneID = i;
+                singleNotes[i].objects[j].GetComponent<SingleNoteHolder>().laneID = i;
             }
 
             // Rotations
-            if (m_holdNotes.Count < LevelEditorManager.Instance.m_chartData.m_lane.Count)
+            if (holdNotes.Count < LevelEditorManager.Instance.chartData.lane.Count)
             {
                 HoldNoteItem item = new HoldNoteItem();
-                item.m_objects = new List<GameObject>();
-                item.m_hold = new List<HoldNoteData>();
-                item.m_created = true;
-                m_holdNotes.Add(item);
+                item.objects = new List<GameObject>();
+                item.hold = new List<HoldNoteData>();
+                item.created = true;
+                holdNotes.Add(item);
             }
 
-            for (int j = 0; j < LevelEditorManager.Instance.m_chartData.m_lane[i].m_holdNote.Count; j++)
+            for (int j = 0; j < LevelEditorManager.Instance.chartData.lane[i].holdNote.Count; j++)
             {
-                if (m_holdNotes[i].m_hold.Count < LevelEditorManager.Instance.m_chartData.m_lane[i].m_holdNote.Count)
+                if (holdNotes[i].hold.Count < LevelEditorManager.Instance.chartData.lane[i].holdNote.Count)
                 {
-                    GameObject obj = Instantiate(m_holdNoteDisplayTemplate, transform);
+                    GameObject obj = Instantiate(holdNoteDisplayTemplate, transform);
                     obj.SetActive(true);
-                    m_holdNotes[i].m_objects.Add(obj);
+                    holdNotes[i].objects.Add(obj);
 
-                    HoldNoteData note = LevelEditorManager.Instance.m_chartData.m_lane[i].m_holdNote[j];
+                    HoldNoteData note = LevelEditorManager.Instance.chartData.lane[i].holdNote[j];
 
-                    obj.GetComponent<HoldNoteHolder>().m_heldNote = note;
-                    m_holdNotes[i].m_hold.Add(note);
+                    obj.GetComponent<HoldNoteHolder>().heldNote = note;
+                    holdNotes[i].hold.Add(note);
                 }
-                m_holdNotes[i].m_objects[j].GetComponent<HoldNoteHolder>().m_laneID = i;
+                holdNotes[i].objects[j].GetComponent<HoldNoteHolder>().laneID = i;
             }
         }
 
@@ -108,28 +108,28 @@ public class NoteListDisplay : MonoBehaviour
     public void ListInfoDisplay()
     {
         // Now that the things are created, lets uh....populate it?
-        for (int i = 0; i < m_singleNotes.Count; i++)
+        for (int i = 0; i < singleNotes.Count; i++)
         {
-            if (m_singleNotes[i].m_single.Count > 0)
+            if (singleNotes[i].single.Count > 0)
             {
-                m_singleNotes[i].m_single = m_singleNotes[i].m_single.OrderBy(lst => lst.m_beat).ToList();
+                singleNotes[i].single = singleNotes[i].single.OrderBy(lst => lst.beat).ToList();
             }
 
-            for (int j = 0; j < m_singleNotes[i].m_single.Count; j++)
+            for (int j = 0; j < singleNotes[i].single.Count; j++)
             {
-                if (m_singleNotes[i].m_objects[j] != null)
+                if (singleNotes[i].objects[j] != null)
                 {
-                    foreach (Transform child in m_singleNotes[i].m_objects[j].transform)
+                    foreach (Transform child in singleNotes[i].objects[j].transform)
                     {
                         if (child.childCount > 0)
                         {
                             if (child.GetComponent<Text>().text.Contains("Lane"))
                             {
-                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_lanes[i].GetComponent<LaneHandler>().m_identifier.ToString();
+                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.lanes[i].GetComponent<LaneHandler>().identifier.ToString();
                             }
                             else if (child.GetComponent<Text>().text.Contains("Beat"))
                             {
-                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_singleNote[j].m_beat.ToString("0.00");
+                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].singleNote[j].beat.ToString("0.00");
                             }
                         }
                     }
@@ -138,30 +138,30 @@ public class NoteListDisplay : MonoBehaviour
         }
 
         // And holds too
-        for (int i = 0; i < m_holdNotes.Count; i++)
+        for (int i = 0; i < holdNotes.Count; i++)
         {
-            if (m_holdNotes[i].m_hold.Count > 0)
+            if (holdNotes[i].hold.Count > 0)
             {
-                m_holdNotes[i].m_hold = m_holdNotes[i].m_hold.OrderBy(lst => lst.m_beat).ToList();
+                holdNotes[i].hold = holdNotes[i].hold.OrderBy(lst => lst.beat).ToList();
             }
 
-            for (int j = 0; j < m_holdNotes[i].m_hold.Count; j++)
+            for (int j = 0; j < holdNotes[i].hold.Count; j++)
             {
-                foreach (Transform child in m_holdNotes[i].m_objects[j].transform)
+                foreach (Transform child in holdNotes[i].objects[j].transform)
                 {
                     if (child.childCount > 0)
                     {
                         if (child.GetComponent<Text>().text.Contains("Lane"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_lanes[i].GetComponent<LaneHandler>().m_identifier.ToString();
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.lanes[i].GetComponent<LaneHandler>().identifier.ToString();
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_holdNote[j].m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].holdNote[j].beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_holdNote[j].m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].holdNote[j].duration.ToString("0.00");
                         }
                     }
                 }
@@ -173,29 +173,29 @@ public class NoteListDisplay : MonoBehaviour
     {
         // A lane contains of 2 lists of notes
         SingleNoteItem item1 = new SingleNoteItem();
-        item1.m_objects = new List<GameObject>();
-        item1.m_single = new List<SingleNoteData>();
-        item1.m_created = true;
-        m_singleNotes.Add(item1);
+        item1.objects = new List<GameObject>();
+        item1.single = new List<SingleNoteData>();
+        item1.created = true;
+        singleNotes.Add(item1);
 
         HoldNoteItem item2 = new HoldNoteItem();
-        item2.m_objects = new List<GameObject>();
-        item2.m_hold = new List<HoldNoteData>();
-        item2.m_created = true;
-        m_holdNotes.Add(item2);
+        item2.objects = new List<GameObject>();
+        item2.hold = new List<HoldNoteData>();
+        item2.created = true;
+        holdNotes.Add(item2);
     }
 
     public void AddNoteToList(SingleNoteData _newNote, int _lane)
     {
-        GameObject obj = Instantiate(m_singleNoteDisplayTemplate, transform);
-        obj.GetComponent<SingleNoteHolder>().m_laneID = _lane;
-        obj.GetComponent<SingleNoteHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_singleNote.IndexOf(_newNote);
+        GameObject obj = Instantiate(singleNoteDisplayTemplate, transform);
+        obj.GetComponent<SingleNoteHolder>().laneID = _lane;
+        obj.GetComponent<SingleNoteHolder>().indexOfThis = LevelEditorManager.Instance.chartData.lane[_lane].singleNote.IndexOf(_newNote);
         obj.SetActive(true);
 
-        m_singleNotes[_lane].m_objects.Insert(obj.GetComponent<SingleNoteHolder>().m_indexOfThis, obj);
+        singleNotes[_lane].objects.Insert(obj.GetComponent<SingleNoteHolder>().indexOfThis, obj);
 
-        obj.GetComponent<SingleNoteHolder>().m_heldNote = _newNote;
-        m_singleNotes[_lane].m_single.Insert(obj.GetComponent<SingleNoteHolder>().m_indexOfThis, _newNote);
+        obj.GetComponent<SingleNoteHolder>().heldNote = _newNote;
+        singleNotes[_lane].single.Insert(obj.GetComponent<SingleNoteHolder>().indexOfThis, _newNote);
 
         foreach (Transform child in obj.transform)
         {
@@ -207,22 +207,22 @@ public class NoteListDisplay : MonoBehaviour
                 }
                 else if (child.GetComponent<Text>().text.Contains("Beat"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newNote.m_beat.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newNote.beat.ToString("0.00");
                 }
             }
         }
     }
     public void AddNoteToList(HoldNoteData _newNote, int _lane)
     {
-        GameObject obj = Instantiate(m_holdNoteDisplayTemplate, transform);
-        obj.GetComponent<HoldNoteHolder>().m_laneID = _lane;
-        obj.GetComponent<HoldNoteHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_holdNote.IndexOf(_newNote);
+        GameObject obj = Instantiate(holdNoteDisplayTemplate, transform);
+        obj.GetComponent<HoldNoteHolder>().laneID = _lane;
+        obj.GetComponent<HoldNoteHolder>().indexOfThis = LevelEditorManager.Instance.chartData.lane[_lane].holdNote.IndexOf(_newNote);
         obj.SetActive(true);
 
-        m_holdNotes[_lane].m_objects.Insert(obj.GetComponent<HoldNoteHolder>().m_indexOfThis, obj);
+        holdNotes[_lane].objects.Insert(obj.GetComponent<HoldNoteHolder>().indexOfThis, obj);
 
-        obj.GetComponent<HoldNoteHolder>().m_heldNote = _newNote;
-        m_holdNotes[_lane].m_hold.Insert(obj.GetComponent<HoldNoteHolder>().m_indexOfThis, _newNote);
+        obj.GetComponent<HoldNoteHolder>().heldNote = _newNote;
+        holdNotes[_lane].hold.Insert(obj.GetComponent<HoldNoteHolder>().indexOfThis, _newNote);
 
         foreach (Transform child in obj.transform)
         {
@@ -234,11 +234,11 @@ public class NoteListDisplay : MonoBehaviour
                 }
                 else if (child.GetComponent<Text>().text.Contains("Beat"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newNote.m_beat.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newNote.beat.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Duration"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newNote.m_duration.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newNote.duration.ToString("0.00");
                 }
             }
         }
@@ -246,12 +246,12 @@ public class NoteListDisplay : MonoBehaviour
 
     public void EditNote(SingleNoteData _newNote, SingleNoteHolder _holder)
     {
-        int lane = _holder.m_laneID;
-        for (int i = 0; i < m_singleNotes[lane].m_objects.Count; i++)
+        int lane = _holder.laneID;
+        for (int i = 0; i < singleNotes[lane].objects.Count; i++)
         {
-            if (_holder == m_singleNotes[lane].m_objects[i].GetComponent<SingleNoteHolder>())
+            if (_holder == singleNotes[lane].objects[i].GetComponent<SingleNoteHolder>())
             {
-                foreach (Transform child in m_singleNotes[lane].m_objects[i].transform)
+                foreach (Transform child in singleNotes[lane].objects[i].transform)
                 {
                     if (child.childCount > 0)
                     {
@@ -261,7 +261,7 @@ public class NoteListDisplay : MonoBehaviour
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newNote.m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newNote.beat.ToString("0.00");
                         }
                     }
                 }
@@ -270,12 +270,12 @@ public class NoteListDisplay : MonoBehaviour
     }
     public void EditNote(HoldNoteData _newNote, HoldNoteHolder _holder)
     {
-        int lane = _holder.m_laneID;
-        for (int i = 0; i < m_holdNotes[lane].m_objects.Count; i++)
+        int lane = _holder.laneID;
+        for (int i = 0; i < holdNotes[lane].objects.Count; i++)
         {
-            if (_holder == m_holdNotes[lane].m_objects[i].GetComponent<HoldNoteHolder>())
+            if (_holder == holdNotes[lane].objects[i].GetComponent<HoldNoteHolder>())
             {
-                foreach (Transform child in m_holdNotes[lane].m_objects[i].transform)
+                foreach (Transform child in holdNotes[lane].objects[i].transform)
                 {
                     if (child.childCount > 0)
                     {
@@ -285,11 +285,11 @@ public class NoteListDisplay : MonoBehaviour
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newNote.m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newNote.beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newNote.m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newNote.duration.ToString("0.00");
                         }
                     }
                 }

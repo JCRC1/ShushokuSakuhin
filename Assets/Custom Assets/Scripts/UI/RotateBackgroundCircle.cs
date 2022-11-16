@@ -9,18 +9,18 @@ public class RotateBackgroundCircle : MonoBehaviour
     {
         if (LevelEditorManager.Instance)
         {
-            if (LevelEditorManager.Instance.m_trackPos > 0)
+            if (LevelEditorManager.Instance.trackPos > 0)
             {
-                gameObject.transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 360, LevelEditorManager.Instance.m_loopPosInAnalog));
+                gameObject.transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 360, LevelEditorManager.Instance.loopPosInAnalog));
             }
         }
         else
         {
-            if (GameManager.Instance.m_trackPos > 0)
+            if (GameManager.Instance.trackPos > 0)
             {
-                gameObject.transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 360, GameManager.Instance.m_loopPosInAnalog));
+                gameObject.transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 360, GameManager.Instance.loopPosInAnalog));
             }
-            if (GameManager.Instance.m_finalized)
+            if (GameManager.Instance.finalized)
             {
                 GetComponent<Animator>().SetTrigger("Finalized");
             }

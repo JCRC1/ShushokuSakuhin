@@ -5,38 +5,38 @@ using UnityEngine.UI;
 
 public class LengthEventEditor : MonoBehaviour
 {
-    public LaneEventLength m_selectedEvent;
+    public LaneEventLength selectedEvent;
 
-    public InputField m_eventLane;
-    public InputField m_eventBeat;
-    public InputField m_targetLength;
-    public InputField m_duration;
-    public Dropdown m_easeType;
+    public InputField eventLane;
+    public InputField eventBeat;
+    public InputField targetLength;
+    public InputField duration;
+    public Dropdown easeType;
 
-    public SelectedEventEditor m_holder;
+    public SelectedEventEditor holder;
 
     public void SetLengthEvent(SelectedEventEditor _holder)
     {
-        if (_holder.m_selectedLengthEvent != null)
+        if (_holder.selectedLengthEvent != null)
         {
-            m_holder = _holder;
-            m_selectedEvent = _holder.m_selectedLengthEvent.m_heldLaneEvent;
+            holder = _holder;
+            selectedEvent = _holder.selectedLengthEvent.heldLaneEvent;
 
-            m_eventLane.text = _holder.m_selectedLengthEvent.m_laneID.ToString();
-            m_eventBeat.text = _holder.m_selectedLengthEvent.m_heldLaneEvent.m_beat.ToString();
-            m_targetLength.text = _holder.m_selectedLengthEvent.m_heldLaneEvent.m_targetLength.ToString();
-            m_duration.text = _holder.m_selectedLengthEvent.m_heldLaneEvent.m_duration.ToString();
-            m_easeType.value = (int)_holder.m_selectedLengthEvent.m_heldLaneEvent.m_easeType;
+            eventLane.text = _holder.selectedLengthEvent.laneID.ToString();
+            eventBeat.text = _holder.selectedLengthEvent.heldLaneEvent.beat.ToString();
+            targetLength.text = _holder.selectedLengthEvent.heldLaneEvent.targetLength.ToString();
+            duration.text = _holder.selectedLengthEvent.heldLaneEvent.duration.ToString();
+            easeType.value = (int)_holder.selectedLengthEvent.heldLaneEvent.easeType;
         }
     }
 
     public void ConfirmLengthEdit()
     {
-        m_selectedEvent.m_beat = float.Parse(m_eventBeat.text);
-        m_selectedEvent.m_targetLength = float.Parse(m_targetLength.text);
-        m_selectedEvent.m_duration = float.Parse(m_duration.text);
-        m_selectedEvent.m_easeType = (LaneEvent.EaseType)m_easeType.value;
+        selectedEvent.beat = float.Parse(eventBeat.text);
+        selectedEvent.targetLength = float.Parse(targetLength.text);
+        selectedEvent.duration = float.Parse(duration.text);
+        selectedEvent.easeType = (LaneEvent.EaseType)easeType.value;
 
-        EventListDisplay.Instance.EditEvent(m_selectedEvent, m_holder.m_selectedLengthEvent);
+        EventListDisplay.Instance.EditEvent(selectedEvent, holder.selectedLengthEvent);
     }
 }

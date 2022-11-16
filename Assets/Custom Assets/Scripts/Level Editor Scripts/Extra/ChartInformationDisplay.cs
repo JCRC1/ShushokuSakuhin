@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class ChartInformationDisplay : MonoBehaviour
 {
-    public InputField m_trackName;
-    public InputField m_trackArtist;
-    public InputField m_trackBPM;
-    public InputField m_trackOffset;
-    public Dropdown m_difficulty;
+    public InputField trackName;
+    public InputField trackArtist;
+    public InputField trackBPM;
+    public InputField trackOffset;
+    public Dropdown difficulty;
 
     public void DisplayChartInfo()
     {
-        m_trackName.text = LevelEditorManager.Instance.m_chartData.m_trackName;
-        m_trackArtist.text = LevelEditorManager.Instance.m_chartData.m_trackArtist;
-        m_trackBPM.text = LevelEditorManager.Instance.m_chartData.m_trackBPM.ToString();
-        m_trackOffset.text = LevelEditorManager.Instance.m_chartData.m_trackOffset.ToString("0.000");
-        m_difficulty.value = LevelEditorManager.Instance.m_chartData.m_trackDifficulty;
+        trackName.text = LevelEditorManager.Instance.chartData.trackName;
+        trackArtist.text = LevelEditorManager.Instance.chartData.trackArtist;
+        trackBPM.text = LevelEditorManager.Instance.chartData.trackBPM.ToString();
+        trackOffset.text = LevelEditorManager.Instance.chartData.trackOffset.ToString("0.000");
+        difficulty.value = LevelEditorManager.Instance.chartData.trackDifficulty;
     }
 }

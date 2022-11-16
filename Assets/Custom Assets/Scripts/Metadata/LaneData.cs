@@ -8,18 +8,18 @@ using UnityEngine;
 [System.Serializable]
 public class LaneData
 {
-    public Vector2                      m_initialPosition;
-    public float                        m_initialRotation;      // Z Axis
-    public float                        m_initialAlpha = 1.0f;
-    public float                        m_initialLength = 10.0f;
+    public Vector2                      initialPosition;
+    public float                        initialRotation;      // Z Axis
+    public float                        initialAlpha = 1.0f;
+    public float                        initialLength = 10.0f;
 
     // Notes on this lane
-    public List<SingleNoteData>               m_singleNote;
-    public List<HoldNoteData>                 m_holdNote;
+    public List<SingleNoteData>               singleNote;
+    public List<HoldNoteData>                 holdNote;
 
     // Lane events
-    public List<LaneEventMovement>      m_laneEventsMovement;
-    public List<LaneEventRotation>      m_laneEventsRotation;
-    public List<LaneEventFade>          m_laneEventFade;
-    public List<LaneEventLength>        m_laneEventLength;
+    public List<LaneEventMovement>      laneEventsMovement;
+    public List<LaneEventRotation>      laneEventsRotation;
+    public List<LaneEventFade>          laneEventFade;
+    public List<LaneEventLength>        laneEventLength;
 }

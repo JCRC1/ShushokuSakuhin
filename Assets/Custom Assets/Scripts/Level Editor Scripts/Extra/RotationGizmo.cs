@@ -4,90 +4,90 @@ using UnityEngine;
 
 public class RotationGizmo : MonoBehaviour
 {
-    public GameObject m_targetObject;
+    public GameObject targetObject;
 
-    public bool m_operating;
-    public bool m_isDrag;
-    private float m_offsetAngle;
+    public bool operating;
+    public bool isDrag;
+    private float offsetAngle;
 
-    private float m_angle;
-    public float m_currentAngle;            // This is the one we want
-    private float m_prevAngle;
-    private float m_actualAngle;
+    private float angle;
+    public float currentAngle;            // This is the one we want
+    private float prevAngle;
+    private float actualAngle;
 
-    private int m_revolutions;
-    private float m_currentSign;
-    private float m_prevSign;
+    private int revolutions;
+    private float currentSign;
+    private float prevSign;
 
-    public Vector2 m_pivot;
+    public Vector2 pivot;
 
     private void OnMouseDown()
     {
-        m_isDrag = true;
+        isDrag = true;
 
-        Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - m_targetObject.transform.position;
-        m_offsetAngle = (Mathf.Atan2(m_targetObject.transform.right.y, m_targetObject.transform.right.x) - Mathf.Atan2(vec.y, vec.x)) * Mathf.Rad2Deg;
+        Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - targetObject.transform.position;
+        offsetAngle = (Mathf.Atan2(targetObject.transform.right.y, targetObject.transform.right.x) - Mathf.Atan2(vec.y, vec.x)) * Mathf.Rad2Deg;
     }
 
     private void OnMouseUp()
     {
-        m_isDrag = false;
-        m_revolutions = 0;
+        isDrag = false;
+        revolutions = 0;
     }
 
     public void SetTargetObject(GameObject _target)
     {
-        m_targetObject = _target;
+        targetObject = _target;
     }
 
     private void Update()
     {
-        m_prevAngle = m_angle;
-        m_prevSign = m_currentSign;
+        prevAngle = angle;
+        prevSign = currentSign;
 
-        if (m_operating && m_targetObject)
+        if (operating && targetObject)
         {
-            transform.parent.transform.position = m_targetObject.transform.position;
-            transform.position = m_targetObject.transform.position;
-            transform.parent.transform.rotation = m_targetObject.transform.rotation;
+            transform.parent.transform.position = targetObject.transform.position;
+            transform.position = targetObject.transform.position;
+            transform.parent.transform.rotation = targetObject.transform.rotation;
         }
 
-        if (m_isDrag)
+        if (isDrag)
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - m_targetObject.transform.position;
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - targetObject.transform.position;
 
-            //m_angle = Vector2.SignedAngle(mousePosition, Vector2.up);
-            m_angle = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg;
-            m_currentSign = Vector2.Dot(mousePosition, Vector2.up);
+            //angle = Vector2.SignedAngle(mousePosition, Vector2.up);
+            angle = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg;
+            currentSign = Vector2.Dot(mousePosition, Vector2.up);
 
-            if (m_angle < 0)
+            if (angle < 0)
             {
-                m_angle = 360 - m_angle * -1;
+                angle = 360 - angle * -1;
             }
 
-            if (m_prevAngle > 270 && m_prevAngle < 360 && m_prevSign < 0 && m_currentSign > 0)
+            if (prevAngle > 270 && prevAngle < 360 && prevSign < 0 && currentSign > 0)
             {
-                m_revolutions++;
+                revolutions++;
             }
-            if (m_prevAngle < 90 && m_prevAngle > 0 && m_prevSign > 0 && m_currentSign < 0)
+            if (prevAngle < 90 && prevAngle > 0 && prevSign > 0 && currentSign < 0)
             {
-                m_revolutions--;
+                revolutions--;
             }
 
-            m_currentAngle = m_targetObject.transform.eulerAngles.z + 360 * m_revolutions;
-            m_actualAngle = m_angle + 360 * m_revolutions;
+            currentAngle = targetObject.transform.eulerAngles.z + 360 * revolutions;
+            actualAngle = angle + 360 * revolutions;
 
-            //m_targetObject.transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_actualAngle + m_offsetAngle);
+            //targetObject.transform.rotation = Quaternion.Euler(0.0f, 0.0f, actualAngle + offsetAngle);
 
-            Quaternion rot = Quaternion.Euler(0.0f, 0.0f, m_actualAngle + m_offsetAngle);
-            //m_targetObject.transform.position = rot * (m_targetObject.transform.position - (Vector3)m_pivot) + (Vector3)m_pivot;
-            m_targetObject.transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_actualAngle + m_offsetAngle);
+            Quaternion rot = Quaternion.Euler(0.0f, 0.0f, actualAngle + offsetAngle);
+            //targetObject.transform.position = rot * (targetObject.transform.position - (Vector3)pivot) + (Vector3)pivot;
+            targetObject.transform.rotation = Quaternion.Euler(0.0f, 0.0f, actualAngle + offsetAngle);
 
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                float z = m_targetObject.transform.eulerAngles.z;
+                float z = targetObject.transform.eulerAngles.z;
 
-                m_targetObject.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Mathf.Round(z / 15.0f) * 15));
+                targetObject.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Mathf.Round(z / 15.0f) * 15));
             }
         }
     }

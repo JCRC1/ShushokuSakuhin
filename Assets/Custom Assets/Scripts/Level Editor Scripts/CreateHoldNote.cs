@@ -8,17 +8,17 @@ public class CreateHoldNote : MonoBehaviour
 {
     public HoldNoteData newNote;
 
-    public InputField m_durationInput;
+    public InputField durationInput;
 
     public void NewNote()
     {
         newNote = new HoldNoteData();
-        float.TryParse(Seekbar.Instance.m_currentBeatText[2].text, out newNote.m_beat);
-        float.TryParse(m_durationInput.text, out newNote.m_duration);
-        int id = LaneEditor.Instance.m_selectedLane.m_identifier;
+        float.TryParse(Seekbar.Instance.currentBeatText[2].text, out newNote.beat);
+        float.TryParse(durationInput.text, out newNote.duration);
+        int id = LaneEditor.Instance.selectedLane.identifier;
 
-        LevelEditorManager.Instance.m_chartData.m_lane[id].m_holdNote.Add(newNote);
-        LevelEditorManager.Instance.m_chartData.m_lane[id].m_holdNote = LevelEditorManager.Instance.m_chartData.m_lane[id].m_holdNote.OrderBy(lst => lst.m_beat).ToList();
+        LevelEditorManager.Instance.chartData.lane[id].holdNote.Add(newNote);
+        LevelEditorManager.Instance.chartData.lane[id].holdNote = LevelEditorManager.Instance.chartData.lane[id].holdNote.OrderBy(lst => lst.beat).ToList();
 
         NoteListDisplay.Instance.AddNoteToList(newNote, id);
     }

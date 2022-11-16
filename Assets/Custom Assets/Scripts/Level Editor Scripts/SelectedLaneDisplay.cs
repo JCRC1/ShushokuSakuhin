@@ -8,26 +8,26 @@ public class SelectedLaneDisplay : MonoBehaviour
     public static SelectedLaneDisplay Instance;
 
     // Contains reference to the display boxes
-    public InputField[] m_indexDisplay;
+    public InputField[] indexDisplay;
 
-    public InputField m_moveToXDisplay;
-    public InputField m_moveToYDisplay;
-    public InputField m_movementDurationDisplay;
-    public Dropdown m_movementEaseSelect;
+    public InputField moveToXDisplay;
+    public InputField moveToYDisplay;
+    public InputField movementDurationDisplay;
+    public Dropdown movementEaseSelect;
 
-    public InputField m_angleDisplay;
-    public InputField m_rotationDurationDisplay;
-    public Toggle m_pivotToggle;
-    public Dropdown m_rotationEaseSelect;
+    public InputField angleDisplay;
+    public InputField rotationDurationDisplay;
+    public Toggle pivotToggle;
+    public Dropdown rotationEaseSelect;
 
-    public InputField m_targetAlphaDisplay;
-    public InputField m_fadeDurationDisplay;
-    public Toggle m_fadeNotesToggle;
-    public Dropdown m_fadeEaseSelect;
+    public InputField targetAlphaDisplay;
+    public InputField fadeDurationDisplay;
+    public Toggle fadeNotesToggle;
+    public Dropdown fadeEaseSelect;
 
-    public InputField m_targetLengthDisplay;
-    public InputField m_lengthDurationDisplay;
-    public Dropdown m_lengthEaseSelect;
+    public InputField targetLengthDisplay;
+    public InputField lengthDurationDisplay;
+    public Dropdown lengthEaseSelect;
 
     private void Awake()
     {
@@ -37,20 +37,20 @@ public class SelectedLaneDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!ManualButton.m_manualBeatInput)
+        if (!ManualButton.manualBeatInput)
         {
-            if (LaneEditor.Instance.m_selectedLane)
+            if (LaneEditor.Instance.selectedLane)
             {
-                for (int i = 0; i < m_indexDisplay.Length; i++)
+                for (int i = 0; i < indexDisplay.Length; i++)
                 {
-                    m_indexDisplay[i].text = LaneEditor.Instance.m_selectedLane.m_identifier.ToString();
+                    indexDisplay[i].text = LaneEditor.Instance.selectedLane.identifier.ToString();
                 }
             }
             else
             {
-                for (int i = 0; i < m_indexDisplay.Length; i++)
+                for (int i = 0; i < indexDisplay.Length; i++)
                 {
-                    m_indexDisplay[i].text = "None";
+                    indexDisplay[i].text = "None";
                 }
             }
         }

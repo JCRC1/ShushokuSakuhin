@@ -1,265 +1,265 @@
 {
-    "m_trackAudioPath": "Apocaliptix/Apocaliptix",
-    "m_trackCoverArtPath": "Apocaliptix/Apocaliptix_Image",
-    "m_trackName": "Apocaliptix",
-    "m_trackArtist": "Juggernaut.",
-    "m_trackDifficulty": 0,
-    "m_trackOffset": 1.1428571939468384,
-    "m_trackBPM": 210.0,
-    "m_lane": [
+    "trackAudioPath": "Apocaliptix/Apocaliptix",
+    "trackCoverArtPath": "Apocaliptix/Apocaliptix_Image",
+    "trackName": "Apocaliptix",
+    "trackArtist": "Juggernaut.",
+    "trackDifficulty": 0,
+    "trackOffset": 1.1428571939468384,
+    "trackBPM": 210.0,
+    "lane": [
         {
-            "m_initialPosition": {
+            "initialPosition": {
                 "x": 21.0,
                 "y": 13.0
             },
-            "m_initialRotation": 0.0,
-            "m_initialAlpha": 1.0,
-            "m_initialLength": 10.0,
-            "m_singleNote": [
+            "initialRotation": 0.0,
+            "initialAlpha": 1.0,
+            "initialLength": 10.0,
+            "singleNote": [
                 {
-                    "m_beat": 64.5
+                    "beat": 64.5
                 }
             ],
-            "m_laneEventsMovement": [
+            "laneEventsMovement": [
                 {
-                    "m_beat": -4.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetPosition": {
+                    "beat": -4.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetPosition": {
                         "x": -16.0,
                         "y": -9.0
                     }
                 },
                 {
-                    "m_beat": 0.0,
-                    "m_duration": 16.0,
-                    "m_easeType": 3,
-                    "m_targetPosition": {
+                    "beat": 0.0,
+                    "duration": 16.0,
+                    "easeType": 3,
+                    "targetPosition": {
                         "x": 0.0,
                         "y": -9.0
                     }
                 },
                 {
-                    "m_beat": 16.0,
-                    "m_duration": 16.0,
-                    "m_easeType": 2,
-                    "m_targetPosition": {
+                    "beat": 16.0,
+                    "duration": 16.0,
+                    "easeType": 2,
+                    "targetPosition": {
                         "x": 16.0,
                         "y": -9.0
                     }
                 },
                 {
-                    "m_beat": 32.0,
-                    "m_duration": 32.0,
-                    "m_easeType": 1,
-                    "m_targetPosition": {
+                    "beat": 32.0,
+                    "duration": 32.0,
+                    "easeType": 1,
+                    "targetPosition": {
                         "x": -16.0,
                         "y": -9.0
                     }
                 }
             ],
-            "m_laneEventsRotation": [
+            "laneEventsRotation": [
                 {
-                    "m_beat": -4.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetRotation": 90.0,
-                    "m_pivotAtEnd": false
+                    "beat": -4.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetRotation": 90.0,
+                    "pivotAtEnd": false
                 }
             ],
-            "m_laneEventFade": [
+            "laneEventFade": [
                 {
-                    "m_beat": -4.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetAlpha": 0.0,
-                    "m_fadeNotes": true
+                    "beat": -4.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetAlpha": 0.0,
+                    "fadeNotes": true
                 },
                 {
-                    "m_beat": 0.0,
-                    "m_duration": 0.5,
-                    "m_easeType": 2,
-                    "m_targetAlpha": 1.0,
-                    "m_fadeNotes": true
+                    "beat": 0.0,
+                    "duration": 0.5,
+                    "easeType": 2,
+                    "targetAlpha": 1.0,
+                    "fadeNotes": true
                 }
             ],
-            "m_laneEventLength": [
+            "laneEventLength": [
                 {
-                    "m_beat": -4.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetLength": 0.0
+                    "beat": -4.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetLength": 0.0
                 },
                 {
-                    "m_beat": 0.0,
-                    "m_duration": 0.5,
-                    "m_easeType": 0,
-                    "m_targetLength": 10.0
+                    "beat": 0.0,
+                    "duration": 0.5,
+                    "easeType": 0,
+                    "targetLength": 10.0
                 }
             ]
         },
         {
-            "m_initialPosition": {
+            "initialPosition": {
                 "x": 21.0,
                 "y": 13.0
             },
-            "m_initialRotation": 0.0,
-            "m_initialAlpha": 1.0,
-            "m_initialLength": 10.0,
-            "m_singleNote": [
+            "initialRotation": 0.0,
+            "initialAlpha": 1.0,
+            "initialLength": 10.0,
+            "singleNote": [
                 {
-                    "m_beat": 40.5
+                    "beat": 40.5
                 }
             ],
-            "m_laneEventsMovement": [
+            "laneEventsMovement": [
                 {
-                    "m_beat": 32.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetPosition": {
+                    "beat": 32.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetPosition": {
                         "x": 16.0,
                         "y": -9.0
                     }
                 }
             ],
-            "m_laneEventsRotation": [
+            "laneEventsRotation": [
                 {
-                    "m_beat": 32.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetRotation": 90.0,
-                    "m_pivotAtEnd": false
+                    "beat": 32.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetRotation": 90.0,
+                    "pivotAtEnd": false
                 }
             ],
-            "m_laneEventFade": [],
-            "m_laneEventLength": [
+            "laneEventFade": [],
+            "laneEventLength": [
                 {
-                    "m_beat": 32.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetLength": 0.0
+                    "beat": 32.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetLength": 0.0
                 },
                 {
-                    "m_beat": 32.0,
-                    "m_duration": 3.5,
-                    "m_easeType": 2,
-                    "m_targetLength": 3.0
+                    "beat": 32.0,
+                    "duration": 3.5,
+                    "easeType": 2,
+                    "targetLength": 3.0
                 },
                 {
-                    "m_beat": 35.5,
-                    "m_duration": 0.5,
-                    "m_easeType": 2,
-                    "m_targetLength": 10.0
+                    "beat": 35.5,
+                    "duration": 0.5,
+                    "easeType": 2,
+                    "targetLength": 10.0
                 }
             ]
         },
         {
-            "m_initialPosition": {
+            "initialPosition": {
                 "x": 21.0,
                 "y": 13.0
             },
-            "m_initialRotation": 0.0,
-            "m_initialAlpha": 1.0,
-            "m_initialLength": 10.0,
-            "m_singleNote": [
+            "initialRotation": 0.0,
+            "initialAlpha": 1.0,
+            "initialLength": 10.0,
+            "singleNote": [
                 {
-                    "m_beat": 48.5
+                    "beat": 48.5
                 }
             ],
-            "m_laneEventsMovement": [
+            "laneEventsMovement": [
                 {
-                    "m_beat": 40.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetPosition": {
+                    "beat": 40.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetPosition": {
                         "x": 11.0,
                         "y": -9.0
                     }
                 }
             ],
-            "m_laneEventsRotation": [
+            "laneEventsRotation": [
                 {
-                    "m_beat": 40.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetRotation": 90.0,
-                    "m_pivotAtEnd": false
+                    "beat": 40.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetRotation": 90.0,
+                    "pivotAtEnd": false
                 }
             ],
-            "m_laneEventFade": [],
-            "m_laneEventLength": [
+            "laneEventFade": [],
+            "laneEventLength": [
                 {
-                    "m_beat": 40.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetLength": 0.0
+                    "beat": 40.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetLength": 0.0
                 },
                 {
-                    "m_beat": 40.0,
-                    "m_duration": 3.5,
-                    "m_easeType": 2,
-                    "m_targetLength": 3.0
+                    "beat": 40.0,
+                    "duration": 3.5,
+                    "easeType": 2,
+                    "targetLength": 3.0
                 },
                 {
-                    "m_beat": 43.5,
-                    "m_duration": 0.5,
-                    "m_easeType": 2,
-                    "m_targetLength": 10.0
+                    "beat": 43.5,
+                    "duration": 0.5,
+                    "easeType": 2,
+                    "targetLength": 10.0
                 }
             ]
         },
         {
-            "m_initialPosition": {
+            "initialPosition": {
                 "x": 21.0,
                 "y": 13.0
             },
-            "m_initialRotation": 0.0,
-            "m_initialAlpha": 1.0,
-            "m_initialLength": 10.0,
-            "m_singleNote": [
+            "initialRotation": 0.0,
+            "initialAlpha": 1.0,
+            "initialLength": 10.0,
+            "singleNote": [
                 {
-                    "m_beat": 56.5
+                    "beat": 56.5
                 }
             ],
-            "m_laneEventsMovement": [
+            "laneEventsMovement": [
                 {
-                    "m_beat": 48.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetPosition": {
+                    "beat": 48.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetPosition": {
                         "x": 0.0,
                         "y": -9.0
                     }
                 }
             ],
-            "m_laneEventsRotation": [
+            "laneEventsRotation": [
                 {
-                    "m_beat": 48.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetRotation": 90.0,
-                    "m_pivotAtEnd": false
+                    "beat": 48.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetRotation": 90.0,
+                    "pivotAtEnd": false
                 }
             ],
-            "m_laneEventFade": [],
-            "m_laneEventLength": [
+            "laneEventFade": [],
+            "laneEventLength": [
                 {
-                    "m_beat": 48.0,
-                    "m_duration": 0.0,
-                    "m_easeType": 0,
-                    "m_targetLength": 0.0
+                    "beat": 48.0,
+                    "duration": 0.0,
+                    "easeType": 0,
+                    "targetLength": 0.0
                 },
                 {
-                    "m_beat": 48.0,
-                    "m_duration": 3.5,
-                    "m_easeType": 2,
-                    "m_targetLength": 3.0
+                    "beat": 48.0,
+                    "duration": 3.5,
+                    "easeType": 2,
+                    "targetLength": 3.0
                 },
                 {
-                    "m_beat": 51.5,
-                    "m_duration": 0.5,
-                    "m_easeType": 2,
-                    "m_targetLength": 10.0
+                    "beat": 51.5,
+                    "duration": 0.5,
+                    "easeType": 2,
+                    "targetLength": 10.0
                 }
             ]
         }

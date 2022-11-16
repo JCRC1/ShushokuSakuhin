@@ -4,78 +4,78 @@ using UnityEngine;
 
 public class SelectedNoteEditor : MonoBehaviour
 {
-    public SingleNoteHolder m_selectedSingleNote;
-    public HoldNoteHolder m_selectedHoldNote;
+    public SingleNoteHolder selectedSingleNote;
+    public HoldNoteHolder selectedHoldNote;
 
     public void SelectSingleNote(SingleNoteHolder _holder)
     {
-        m_selectedSingleNote = _holder;
-        m_selectedHoldNote = null;
+        selectedSingleNote = _holder;
+        selectedHoldNote = null;
     }
 
     public void SelectHoldNote(HoldNoteHolder _holder)
     {
-        m_selectedSingleNote = null;
-        m_selectedHoldNote = _holder;
+        selectedSingleNote = null;
+        selectedHoldNote = _holder;
     }
 
     public void RemoveFromList()
     {
-        if (m_selectedSingleNote)
+        if (selectedSingleNote)
         {
             // References to all the members we actually need, though mostly for making things less spaghetti
-            ChartData chart = LevelEditorManager.Instance.m_chartData;
-            SingleNoteData singleNote = m_selectedSingleNote.m_heldNote;
-            int noteIndex = m_selectedSingleNote.m_indexOfThis;
-            int lane = m_selectedSingleNote.m_laneID;
-            GameObject item = NoteListDisplay.Instance.m_singleNotes[lane].m_objects[noteIndex];
-            GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
+            ChartData chart = LevelEditorManager.Instance.chartData;
+            SingleNoteData singleNote = selectedSingleNote.heldNote;
+            int noteIndex = selectedSingleNote.indexOfThis;
+            int lane = selectedSingleNote.laneID;
+            GameObject item = NoteListDisplay.Instance.singleNotes[lane].objects[noteIndex];
+            GameObject correspondingLane = LevelEditorManager.Instance.lanes[lane];
 
             // Lower the index by one
-            correspondingLane.GetComponent<LaneHandler>().m_nextSingleNoteIndex--;
+            correspondingLane.GetComponent<LaneHandler>().nextSingleNoteIndex--;
 
             // Remove this from all the lists
-            NoteListDisplay.Instance.m_singleNotes[lane].m_single.Remove(singleNote);
-            NoteListDisplay.Instance.m_singleNotes[lane].m_objects.Remove(item);
-            chart.m_lane[lane].m_singleNote.Remove(singleNote);
+            NoteListDisplay.Instance.singleNotes[lane].single.Remove(singleNote);
+            NoteListDisplay.Instance.singleNotes[lane].objects.Remove(item);
+            chart.lane[lane].singleNote.Remove(singleNote);
             Destroy(item);
 
             // Remove from Lane's note queue
-            List<SingleNoteHandler> noteList = new List<SingleNoteHandler>(LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_singleNotes);
+            List<SingleNoteHandler> noteList = new List<SingleNoteHandler>(LevelEditorManager.Instance.lanes[lane].GetComponent<LaneHandler>().singleNotes);
             noteList[noteIndex].gameObject.SetActive(false);
             noteList.RemoveAt(noteIndex);
-            LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_singleNotes = new Queue<SingleNoteHandler>(noteList);
+            LevelEditorManager.Instance.lanes[lane].GetComponent<LaneHandler>().singleNotes = new Queue<SingleNoteHandler>(noteList);
         }
-        else if (m_selectedHoldNote)
+        else if (selectedHoldNote)
         {
             // References to all the members we actually need, though mostly for making things less spaghetti
-            ChartData chart = LevelEditorManager.Instance.m_chartData;
-            HoldNoteData holdNote = m_selectedHoldNote.m_heldNote;
-            int noteIndex = m_selectedHoldNote.m_indexOfThis;
-            int lane = m_selectedHoldNote.m_laneID;
-            GameObject item = NoteListDisplay.Instance.m_holdNotes[lane].m_objects[noteIndex];
-            GameObject correspondingLane = LevelEditorManager.Instance.m_lanes[lane];
+            ChartData chart = LevelEditorManager.Instance.chartData;
+            HoldNoteData holdNote = selectedHoldNote.heldNote;
+            int noteIndex = selectedHoldNote.indexOfThis;
+            int lane = selectedHoldNote.laneID;
+            GameObject item = NoteListDisplay.Instance.holdNotes[lane].objects[noteIndex];
+            GameObject correspondingLane = LevelEditorManager.Instance.lanes[lane];
 
             // Lower the index by one
-            correspondingLane.GetComponent<LaneHandler>().m_nextHoldNoteIndex--;
+            correspondingLane.GetComponent<LaneHandler>().nextHoldNoteIndex--;
 
             // Remove this from all the lists
-            NoteListDisplay.Instance.m_holdNotes[lane].m_hold.Remove(holdNote);
-            NoteListDisplay.Instance.m_holdNotes[lane].m_objects.Remove(item);
-            chart.m_lane[lane].m_holdNote.Remove(holdNote);
+            NoteListDisplay.Instance.holdNotes[lane].hold.Remove(holdNote);
+            NoteListDisplay.Instance.holdNotes[lane].objects.Remove(item);
+            chart.lane[lane].holdNote.Remove(holdNote);
             Destroy(item);
 
             // Remove from Lane's note queue
-            List<HoldNoteHandler> noteList = new List<HoldNoteHandler>(LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_holdNotes);
+            List<HoldNoteHandler> noteList = new List<HoldNoteHandler>(LevelEditorManager.Instance.lanes[lane].GetComponent<LaneHandler>().holdNotes);
             noteList[noteIndex].gameObject.SetActive(false);
             noteList.RemoveAt(noteIndex);
-            LevelEditorManager.Instance.m_lanes[lane].GetComponent<LaneHandler>().m_holdNotes = new Queue<HoldNoteHandler>(noteList);
+            LevelEditorManager.Instance.lanes[lane].GetComponent<LaneHandler>().holdNotes = new Queue<HoldNoteHandler>(noteList);
         }
     }
 
     public void EditSingleNote(GameObject _display)
     {
-        if (m_selectedSingleNote)
+        if (selectedSingleNote)
         {
             _display.SetActive(true);
         }
@@ -83,7 +83,7 @@ public class SelectedNoteEditor : MonoBehaviour
 
     public void EditHoldNote(GameObject _display)
     {
-        if (m_selectedHoldNote)
+        if (selectedHoldNote)
         {
             _display.SetActive(true);
         }
@@ -91,13 +91,13 @@ public class SelectedNoteEditor : MonoBehaviour
 
     public void SeekToSelectedNote()
     {
-        if (m_selectedSingleNote)
+        if (selectedSingleNote)
         {
-            LevelEditorManager.Instance.m_audioSource.time = (LevelEditorManager.Instance.m_secPerBeat * (m_selectedSingleNote.m_heldNote.m_beat - 4)) + LevelEditorManager.Instance.m_chartData.m_trackOffset;
+            LevelEditorManager.Instance.audioSource.time = (LevelEditorManager.Instance.secPerBeat * (selectedSingleNote.heldNote.beat - 4)) + LevelEditorManager.Instance.chartData.trackOffset;
         }
-        else if (m_selectedHoldNote)
+        else if (selectedHoldNote)
         {
-            LevelEditorManager.Instance.m_audioSource.time = (LevelEditorManager.Instance.m_secPerBeat * (m_selectedHoldNote.m_heldNote.m_beat - 4)) + LevelEditorManager.Instance.m_chartData.m_trackOffset;
+            LevelEditorManager.Instance.audioSource.time = (LevelEditorManager.Instance.secPerBeat * (selectedHoldNote.heldNote.beat - 4)) + LevelEditorManager.Instance.chartData.trackOffset;
         }
     }
 }

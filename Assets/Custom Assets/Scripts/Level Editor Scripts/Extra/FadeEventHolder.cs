@@ -5,12 +5,12 @@ using UnityEngine;
 public class FadeEventHolder : MonoBehaviour
 {
     // Which lane it belongs to
-    public int m_laneID;
-    public int m_indexOfThis;
-    public LaneEventFade m_heldLaneEvent;
+    public int laneID;
+    public int indexOfThis;
+    public LaneEventFade heldLaneEvent;
 
     private void Update()
     {
-        m_indexOfThis = EventListDisplay.Instance.m_fades[m_laneID].m_fades.IndexOf(m_heldLaneEvent);
+        indexOfThis = EventListDisplay.Instance.fades[laneID].fades.IndexOf(heldLaneEvent);
     }
 }

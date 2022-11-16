@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SingleNoteHandler : NoteHandler
 {
-    public SingleNoteData m_noteData;
+    public SingleNoteData noteData;
 
     public void InitializeSingleNote(SingleNoteData _noteData, Transform _start, Transform _end)
     {
-        m_noteData = _noteData;
+        noteData = _noteData;
         base.Initialize(_start, _end);
     }
 
@@ -18,20 +18,20 @@ public class SingleNoteHandler : NoteHandler
         // Note Movement
         if (GameManager.Instance)
         {
-            t = (1.0f - (m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats) / GameManager.Instance.m_beatsToShow);
+            t = (1.0f - (noteData.beat - GameManager.Instance.trackPosInBeats) / GameManager.Instance.beatsToShow);
 
         }
         else if (LevelEditorManager.Instance)
         {
-            t = (1.0f - (m_noteData.m_beat - LevelEditorManager.Instance.m_trackPosInBeats) / LevelEditorManager.Instance.m_beatsToShow);
+            t = (1.0f - (noteData.beat - LevelEditorManager.Instance.trackPosInBeats) / LevelEditorManager.Instance.beatsToShow);
         }
 
         t = Mathf.Clamp01(t);
-        transform.position = Vector2.Lerp(m_start.position, m_end.position, t);
+        transform.position = Vector2.Lerp(start.position, end.position, t);
 
         if (LevelEditorManager.Instance)
         {
-            if (m_noteData.m_beat < LevelEditorManager.Instance.m_trackPosInBeats)
+            if (noteData.beat < LevelEditorManager.Instance.trackPosInBeats)
             {
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }

@@ -5,30 +5,30 @@ using UnityEngine.UI;
 
 public class SingleNoteEditor : MonoBehaviour
 {
-    public SingleNoteData m_selectedNote;
+    public SingleNoteData selectedNote;
 
-    public InputField m_noteLane;
-    public InputField m_noteBeat;
+    public InputField noteLane;
+    public InputField noteBeat;
 
-    public SelectedNoteEditor m_holder;
+    public SelectedNoteEditor holder;
 
     public void SetNote(SelectedNoteEditor _holder)
     {
-        if (_holder.m_selectedSingleNote != null)
+        if (_holder.selectedSingleNote != null)
         {
-            m_holder = _holder;
+            holder = _holder;
 
-            m_selectedNote = _holder.m_selectedSingleNote.m_heldNote;
+            selectedNote = _holder.selectedSingleNote.heldNote;
 
-            m_noteLane.text = _holder.m_selectedSingleNote.m_laneID.ToString();
-            m_noteBeat.text = _holder.m_selectedSingleNote.m_heldNote.m_beat.ToString();
+            noteLane.text = _holder.selectedSingleNote.laneID.ToString();
+            noteBeat.text = _holder.selectedSingleNote.heldNote.beat.ToString();
         }
     }
 
     public void ConfirmEdit()
     {
-        m_selectedNote.m_beat = float.Parse(m_noteBeat.text);
+        selectedNote.beat = float.Parse(noteBeat.text);
 
-        NoteListDisplay.Instance.EditNote(m_selectedNote, m_holder.m_selectedSingleNote);
+        NoteListDisplay.Instance.EditNote(selectedNote, holder.selectedSingleNote);
     }
 }

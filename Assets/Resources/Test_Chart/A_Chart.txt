@@ -1,30 +1,30 @@
 {
-    "m_trackAudioPath": "60bpm",
-    "m_trackCoverArtPath": "",
-    "m_trackName": "A",
-    "m_trackArtist": "A",
-    "m_trackDifficulty": 0,
-    "m_trackOffset": 0.0,
-    "m_trackBPM": 60.0,
-    "m_lane": [
+    "trackAudioPath": "60bpm",
+    "trackCoverArtPath": "",
+    "trackName": "A",
+    "trackArtist": "A",
+    "trackDifficulty": 0,
+    "trackOffset": 0.0,
+    "trackBPM": 60.0,
+    "lane": [
         {
-            "m_initialPosition": {
+            "initialPosition": {
                 "x": 0.0,
                 "y": 0.0
             },
-            "m_initialRotation": 5.0,
-            "m_notes": [],
-            "m_laneEventsMovement": [
+            "initialRotation": 5.0,
+            "notes": [],
+            "laneEventsMovement": [
                 {
-                    "m_beat": 2.216644048690796,
-                    "m_duration": 0.0,
-                    "m_targetPosition": {
+                    "beat": 2.216644048690796,
+                    "duration": 0.0,
+                    "targetPosition": {
                         "x": 11.310500144958496,
                         "y": -7.250319004058838
                     }
                 }
             ],
-            "m_laneEventsRotation": []
+            "laneEventsRotation": []
         }
     ]
 }

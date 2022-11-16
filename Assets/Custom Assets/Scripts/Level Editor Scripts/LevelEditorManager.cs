@@ -17,58 +17,58 @@ public class LevelEditorManager : MonoBehaviour
     //----------------------------
     // Chart information
     //----------------------------
-    public ChartData m_chartData;
+    public ChartData chartData;
 
     // Prefab of note
-    public GameObject m_notePrefab;
+    public GameObject notePrefab;
     // Prefab of lane
-    public GameObject m_lanePrefab;
+    public GameObject lanePrefab;
 
-    public GameObject m_laneIDDisplayPrefab;
+    public GameObject laneIDDisplayPrefab;
 
     [HideInInspector]
-    public List<GameObject> m_lanes;
+    public List<GameObject> lanes;
 
     // Indexes
     [HideInInspector]
-    public List<int> m_nextNoteIndex;
+    public List<int> nextNoteIndex;
     //[HideInInspector]
-    public List<int> m_currentMovementIndex;
+    public List<int> currentMovementIndex;
     //[HideInInspector]
-    public List<int> m_currentRotationIndex;
+    public List<int> currentRotationIndex;
     //[HideInInspector]
-    public List<int> m_currentFadeIndex;
+    public List<int> currentFadeIndex;
     //[HideInInspector]
-    public List<int> m_currentLengthIndex;
+    public List<int> currentLengthIndex;
 
     // Total lanes
     [HideInInspector]
-    public int m_totalLanes;
+    public int totalLanes;
     // Beats to show in advance
-    public float m_beatsToShow = 4;
+    public float beatsToShow = 4;
     // Seconds between each beat
     [HideInInspector]
-    public float m_secPerBeat;
+    public float secPerBeat;
     // Position of track in seconds
-    public float m_trackPos;
+    public float trackPos;
     // Position of track in beats
     [HideInInspector]
-    public float m_trackPosInBeats;
+    public float trackPosInBeats;
 
     //the number of beats in each loop
-    public float m_beatsPerLoop;
+    public float beatsPerLoop;
     //the total number of loops completed since the looping clip first started
-    public int m_completedLoops = 0;
+    public int completedLoops = 0;
     //The current position of the song within the loop in beats.
-    public float m_loopPosInBeats;
+    public float loopPosInBeats;
     //The current relative position of the song within the loop measured between 0 and 1.
-    public float m_loopPosInAnalog;
+    public float loopPosInAnalog;
 
     // Attached AudioSource
     [HideInInspector]
-    public AudioSource m_audioSource;
+    public AudioSource audioSource;
 
-    public bool m_initialized;
+    public bool initialized;
 
     private void Awake()
     {
@@ -77,8 +77,8 @@ public class LevelEditorManager : MonoBehaviour
 
     private void Start()
     {
-        m_chartData = new ChartData();
-        m_audioSource = GetComponent<AudioSource>();
+        chartData = new ChartData();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void ConfirmNewChart()
@@ -88,20 +88,20 @@ public class LevelEditorManager : MonoBehaviour
         bp.filter = "txt files (*.txt)|*.txt";
         bp.filterIndex = 0;
 
-        new FileBrowser().SaveFileBrowser(bp, m_chartData.m_trackName + "_" + m_chartData.m_trackDifficulty + "_Chart.txt", ".txt", path =>
+        new FileBrowser().SaveFileBrowser(bp, chartData.trackName + "_" + chartData.trackDifficulty + "_Chart.txt", ".txt", path =>
         {
             //Do something with path(string)
-            string json = JsonUtility.ToJson(m_chartData, true);
+            string json = JsonUtility.ToJson(chartData, true);
             File.WriteAllText(path, json);
         });
     }
 
     private void Update()
     {
-        m_chartData = ChartMetadataBuilder.m_chartData;
-        m_secPerBeat = 60.0f / m_chartData.m_trackBPM;
-        m_audioSource.clip = Resources.Load<AudioClip>(m_chartData.m_trackAudioPath);
-        if (m_initialized)
+        chartData = ChartMetadataBuilder.chartData;
+        secPerBeat = 60.0f / chartData.trackBPM;
+        audioSource.clip = Resources.Load<AudioClip>(chartData.trackAudioPath);
+        if (initialized)
         {
             TrackUpdate();
             LaneEventSpawn();
@@ -111,68 +111,68 @@ public class LevelEditorManager : MonoBehaviour
     {
         // Initialize lanes and index array
         {
-            m_chartData.m_lane = new List<LaneData>();
+            chartData.lane = new List<LaneData>();
 
-            m_totalLanes = 0;
-            m_lanes = new List<GameObject>();
-            m_nextNoteIndex = new List<int>();
-            m_currentMovementIndex = new List<int>();
-            m_currentRotationIndex = new List<int>();
-            m_currentFadeIndex = new List<int>();
-            m_currentLengthIndex = new List<int>();
+            totalLanes = 0;
+            lanes = new List<GameObject>();
+            nextNoteIndex = new List<int>();
+            currentMovementIndex = new List<int>();
+            currentRotationIndex = new List<int>();
+            currentFadeIndex = new List<int>();
+            currentLengthIndex = new List<int>();
         }
 
-        m_audioSource.Play();
+        audioSource.Play();
 
         Resources.FindObjectsOfTypeAll<NoteListDisplay>()[0].Initialized();
-        m_initialized = true;
+        initialized = true;
     }
 
     public void ChartOpened()
     {
-        m_totalLanes = 0;
-        m_lanes = new List<GameObject>();
-        m_nextNoteIndex = new List<int>();
-        m_currentMovementIndex = new List<int>();
-        m_currentRotationIndex = new List<int>();
-        m_currentFadeIndex = new List<int>();
-        m_currentLengthIndex = new List<int>();
+        totalLanes = 0;
+        lanes = new List<GameObject>();
+        nextNoteIndex = new List<int>();
+        currentMovementIndex = new List<int>();
+        currentRotationIndex = new List<int>();
+        currentFadeIndex = new List<int>();
+        currentLengthIndex = new List<int>();
 
-        for (int i = 0; i < m_chartData.m_lane.Count; i++)
+        for (int i = 0; i < chartData.lane.Count; i++)
         {
-            InitLoadedLane(m_chartData.m_lane[i]);
+            InitLoadedLane(chartData.lane[i]);
         }
 
-        m_initialized = true;
+        initialized = true;
         EventListDisplay.Instance.GenerateLoadedList();
         Resources.FindObjectsOfTypeAll<NoteListDisplay>()[0].GenerateLoadedList();
-        m_audioSource.Play();
+        audioSource.Play();
     }
     public void InitLoadedLane(LaneData _laneData)
     {
-        m_lanes.Add(Instantiate(m_lanePrefab, _laneData.m_initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, _laneData.m_initialRotation))));
+        lanes.Add(Instantiate(lanePrefab, _laneData.initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, _laneData.initialRotation))));
 
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_identifier = m_totalLanes;
+        lanes[totalLanes].GetComponent<LaneHandler>().identifier = totalLanes;
 
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_movementStartPosition = _laneData.m_initialPosition;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventMovement.m_targetPosition = _laneData.m_initialPosition;
+        lanes[totalLanes].GetComponent<LaneHandler>().movementStartPosition = _laneData.initialPosition;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventMovement.targetPosition = _laneData.initialPosition;
 
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startRotation = _laneData.m_initialRotation;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventRotation.m_targetRotation = _laneData.m_initialRotation;
+        lanes[totalLanes].GetComponent<LaneHandler>().startRotation = _laneData.initialRotation;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventRotation.targetRotation = _laneData.initialRotation;
 
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startAlpha = 1.0f;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventFade.m_targetAlpha = 1.0f;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startLength = 10.0f;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventLength.m_targetLength = 10.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().startAlpha = 1.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventFade.targetAlpha = 1.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().startLength = 10.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventLength.targetLength = 10.0f;
 
-        m_nextNoteIndex.Add(0);
-        m_currentMovementIndex.Add(0);
-        m_currentRotationIndex.Add(0);
-        m_currentFadeIndex.Add(0);
-        m_currentLengthIndex.Add(0);
+        nextNoteIndex.Add(0);
+        currentMovementIndex.Add(0);
+        currentRotationIndex.Add(0);
+        currentFadeIndex.Add(0);
+        currentLengthIndex.Add(0);
 
-        Instantiate(m_laneIDDisplayPrefab, m_lanes[m_totalLanes].transform).GetComponent<TextMeshPro>().text = m_totalLanes.ToString();
-        m_totalLanes++;
+        Instantiate(laneIDDisplayPrefab, lanes[totalLanes].transform).GetComponent<TextMeshPro>().text = totalLanes.ToString();
+        totalLanes++;
     }
 
     public void InitEmptyLane(LaneData _laneData)
@@ -180,281 +180,281 @@ public class LevelEditorManager : MonoBehaviour
         LaneData newLane = new LaneData();
         newLane = _laneData;
 
-        newLane.m_laneEventsMovement = new List<LaneEventMovement>();
-        newLane.m_laneEventsRotation = new List<LaneEventRotation>();
-        newLane.m_laneEventFade = new List<LaneEventFade>();
-        newLane.m_laneEventLength = new List<LaneEventLength>();
-        newLane.m_singleNote = new List<SingleNoteData>();
-        newLane.m_holdNote = new List<HoldNoteData>();
+        newLane.laneEventsMovement = new List<LaneEventMovement>();
+        newLane.laneEventsRotation = new List<LaneEventRotation>();
+        newLane.laneEventFade = new List<LaneEventFade>();
+        newLane.laneEventLength = new List<LaneEventLength>();
+        newLane.singleNote = new List<SingleNoteData>();
+        newLane.holdNote = new List<HoldNoteData>();
 
-        m_lanes.Add(Instantiate(m_lanePrefab, newLane.m_initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, newLane.m_initialRotation))));
+        lanes.Add(Instantiate(lanePrefab, newLane.initialPosition, Quaternion.Euler(new Vector3(0.0f, 0.0f, newLane.initialRotation))));
 
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_identifier = m_totalLanes;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_movementStartPosition = newLane.m_initialPosition;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventMovement.m_targetPosition = newLane.m_initialPosition;
+        lanes[totalLanes].GetComponent<LaneHandler>().identifier = totalLanes;
+        lanes[totalLanes].GetComponent<LaneHandler>().movementStartPosition = newLane.initialPosition;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventMovement.targetPosition = newLane.initialPosition;
 
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startRotation = newLane.m_initialRotation;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventRotation.m_targetRotation = newLane.m_initialRotation;
+        lanes[totalLanes].GetComponent<LaneHandler>().startRotation = newLane.initialRotation;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventRotation.targetRotation = newLane.initialRotation;
 
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startAlpha = 1.0f;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventFade.m_targetAlpha = 1.0f;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_startLength = 10.0f;
-        m_lanes[m_totalLanes].GetComponent<LaneHandler>().m_laneEventLength.m_targetLength = 10.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().startAlpha = 1.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventFade.targetAlpha = 1.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().startLength = 10.0f;
+        lanes[totalLanes].GetComponent<LaneHandler>().laneEventLength.targetLength = 10.0f;
 
-        m_nextNoteIndex.Add(0);
-        m_currentMovementIndex.Add(0);
-        m_currentRotationIndex.Add(0);
-        m_currentFadeIndex.Add(0);
-        m_currentLengthIndex.Add(0);
+        nextNoteIndex.Add(0);
+        currentMovementIndex.Add(0);
+        currentRotationIndex.Add(0);
+        currentFadeIndex.Add(0);
+        currentLengthIndex.Add(0);
 
-        m_chartData.m_lane.Add(newLane);
-        Instantiate(m_laneIDDisplayPrefab, m_lanes[m_totalLanes].transform).GetComponent<TextMeshPro>().text = m_totalLanes.ToString();
-        m_totalLanes++;
+        chartData.lane.Add(newLane);
+        Instantiate(laneIDDisplayPrefab, lanes[totalLanes].transform).GetComponent<TextMeshPro>().text = totalLanes.ToString();
+        totalLanes++;
     }
 
     private void TrackUpdate()
     {
         // How many seconds since we started
-        m_trackPos = (float)(m_audioSource.time - m_chartData.m_trackOffset);
+        trackPos = (float)(audioSource.time - chartData.trackOffset);
         // How many beats since we started
-        m_trackPosInBeats = m_trackPos / m_secPerBeat;
+        trackPosInBeats = trackPos / secPerBeat;
 
-        if (m_trackPosInBeats >= (m_completedLoops + 1) * m_beatsPerLoop)
-            m_completedLoops++;
-        m_loopPosInBeats = m_trackPosInBeats - m_completedLoops * m_beatsPerLoop;
+        if (trackPosInBeats >= (completedLoops + 1) * beatsPerLoop)
+            completedLoops++;
+        loopPosInBeats = trackPosInBeats - completedLoops * beatsPerLoop;
 
-        m_loopPosInAnalog = m_loopPosInBeats / m_beatsPerLoop;
+        loopPosInAnalog = loopPosInBeats / beatsPerLoop;
 
         // Sort the lists so its nice and tidy
-        for (int i = 0; i < m_chartData.m_lane.Count; i++ )
+        for (int i = 0; i < chartData.lane.Count; i++ )
         {
-            m_chartData.m_lane[i].m_laneEventsMovement = m_chartData.m_lane[i].m_laneEventsMovement.OrderBy(lst => lst.m_beat).ToList();
-            m_chartData.m_lane[i].m_laneEventsRotation = m_chartData.m_lane[i].m_laneEventsRotation.OrderBy(lst => lst.m_beat).ToList();
+            chartData.lane[i].laneEventsMovement = chartData.lane[i].laneEventsMovement.OrderBy(lst => lst.beat).ToList();
+            chartData.lane[i].laneEventsRotation = chartData.lane[i].laneEventsRotation.OrderBy(lst => lst.beat).ToList();
         }
     }
 
     private void LaneEventSpawn()
     {
-        for (int i = 0; i < m_chartData.m_lane.Count; i++)
+        for (int i = 0; i < chartData.lane.Count; i++)
         {
             // Lane Events
             {
                 // Make sure these don't go negative or else Unity has a cry
-                if (m_currentMovementIndex[i] <= 0)
+                if (currentMovementIndex[i] <= 0)
                 {
-                    m_currentMovementIndex[i] = 0;
+                    currentMovementIndex[i] = 0;
                 }
 
                 // First check if the current index is less than the total count of events
-                if (m_currentMovementIndex[i] < m_chartData.m_lane[i].m_laneEventsMovement.Count)
+                if (currentMovementIndex[i] < chartData.lane[i].laneEventsMovement.Count)
                 {
-                    if (m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i]].m_beat < m_trackPosInBeats)
+                    if (chartData.lane[i].laneEventsMovement[currentMovementIndex[i]].beat < trackPosInBeats)
                     {
-                        if (m_currentMovementIndex[i] < 1)
+                        if (currentMovementIndex[i] < 1)
                         {
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeMovement(m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i]], m_chartData.m_lane[i].m_initialPosition);
+                            lanes[i].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[i].laneEventsMovement[currentMovementIndex[i]], chartData.lane[i].initialPosition);
 
-                            m_currentMovementIndex[i]++;
+                            currentMovementIndex[i]++;
                         }
                         else
                         {
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeMovement(m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i]], m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i] - 1].m_targetPosition);
+                            lanes[i].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[i].laneEventsMovement[currentMovementIndex[i]], chartData.lane[i].laneEventsMovement[currentMovementIndex[i] - 1].targetPosition);
 
-                            m_currentMovementIndex[i]++;
+                            currentMovementIndex[i]++;
                         }
                     }
                 }
 
-                if (m_currentRotationIndex[i] <= 0)
+                if (currentRotationIndex[i] <= 0)
                 {
-                    m_currentRotationIndex[i] = 0;
+                    currentRotationIndex[i] = 0;
                 }
 
                 // First check if the current index is less than the total count of events
-                if (m_currentRotationIndex[i] < m_chartData.m_lane[i].m_laneEventsRotation.Count)
+                if (currentRotationIndex[i] < chartData.lane[i].laneEventsRotation.Count)
                 {
-                    if (m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i]].m_beat < m_trackPosInBeats)
+                    if (chartData.lane[i].laneEventsRotation[currentRotationIndex[i]].beat < trackPosInBeats)
                     {
-                        if (m_currentRotationIndex[i] < 1)
+                        if (currentRotationIndex[i] < 1)
                         {
-                            float z = m_chartData.m_lane[i].m_initialRotation;
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeRotation(m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i]], z);
+                            float z = chartData.lane[i].initialRotation;
+                            lanes[i].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[i].laneEventsRotation[currentRotationIndex[i]], z);
 
-                            m_currentRotationIndex[i]++;
+                            currentRotationIndex[i]++;
                         }
                         else
                         {
-                            float z = m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i] - 1].m_targetRotation;
+                            float z = chartData.lane[i].laneEventsRotation[currentRotationIndex[i] - 1].targetRotation;
 
                             if (z >= 360)
                             {
                                 z %= 360;
                             }
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeRotation(m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i]], z);
+                            lanes[i].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[i].laneEventsRotation[currentRotationIndex[i]], z);
 
-                            m_currentRotationIndex[i]++;
+                            currentRotationIndex[i]++;
                         }
                     }
                 }
 
                 // Fade
-                if (m_currentFadeIndex[i] <= 0)
+                if (currentFadeIndex[i] <= 0)
                 {
-                    m_currentFadeIndex[i] = 0;
+                    currentFadeIndex[i] = 0;
                 }
 
                 // First check if the current index is less than the total count of events
-                if (m_currentFadeIndex[i] < m_chartData.m_lane[i].m_laneEventFade.Count)
+                if (currentFadeIndex[i] < chartData.lane[i].laneEventFade.Count)
                 {
-                    if (m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]].m_beat < m_trackPosInBeats)
+                    if (chartData.lane[i].laneEventFade[currentFadeIndex[i]].beat < trackPosInBeats)
                     {
-                        if (m_currentFadeIndex[i] < 1)
+                        if (currentFadeIndex[i] < 1)
                         {
-                            float a = m_chartData.m_lane[i].m_initialAlpha;
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], a);
+                            float a = chartData.lane[i].initialAlpha;
+                            lanes[i].GetComponent<LaneHandler>().InitializeFade(chartData.lane[i].laneEventFade[currentFadeIndex[i]], a);
 
-                            m_currentFadeIndex[i]++;
+                            currentFadeIndex[i]++;
                         }
                         else
                         {
-                            float a = m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_targetAlpha;
+                            float a = chartData.lane[i].laneEventFade[currentFadeIndex[i] - 1].targetAlpha;
 
                             if (a >= 1)
                                 a = 1;
                             else if (a <= 0)
                                 a = 0;
 
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], a);
+                            lanes[i].GetComponent<LaneHandler>().InitializeFade(chartData.lane[i].laneEventFade[currentFadeIndex[i]], a);
 
-                            m_currentFadeIndex[i]++;
+                            currentFadeIndex[i]++;
                         }
                     }
                 }
 
                 // Length
-                if (m_currentLengthIndex[i] <= 0)
+                if (currentLengthIndex[i] <= 0)
                 {
-                    m_currentLengthIndex[i] = 0;
+                    currentLengthIndex[i] = 0;
                 }
 
                 // First check if the current index is less than the total count of events
-                if (m_currentLengthIndex[i] < m_chartData.m_lane[i].m_laneEventLength.Count)
+                if (currentLengthIndex[i] < chartData.lane[i].laneEventLength.Count)
                 {
-                    if (m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i]].m_beat < m_trackPosInBeats)
+                    if (chartData.lane[i].laneEventLength[currentLengthIndex[i]].beat < trackPosInBeats)
                     {
-                        if (m_currentLengthIndex[i] < 1)
+                        if (currentLengthIndex[i] < 1)
                         {
-                            float l = m_chartData.m_lane[i].m_initialLength;
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeLength(m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i]], l);
+                            float l = chartData.lane[i].initialLength;
+                            lanes[i].GetComponent<LaneHandler>().InitializeLength(chartData.lane[i].laneEventLength[currentLengthIndex[i]], l);
 
-                            m_currentLengthIndex[i]++;
+                            currentLengthIndex[i]++;
                         }
                         else
                         {
-                            float l = m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i] - 1].m_targetLength;
+                            float l = chartData.lane[i].laneEventLength[currentLengthIndex[i] - 1].targetLength;
 
-                            m_lanes[i].GetComponent<LaneHandler>().InitializeLength(m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i]], l);
+                            lanes[i].GetComponent<LaneHandler>().InitializeLength(chartData.lane[i].laneEventLength[currentLengthIndex[i]], l);
 
-                            m_currentLengthIndex[i]++;
+                            currentLengthIndex[i]++;
                         }
                     }
                 }
             }
         }
 
-        for (int i = 0; i < m_chartData.m_lane.Count; i++)
+        for (int i = 0; i < chartData.lane.Count; i++)
         {
             // For rewinding purposes we need to revert the index back to preview the proper movement in order. It's janky as shit.
-            if (m_chartData.m_lane[i].m_laneEventsMovement.Count > 0 && m_currentMovementIndex[i] - 1 >= 0)
+            if (chartData.lane[i].laneEventsMovement.Count > 0 && currentMovementIndex[i] - 1 >= 0)
             {
-                if (m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i] - 1].m_beat + m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i] - 1].m_duration >= m_trackPosInBeats)
+                if (chartData.lane[i].laneEventsMovement[currentMovementIndex[i] - 1].beat + chartData.lane[i].laneEventsMovement[currentMovementIndex[i] - 1].duration >= trackPosInBeats)
                 {
-                    if (m_currentMovementIndex[i] - 1 >= 0)
+                    if (currentMovementIndex[i] - 1 >= 0)
                     {
-                        m_currentMovementIndex[i]--;
+                        currentMovementIndex[i]--;
                         // Continue looping but stop here since this means we are at 0, and therefore continuing through this specific iteration will shit itself cuz negative indexes suck
                         continue;
                     }
 
-                    m_lanes[i].GetComponent<LaneHandler>().InitializeMovement(m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i]], m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i] - 1].m_targetPosition);
+                    lanes[i].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[i].laneEventsMovement[currentMovementIndex[i]], chartData.lane[i].laneEventsMovement[currentMovementIndex[i] - 1].targetPosition);
                 }
             }
-            else if (m_chartData.m_lane[i].m_laneEventsMovement.Count > 0 && m_currentMovementIndex[i] - 1 < 0)
+            else if (chartData.lane[i].laneEventsMovement.Count > 0 && currentMovementIndex[i] - 1 < 0)
             {
-                m_lanes[i].GetComponent<LaneHandler>().InitializeMovement(m_chartData.m_lane[i].m_laneEventsMovement[m_currentMovementIndex[i]], m_chartData.m_lane[i].m_initialPosition);
+                lanes[i].GetComponent<LaneHandler>().InitializeMovement(chartData.lane[i].laneEventsMovement[currentMovementIndex[i]], chartData.lane[i].initialPosition);
 
             }
 
             // For rotation
-            if (m_chartData.m_lane[i].m_laneEventsRotation.Count > 0 && m_currentRotationIndex[i] - 1 >= 0)
+            if (chartData.lane[i].laneEventsRotation.Count > 0 && currentRotationIndex[i] - 1 >= 0)
             {
-                if (m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i] - 1].m_beat + m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i] - 1].m_duration >= m_trackPosInBeats)
+                if (chartData.lane[i].laneEventsRotation[currentRotationIndex[i] - 1].beat + chartData.lane[i].laneEventsRotation[currentRotationIndex[i] - 1].duration >= trackPosInBeats)
                 {
-                    if (m_currentRotationIndex[i] - 1 >= 0)
+                    if (currentRotationIndex[i] - 1 >= 0)
                     {
-                        m_currentRotationIndex[i]--;
+                        currentRotationIndex[i]--;
                         // Continue looping but stop here since this means we are at 0, and therefore continuing through this specific iteration will be sad at itself cuz negative indexes are not fun
                         continue;
                     }
 
-                    float z = m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i] - 1].m_targetRotation;
+                    float z = chartData.lane[i].laneEventsRotation[currentRotationIndex[i] - 1].targetRotation;
 
                     if (z >= 360)
                     {
                         z %= 360;
                     }
 
-                    m_lanes[i].GetComponent<LaneHandler>().InitializeRotation(m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i]], z);
+                    lanes[i].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[i].laneEventsRotation[currentRotationIndex[i]], z);
                 }
             }
-            else if (m_chartData.m_lane[i].m_laneEventsRotation.Count > 0 && m_currentRotationIndex[i] - 1 < 0)
+            else if (chartData.lane[i].laneEventsRotation.Count > 0 && currentRotationIndex[i] - 1 < 0)
             {
-                m_lanes[i].GetComponent<LaneHandler>().InitializeRotation(m_chartData.m_lane[i].m_laneEventsRotation[m_currentRotationIndex[i]], m_chartData.m_lane[i].m_initialRotation);
+                lanes[i].GetComponent<LaneHandler>().InitializeRotation(chartData.lane[i].laneEventsRotation[currentRotationIndex[i]], chartData.lane[i].initialRotation);
 
             }
 
             // For fades
-            if (m_chartData.m_lane[i].m_laneEventFade.Count > 0 && m_currentFadeIndex[i] - 1 >= 0)
+            if (chartData.lane[i].laneEventFade.Count > 0 && currentFadeIndex[i] - 1 >= 0)
             {
-                if (m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_beat + m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_duration >= m_trackPosInBeats)
+                if (chartData.lane[i].laneEventFade[currentFadeIndex[i] - 1].beat + chartData.lane[i].laneEventFade[currentFadeIndex[i] - 1].duration >= trackPosInBeats)
                 {
-                    if (m_currentFadeIndex[i] - 1 >= 0)
+                    if (currentFadeIndex[i] - 1 >= 0)
                     {
-                        m_currentFadeIndex[i]--;
+                        currentFadeIndex[i]--;
                         // Continue looping but stop here since this means we are at 0, and therefore continuing through this specific iteration will be sad at itself cuz negative indexes are not fun
                         continue;
                     }
 
-                    float a = m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i] - 1].m_targetAlpha;
+                    float a = chartData.lane[i].laneEventFade[currentFadeIndex[i] - 1].targetAlpha;
 
-                    m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], a);
+                    lanes[i].GetComponent<LaneHandler>().InitializeFade(chartData.lane[i].laneEventFade[currentFadeIndex[i]], a);
                 }
             }
-            else if (m_chartData.m_lane[i].m_laneEventFade.Count > 0 && m_currentFadeIndex[i] - 1 < 0)
+            else if (chartData.lane[i].laneEventFade.Count > 0 && currentFadeIndex[i] - 1 < 0)
             {
-                m_lanes[i].GetComponent<LaneHandler>().InitializeFade(m_chartData.m_lane[i].m_laneEventFade[m_currentFadeIndex[i]], m_chartData.m_lane[i].m_initialAlpha);
+                lanes[i].GetComponent<LaneHandler>().InitializeFade(chartData.lane[i].laneEventFade[currentFadeIndex[i]], chartData.lane[i].initialAlpha);
             }
 
             // For length changes
-            if (m_chartData.m_lane[i].m_laneEventLength.Count > 0 && m_currentLengthIndex[i] - 1 >= 0)
+            if (chartData.lane[i].laneEventLength.Count > 0 && currentLengthIndex[i] - 1 >= 0)
             {
-                if (m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i] - 1].m_beat + m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i] - 1].m_duration >= m_trackPosInBeats)
+                if (chartData.lane[i].laneEventLength[currentLengthIndex[i] - 1].beat + chartData.lane[i].laneEventLength[currentLengthIndex[i] - 1].duration >= trackPosInBeats)
                 {
-                    if (m_currentLengthIndex[i] - 1 >= 0)
+                    if (currentLengthIndex[i] - 1 >= 0)
                     {
-                        m_currentLengthIndex[i]--;
+                        currentLengthIndex[i]--;
                         // Continue looping but stop here since this means we are at 0, and therefore continuing through this specific iteration will be sad at itself cuz negative indexes are not fun
                         continue;
                     }
 
-                    float l = m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i] - 1].m_targetLength;
+                    float l = chartData.lane[i].laneEventLength[currentLengthIndex[i] - 1].targetLength;
 
-                    m_lanes[i].GetComponent<LaneHandler>().InitializeLength(m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i]], l);
+                    lanes[i].GetComponent<LaneHandler>().InitializeLength(chartData.lane[i].laneEventLength[currentLengthIndex[i]], l);
                 }
             }
-            else if (m_chartData.m_lane[i].m_laneEventLength.Count > 0 && m_currentLengthIndex[i] - 1 < 0)
+            else if (chartData.lane[i].laneEventLength.Count > 0 && currentLengthIndex[i] - 1 < 0)
             {
-                m_lanes[i].GetComponent<LaneHandler>().InitializeLength(m_chartData.m_lane[i].m_laneEventLength[m_currentLengthIndex[i]], m_chartData.m_lane[i].m_initialLength);
+                lanes[i].GetComponent<LaneHandler>().InitializeLength(chartData.lane[i].laneEventLength[currentLengthIndex[i]], chartData.lane[i].initialLength);
             }
         }
     }

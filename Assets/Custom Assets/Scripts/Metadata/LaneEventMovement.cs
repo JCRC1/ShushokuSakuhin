@@ -5,5 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class LaneEventMovement : LaneEvent
 {
-    public Vector2 m_targetPosition;
+    public Vector2 targetPosition;
 }

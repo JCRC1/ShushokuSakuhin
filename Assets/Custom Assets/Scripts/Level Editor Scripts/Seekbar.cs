@@ -7,12 +7,12 @@ public class Seekbar : MonoBehaviour
 {
     public static Seekbar Instance;
 
-    private AudioSource m_audioSource;
-    private Slider m_slider;
+    private AudioSource audioSource;
+    private Slider slider;
 
-    public InputField[] m_currentBeatText;
+    public InputField[] currentBeatText;
 
-    private float m_trackTime;
+    private float trackTime;
 
     private void Awake()
     {
@@ -21,59 +21,59 @@ public class Seekbar : MonoBehaviour
 
     private void Start()
     {
-        m_slider = GetComponent<Slider>();
-        m_audioSource = LevelEditorManager.Instance.GetComponent<AudioSource>();
+        slider = GetComponent<Slider>();
+        audioSource = LevelEditorManager.Instance.GetComponent<AudioSource>();
     }
 
     public void ChangeAudioTime()
     {
-        if (m_slider.value < 1.0f)
+        if (slider.value < 1.0f)
         {
-            m_audioSource.time = (m_audioSource.clip.length * m_slider.value);
+            audioSource.time = (audioSource.clip.length * slider.value);
         }
     }
 
     public void SetTimeSeconds(Text _text)
     {
-        LevelEditorManager.Instance.m_audioSource.time = float.Parse(_text.text);
+        LevelEditorManager.Instance.audioSource.time = float.Parse(_text.text);
     }
 
     public void SetTimeBeats(Text _text)
     {
-        LevelEditorManager.Instance.m_audioSource.time = LevelEditorManager.Instance.m_secPerBeat * float.Parse(_text.text);
+        LevelEditorManager.Instance.audioSource.time = LevelEditorManager.Instance.secPerBeat * float.Parse(_text.text);
     }
 
     public void Update()
     {
-        if (LevelEditorManager.Instance.m_initialized)
+        if (LevelEditorManager.Instance.initialized)
         {
-            m_slider.value = m_audioSource.time / m_audioSource.clip.length;
+            slider.value = audioSource.time / audioSource.clip.length;
         }
 
         // Keep track of the beats of the track
-        if (!ManualButton.m_manualBeatInput)
+        if (!ManualButton.manualBeatInput)
         {
-            if (!CreateLaneEvent.m_creatingMovement && !CreateLaneEvent.m_creatingRotation)
+            if (!CreateLaneEvent.creatingMovement && !CreateLaneEvent.creatingRotation)
             {
-                for (int i = 0; i < m_currentBeatText.Length; i++)
+                for (int i = 0; i < currentBeatText.Length; i++)
                 {
-                    m_currentBeatText[i].text = LevelEditorManager.Instance.m_trackPosInBeats.ToString("00.00");
+                    currentBeatText[i].text = LevelEditorManager.Instance.trackPosInBeats.ToString("00.00");
                 }
             }
         }
 
-        if (LevelEditorManager.Instance.m_audioSource.isPlaying)
+        if (LevelEditorManager.Instance.audioSource.isPlaying)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                LevelEditorManager.Instance.m_audioSource.Pause();
+                LevelEditorManager.Instance.audioSource.Pause();
             }
         }
         else
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                LevelEditorManager.Instance.m_audioSource.UnPause();
+                LevelEditorManager.Instance.audioSource.UnPause();
             }
         }
     }

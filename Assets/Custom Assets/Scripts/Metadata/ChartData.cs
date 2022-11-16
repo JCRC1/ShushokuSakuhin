@@ -8,14 +8,14 @@ using UnityEngine;
 [System.Serializable]
 public class ChartData
 {    
-    public string            m_trackAudioPath;            // The path of where the song is contained
-    public string            m_trackCoverArtPath;
-    public string            m_trackName;
-    public string            m_trackArtist;
-    public int               m_trackDifficulty;
+    public string            trackAudioPath;            // The path of where the song is contained
+    public string            trackCoverArtPath;
+    public string            trackName;
+    public string            trackArtist;
+    public int               trackDifficulty;
 
-    public float             m_trackOffset;
-    public float             m_trackBPM;
+    public float             trackOffset;
+    public float             trackBPM;
 
-    public List<LaneData>    m_lane;
+    public List<LaneData>    lane;
 }

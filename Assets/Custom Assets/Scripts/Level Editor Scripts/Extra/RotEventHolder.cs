@@ -5,12 +5,12 @@ using UnityEngine;
 public class RotEventHolder : MonoBehaviour
 {
     // Which lane it belongs to
-    public int m_laneID;
-    public int m_indexOfThis;
-    public LaneEventRotation m_heldLaneEvent;
+    public int laneID;
+    public int indexOfThis;
+    public LaneEventRotation heldLaneEvent;
 
     private void Update()
     {
-        m_indexOfThis = EventListDisplay.Instance.m_rotations[m_laneID].m_rots.IndexOf(m_heldLaneEvent);
+        indexOfThis = EventListDisplay.Instance.rotations[laneID].rots.IndexOf(heldLaneEvent);
     }
 }

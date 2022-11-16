@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class PreviewAudioPath : MonoBehaviour
 {
-    private Text m_path;
+    private Text path;
 
     private void Start()
     {
-        m_path = GetComponent<Text>();
+        path = GetComponent<Text>();
     }
 
     private void Update()
     {
-        if(ChartMetadataBuilder.m_chartData != null)
-        m_path.text = ChartMetadataBuilder.m_chartData.m_trackAudioPath;
+        if(ChartMetadataBuilder.chartData != null)
+        path.text = ChartMetadataBuilder.chartData.trackAudioPath;
     }
 }

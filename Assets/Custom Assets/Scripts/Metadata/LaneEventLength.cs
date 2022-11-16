@@ -5,5 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class LaneEventLength : LaneEvent
 {
-    public float m_targetLength;
+    public float targetLength;
 }

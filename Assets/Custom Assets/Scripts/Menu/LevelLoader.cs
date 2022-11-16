@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    public Animator[] m_animatorsToTrigger;
+    public Animator[] animatorsToTrigger;
 
-    public float m_transitionTime;
+    public float transitionTime;
 
-    public int m_sceneIndex;
+    public int sceneIndex;
 
-    public AudioClip m_soundEffect;
+    public AudioClip soundEffect;
 
     private void Update()
     {
@@ -27,21 +27,21 @@ public class LevelLoader : MonoBehaviour
 
     public virtual void LoadNextLevel()
     {
-        StartCoroutine(LoadLevel(m_sceneIndex));
+        StartCoroutine(LoadLevel(sceneIndex));
 
-        GetComponent<AudioSource>().clip = m_soundEffect;
+        GetComponent<AudioSource>().clip = soundEffect;
         GetComponent<AudioSource>().Play();
     }
 
     IEnumerator LoadLevel(int _levelIndex)
     {
-        for (int i = 0; i < m_animatorsToTrigger.Length; i++)
+        for (int i = 0; i < animatorsToTrigger.Length; i++)
         {
-            m_animatorsToTrigger[i].enabled = true;
-            m_animatorsToTrigger[i].SetTrigger("Start");
+            animatorsToTrigger[i].enabled = true;
+            animatorsToTrigger[i].SetTrigger("Start");
         }
 
-        yield return new WaitForSeconds(m_transitionTime);
+        yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene(_levelIndex);
     }

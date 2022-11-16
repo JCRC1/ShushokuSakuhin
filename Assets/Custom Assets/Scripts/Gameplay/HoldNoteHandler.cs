@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class HoldNoteHandler : NoteHandler
 {
-    public HoldNoteData m_noteData;
-    public bool m_isHeld;
+    public HoldNoteData noteData;
+    public bool isHeld;
 
-    public int m_laneItBelongs;
+    public int laneItBelongs;
 
-    public KeyCode m_pressed;
+    public KeyCode pressed;
 
     public void InitializeHoldNote(HoldNoteData _noteData, Transform _start, Transform _end, int _laneItBelongs)
     {
-        m_pressed = KeyCode.None;
-        m_isHeld = false;
+        pressed = KeyCode.None;
+        isHeld = false;
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 1f);
         GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 1f);
-        m_noteState = NoteState.NONE;
-        m_noteData = _noteData;
-        m_laneItBelongs = _laneItBelongs;
+        noteState = NoteState.NONE;
+        noteData = _noteData;
+        laneItBelongs = _laneItBelongs;
         base.Initialize(_start, _end);
     }
 
@@ -31,47 +31,47 @@ public class HoldNoteHandler : NoteHandler
         // Note Movement
         if (GameManager.Instance)
         {
-            t1 = (1.0f - (m_noteData.m_beat - GameManager.Instance.m_trackPosInBeats) / GameManager.Instance.m_beatsToShow);
-            t2 = (1.0f - ((m_noteData.m_beat + m_noteData.m_duration) - GameManager.Instance.m_trackPosInBeats) / GameManager.Instance.m_beatsToShow);
+            t1 = (1.0f - (noteData.beat - GameManager.Instance.trackPosInBeats) / GameManager.Instance.beatsToShow);
+            t2 = (1.0f - ((noteData.beat + noteData.duration) - GameManager.Instance.trackPosInBeats) / GameManager.Instance.beatsToShow);
 
         }
         else if (LevelEditorManager.Instance)
         {
-            t1 = (1.0f - (m_noteData.m_beat - LevelEditorManager.Instance.m_trackPosInBeats) / LevelEditorManager.Instance.m_beatsToShow);
-            t2 = (1.0f - ((m_noteData.m_beat + m_noteData.m_duration) - LevelEditorManager.Instance.m_trackPosInBeats) / LevelEditorManager.Instance.m_beatsToShow);
+            t1 = (1.0f - (noteData.beat - LevelEditorManager.Instance.trackPosInBeats) / LevelEditorManager.Instance.beatsToShow);
+            t2 = (1.0f - ((noteData.beat + noteData.duration) - LevelEditorManager.Instance.trackPosInBeats) / LevelEditorManager.Instance.beatsToShow);
         }
 
         t1 = Mathf.Clamp01(t1);
         t2 = Mathf.Clamp01(t2);
 
-        transform.position = Vector2.Lerp(m_start.position, m_end.position, t1);
+        transform.position = Vector2.Lerp(start.position, end.position, t1);
         GetComponent<LineRenderer>().SetPosition(0, transform.position);
-        GetComponent<LineRenderer>().SetPosition(1, Vector2.Lerp(m_start.position, m_end.position, t2));
+        GetComponent<LineRenderer>().SetPosition(1, Vector2.Lerp(start.position, end.position, t2));
 
         if (GameManager.Instance)
         {
             // If we are holding this note down
-            if (m_isHeld)
+            if (isHeld)
             {
                 // Check if it has reached the end and calculate score
-                if (m_noteData.m_beat + m_noteData.m_duration < GameManager.Instance.m_trackPosInBeats)
+                if (noteData.beat + noteData.duration < GameManager.Instance.trackPosInBeats)
                 {
                     Debug.Log("Fine to let go");
-                    switch (m_noteState)
+                    switch (noteState)
                     {
                         case NoteState.NONE:
                             break;
                         case NoteState.PERFECT:
                             ScoreController.Instance.AddPerfectHit();
-                            KeyboardControls.Instance.m_hitSource.Play();
-                            transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
-                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
+                            KeyboardControls.Instance.hitSource.Play();
+                            transform.parent.parent.GetComponent<LaneHandler>().holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().allNotes.Dequeue();
                             break;
                         case NoteState.GOOD:
                             ScoreController.Instance.AddGoodHit();
-                            KeyboardControls.Instance.m_hitSource.Play();
-                            transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
-                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
+                            KeyboardControls.Instance.hitSource.Play();
+                            transform.parent.parent.GetComponent<LaneHandler>().holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().allNotes.Dequeue();
                             break;
                         case NoteState.MISS:
                             break;
@@ -79,91 +79,91 @@ public class HoldNoteHandler : NoteHandler
                     gameObject.SetActive(false);
                 }
                 // If while holding, we let our key up and we are not done then this note becomes miss
-                if (m_laneItBelongs % 2 == 0)
+                if (laneItBelongs % 2 == 0)
                 {
-                    foreach (KeyCode key in KeyboardControls.Instance.m_evenLaneKeybind)
+                    foreach (KeyCode key in KeyboardControls.Instance.evenLaneKeybind)
                     {
                         if (Input.GetKey(key))
                         {
-                            m_pressed = key;
+                            pressed = key;
                         }
                     }
 
-                    if (Input.GetKeyUp(m_pressed))
+                    if (Input.GetKeyUp(pressed))
                     {
-                        if (m_noteData.m_beat + m_noteData.m_duration > GameManager.Instance.m_trackPosInBeats)
+                        if (noteData.beat + noteData.duration > GameManager.Instance.trackPosInBeats)
                         {
                             foreach (GameObject gO in GameManager.Instance.GetComponent<ObjectPooler>().pooledNotes)
                             {
                                 if (gO.activeSelf)
                                 {
-                                    if (gO.GetComponent<ParticleLifetime>().m_follow == transform.parent.parent.GetChild(1))
+                                    if (gO.GetComponent<ParticleLifetime>().follow == transform.parent.parent.GetChild(1))
                                     {
                                         gO.SetActive(false);
                                     }
                                 }
                             }
-                            m_noteState = NoteState.MISS;
+                            noteState = NoteState.MISS;
 
                             GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
                             missText.transform.position = transform.parent.parent.GetChild(1).position;
-                            missText.GetComponent<ParticleLifetime>().m_follow = transform.parent.parent.GetChild(1);
+                            missText.GetComponent<ParticleLifetime>().follow = transform.parent.parent.GetChild(1);
                             missText.SetActive(true);
 
-                            ScoreController.Instance.m_currentCombo = 0;
-                            ScoreController.Instance.m_missCount++;
+                            ScoreController.Instance.currentCombo = 0;
+                            ScoreController.Instance.missCount++;
 
                             GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
                             GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 0.5f);
                             GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
 
-                            transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
-                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
-                            m_isHeld = false;
+                            transform.parent.parent.GetComponent<LaneHandler>().holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().allNotes.Dequeue();
+                            isHeld = false;
                         }
                     }
                 } 
-                else if(m_laneItBelongs % 2 != 0)
+                else if(laneItBelongs % 2 != 0)
                 {
-                    foreach (KeyCode key in KeyboardControls.Instance.m_oddLaneKeybind)
+                    foreach (KeyCode key in KeyboardControls.Instance.oddLaneKeybind)
                     {
                         if (Input.GetKey(key))
                         {
-                            m_pressed = key;
+                            pressed = key;
                         }
                     }
 
-                    if (Input.GetKeyUp(m_pressed))
+                    if (Input.GetKeyUp(pressed))
                     {
-                        if (m_noteData.m_beat + m_noteData.m_duration > GameManager.Instance.m_trackPosInBeats)
+                        if (noteData.beat + noteData.duration > GameManager.Instance.trackPosInBeats)
                         {
                             foreach (GameObject gO in GameManager.Instance.GetComponent<ObjectPooler>().pooledNotes)
                             {
                                 if (gO.activeSelf)
                                 {
-                                    if (gO.GetComponent<ParticleLifetime>().m_follow == transform.parent.parent.GetChild(1))
+                                    if (gO.GetComponent<ParticleLifetime>().follow == transform.parent.parent.GetChild(1))
                                     {
                                         gO.SetActive(false);
                                     }
                                 }
                             }
-                            m_noteState = NoteState.MISS;
+                            noteState = NoteState.MISS;
 
                             GameObject missText = GameManager.Instance.GetComponent<ObjectPooler>().GetPooledNote("MissText");
                             missText.transform.position = transform.parent.parent.GetChild(1).position;
-                            missText.GetComponent<ParticleLifetime>().m_follow = transform.parent.parent.GetChild(1);
+                            missText.GetComponent<ParticleLifetime>().follow = transform.parent.parent.GetChild(1);
                             missText.SetActive(true);
 
-                            ScoreController.Instance.m_currentCombo = 0;
-                            ScoreController.Instance.m_missCount++;
+                            ScoreController.Instance.currentCombo = 0;
+                            ScoreController.Instance.missCount++;
 
                             GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
                             GetComponent<LineRenderer>().startColor = new Color(1, 1, 1, 0.5f);
                             GetComponent<LineRenderer>().endColor = new Color(1, 1, 1, 0.5f);
 
-                            transform.parent.parent.GetComponent<LaneHandler>().m_holdNotes.Dequeue();
-                            transform.parent.parent.GetComponent<LaneHandler>().m_allNotes.Dequeue();
-                            m_isHeld = false; 
+                            transform.parent.parent.GetComponent<LaneHandler>().holdNotes.Dequeue();
+                            transform.parent.parent.GetComponent<LaneHandler>().allNotes.Dequeue();
+                            isHeld = false; 
                         }
                     }
                 }
@@ -171,7 +171,7 @@ public class HoldNoteHandler : NoteHandler
             else
             {
                 // Note continues as normal until disappearing
-                if (m_noteData.m_beat + m_noteData.m_duration < GameManager.Instance.m_trackPosInBeats)
+                if (noteData.beat + noteData.duration < GameManager.Instance.trackPosInBeats)
                 {
                     gameObject.SetActive(false);
                 }
@@ -179,7 +179,7 @@ public class HoldNoteHandler : NoteHandler
         }
         else if (LevelEditorManager.Instance)
         {
-            if (m_noteData.m_beat + m_noteData.m_duration < LevelEditorManager.Instance.m_trackPosInBeats)
+            if (noteData.beat + noteData.duration < LevelEditorManager.Instance.trackPosInBeats)
             {
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }

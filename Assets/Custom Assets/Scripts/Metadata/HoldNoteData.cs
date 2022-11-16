@@ -8,5 +8,5 @@ using UnityEngine;
 [System.Serializable]
 public class HoldNoteData : NoteBase
 {
-    public float m_duration;
+    public float duration;
 }

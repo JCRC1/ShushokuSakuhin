@@ -536,9 +536,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f93dcdad56f5f44a919cfd9637f286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_tabButtons: []
-  m_selectedTab: {fileID: 0}
-  m_objectsToSwap: []
+  tabButtons: []
+  selectedTab: {fileID: 0}
+  objectsToSwap: []
 --- !u!114 &83054300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,12 +659,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c89e8d27ef1dc04fbc3ede5b8e5c16d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_chartFolderCount: 0
-  m_levelTabsContainer: {fileID: 83054295}
-  m_levelTabTemplate: {fileID: 1719741183}
-  m_levelInfoContainer: {fileID: 1799673216}
-  m_levelInfoTemplate: {fileID: 1043047784}
-  m_chartLevelSelect: {fileID: 1049964282}
+  chartFolderCount: 0
+  levelTabsContainer: {fileID: 83054295}
+  levelTabTemplate: {fileID: 1719741183}
+  levelInfoContainer: {fileID: 1799673216}
+  levelInfoTemplate: {fileID: 1043047784}
+  chartLevelSelect: {fileID: 1049964282}
 --- !u!1 &90372544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,9 +1293,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab818c1c9e6844418bf991524eddce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mixer: {fileID: 24100000, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
-  m_slider: {fileID: 334536115}
-  m_parameterName: BGMVolume
+  mixer: {fileID: 24100000, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
+  slider: {fileID: 334536115}
+  parameterName: BGMVolume
 --- !u!1 &339239207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3110,9 +3110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fd63e3515b4e14e801a5f03c13a1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_selectedChartPath: 
-  m_difficultySelected: 0
-  m_trackHiScore: {fileID: 90372547}
+  selectedChartPath: 
+  difficultySelected: 0
+  trackHiScore: {fileID: 90372547}
 --- !u!4 &1049964283
 Transform:
   m_ObjectHideFlags: 0
@@ -4195,8 +4195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3154641726147a9438de41d4d31bded5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_hitSoundsOn: {fileID: 24500006, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
-  m_hitSoundsOff: {fileID: -2438127130640365674, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
+  hitSoundsOn: {fileID: 24500006, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
+  hitSoundsOff: {fileID: -2438127130640365674, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
 --- !u!1 &1549913882
 GameObject:
   m_ObjectHideFlags: 0
@@ -4308,10 +4308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1250a849de2e564f9edea9f53bbbe90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_defaultBGM: {fileID: 8300000, guid: 1fad8e3cb3dfafb41bafd6d19587d6b8, type: 3}
-  m_crossfadeTime: 2
-  m_bgmMixerGroup: {fileID: -4070982358696839402, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
-  m_isPlayingTrack01: 0
+  defaultBGM: {fileID: 0}
+  crossfadeTime: 0
+  bgmMixerGroup: {fileID: 0}
+  isPlayingTrack01: 0
 --- !u!4 &1578215780
 Transform:
   m_ObjectHideFlags: 0
@@ -4441,9 +4441,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab818c1c9e6844418bf991524eddce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mixer: {fileID: 24100000, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
-  m_slider: {fileID: 1604804074}
-  m_parameterName: SFXVolume
+  mixer: {fileID: 24100000, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
+  slider: {fileID: 1604804074}
+  parameterName: SFXVolume
 --- !u!1 &1634551562
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,8 +4662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3f6244538846248a0072be28853877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_tabGroup: {fileID: 83054299}
-  m_tabImage: {fileID: 0}
+  tabGroup: {fileID: 83054299}
+  tabImage: {fileID: 0}
 --- !u!114 &1719741186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4812,15 +4812,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ea519078d087945b67c72e22631a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animatorsToTrigger:
-  - {fileID: 419019451}
-  - {fileID: 90372546}
-  - {fileID: 116637591}
+  animatorsToTrigger:
   - {fileID: 23651727}
-  - {fileID: 46189675}
-  m_transitionTime: 2
-  m_sceneIndex: 2
-  m_soundEffect: {fileID: 8300000, guid: 90717c6b5b87cc742816f720cc9ca65e, type: 3}
+  - {fileID: 663934546}
+  - {fileID: 116637591}
+  - {fileID: 90372546}
+  - {fileID: 419019451}
+  transitionTime: 1
+  sceneIndex: 2
+  soundEffect: {fileID: 8300000, guid: 90717c6b5b87cc742816f720cc9ca65e, type: 3}
 --- !u!4 &1789006176
 Transform:
   m_ObjectHideFlags: 0

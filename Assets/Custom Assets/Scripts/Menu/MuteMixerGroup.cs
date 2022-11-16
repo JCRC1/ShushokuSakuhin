@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class MuteMixerGroup : MonoBehaviour
 {
-    public AudioMixerSnapshot m_hitSoundsOn;
-    public AudioMixerSnapshot m_hitSoundsOff;
+    public AudioMixerSnapshot hitSoundsOn;
+    public AudioMixerSnapshot hitSoundsOff;
 
     private void Start()
     {
@@ -28,12 +28,12 @@ public class MuteMixerGroup : MonoBehaviour
         if (_mute)
         {
             PlayerPrefs.SetInt("MuteHitSound", 1);
-            m_hitSoundsOff.TransitionTo(0);
+            hitSoundsOff.TransitionTo(0);
         }
         else
         {
             PlayerPrefs.SetInt("MuteHitSound", 0);
-            m_hitSoundsOn.TransitionTo(0);
+            hitSoundsOn.TransitionTo(0);
         }
     }
 }

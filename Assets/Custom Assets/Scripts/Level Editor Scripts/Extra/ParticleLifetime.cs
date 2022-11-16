@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ParticleLifetime : MonoBehaviour
 {
-    public float m_lifeTime = 2.0f;
-    public Transform m_follow;
+    public float lifeTime = 2.0f;
+    public Transform follow;
 
     float timer = 0.0f;
 
@@ -18,7 +18,7 @@ public class ParticleLifetime : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer < m_lifeTime)
+        if (timer < lifeTime)
         {
             timer += Time.deltaTime;
         }
@@ -28,7 +28,7 @@ public class ParticleLifetime : MonoBehaviour
             timer = 0.0f;
         }
 
-        if(m_follow != null)
-            transform.position = m_follow.position;
+        if(follow != null)
+            transform.position = follow.position;
     }
 }

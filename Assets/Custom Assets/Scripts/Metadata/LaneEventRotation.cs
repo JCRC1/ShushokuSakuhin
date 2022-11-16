@@ -6,6 +6,6 @@ using UnityEngine;
 public class LaneEventRotation : LaneEvent
 {
     // Float since the only axis to rotate from is the z axis
-    public float m_targetRotation;
-    public bool m_pivotAtEnd;
+    public float targetRotation;
+    public bool pivotAtEnd;
 }

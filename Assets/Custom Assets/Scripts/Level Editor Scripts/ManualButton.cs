@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class ManualButton : MonoBehaviour
 {
-    public static bool m_manualBeatInput = false;
+    public static bool manualBeatInput = false;
 
     public void ManualInput()
     {
-        m_manualBeatInput = !m_manualBeatInput;
+        manualBeatInput = !manualBeatInput;
     }
 
     public void InputOnOff(InputField _inputField)
     {
-        _inputField.interactable = m_manualBeatInput;
+        _inputField.interactable = manualBeatInput;
     }
 }

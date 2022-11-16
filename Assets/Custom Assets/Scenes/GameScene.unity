@@ -442,8 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9445177b4ca303841afbc59b79383d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animator: {fileID: 0}
-  m_currentState: 0
+  animator: {fileID: 0}
+  currentState: 0
 --- !u!95 &188239594
 Animator:
   serializedVersion: 3
@@ -831,12 +831,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ea519078d087945b67c72e22631a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animatorsToTrigger:
-  - {fileID: 1216354702}
-  - {fileID: 1255951681}
-  m_transitionTime: 3
-  m_sceneIndex: 1
-  m_soundEffect: {fileID: 8300000, guid: 90717c6b5b87cc742816f720cc9ca65e, type: 3}
+  animatorsToTrigger:
+  - {fileID: 1802769618}
+  transitionTime: 1
+  sceneIndex: 1
+  soundEffect: {fileID: 8300000, guid: 90717c6b5b87cc742816f720cc9ca65e, type: 3}
 --- !u!95 &463470478
 Animator:
   serializedVersion: 3
@@ -2718,10 +2717,10 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216354700}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 12ff158da8879a84b8983bde75f8be0a, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -3785,8 +3784,8 @@ GameObject:
   - component: {fileID: 1729189350}
   - component: {fileID: 1729189348}
   - component: {fileID: 1729189349}
-  - component: {fileID: 1729189345}
   - component: {fileID: 1729189351}
+  - component: {fileID: 1729189345}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3902,39 +3901,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5ee35daad6a9b46a97babe052f9979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_manualMode: 0
-  m_path: Apocaliptix/Apocaliptix_1_Chart.txt
-  m_chartData:
-    m_trackAudioPath: 
-    m_trackCoverArtPath: 
-    m_trackName: 
-    m_trackArtist: 
-    m_trackDifficulty: 0
-    m_trackOffset: 0
-    m_trackBPM: 0
-    m_lane: []
-  m_notePrefab: {fileID: 1499816178328720486, guid: 18233e59c13f3e14095452e5220b15b5, type: 3}
-  m_lanePrefab: {fileID: 7632251748279742534, guid: bd2784378d880c04e82fc2e77159d6c4, type: 3}
-  m_lanes: []
-  m_nextNoteIndex: 
-  m_currentMovementIndex: 
-  m_currentRotationIndex: 
-  m_currentFadeIndex: 
-  m_currentLengthIndex: 
-  m_totalLanes: 0
-  m_totalNotes: 0
-  m_beatsToShow: 3
-  m_secPerBeat: 0
-  m_hitWindow: 0.125
-  m_trackPos: 0
-  m_trackPosInBeats: 0
-  m_beatsPerLoop: 1
-  m_completedLoops: 0
-  m_loopPosInBeats: 0
-  m_loopPosInAnalog: 0
-  m_audioSource: {fileID: 0}
-  m_initialized: 0
-  m_finalized: 0
+  chartData:
+    trackAudioPath: 
+    trackCoverArtPath: 
+    trackName: 
+    trackArtist: 
+    trackDifficulty: 0
+    trackOffset: 0
+    trackBPM: 0
+    lane: []
+  audioSource: {fileID: 0}
+  path: La'qryma of the Wasteland/La'qryma of the Wasteland_0_Chart.txt
+  manualMode: 1
+  lanePrefab: {fileID: 7632251748279742534, guid: bd2784378d880c04e82fc2e77159d6c4, type: 3}
+  lanes: []
+  totalLanes: 0
+  totalNotes: 0
+  nextNoteIndex: 
+  currentMovementIndex: 
+  currentRotationIndex: 
+  currentFadeIndex: 
+  currentLengthIndex: 
+  beatsToShow: 4
+  hitWindow: 0.125
+  beatsPerLoop: 1
+  secPerBeat: 0
+  trackPos: 0
+  trackPosInBeats: 0
+  completedLoops: 0
+  loopPosInBeats: 0
+  loopPosInAnalog: 0
+  initialized: 0
+  finalized: 0
 --- !u!4 &1729189347
 Transform:
   m_ObjectHideFlags: 0
@@ -3961,15 +3959,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06ef7aa3feb36354eae77b48183a0d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_currentScore: 0
-  m_currentCombo: 0
-  m_maxCombo: 0
-  m_perfectHitCount: 0
-  m_goodHitCount: 0
-  m_missCount: 0
-  m_UIScore: {fileID: 2140142121}
-  m_UICombo: {fileID: 1091217246}
-  m_scorePerNote: 0
+  currentScore: 0
+  currentCombo: 0
+  maxCombo: 0
+  perfectHitCount: 0
+  goodHitCount: 0
+  missCount: 0
+  UIScore: {fileID: 2140142121}
+  UICombo: {fileID: 1091217246}
+  scorePerNote: 0
 --- !u!114 &1729189349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3982,11 +3980,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2011b79d4b96bb4ba1f16b4553b15eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_oddLaneKeybind: 6a0000006b0000006c0000003b000000
-  m_evenLaneKeybind: 66000000640000007300000061000000
-  m_hitSound: {fileID: 8300000, guid: 3f59982fe906e2340905335426751bb6, type: 3}
-  m_hitSource: {fileID: 0}
-  m_sfxMixerGroup: {fileID: -7835294324252229687, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
+  oddLaneKeybind: 6a0000006b0000006c0000003b000000
+  evenLaneKeybind: 61000000730000006400000066000000
+  hitSound: {fileID: 8300000, guid: 3f59982fe906e2340905335426751bb6, type: 3}
+  hitSource: {fileID: 0}
+  sfxMixerGroup: {fileID: -7411672146143108802, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
 --- !u!114 &1729189350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3999,26 +3997,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffdff35c2237ae74ea2d1fd03b58680b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIAnimator:
-  - {fileID: 966137396}
+  UIAnimator:
+  - {fileID: 1255951681}
   - {fileID: 2140142123}
+  - {fileID: 966137396}
   - {fileID: 886881272}
-  m_ScoreDisplay: {fileID: 1216354700}
-  m_trackImage: {fileID: 315186062}
-  m_trackName:
-  - {fileID: 966137394}
+  - {fileID: 188239594}
+  ScoreDisplay: {fileID: 1216354700}
+  trackImage: {fileID: 315186062}
+  trackName:
   - {fileID: 1517766536}
-  m_difficulty:
-  - {fileID: 886881270}
+  - {fileID: 966137394}
+  difficulty:
   - {fileID: 157446844}
-  m_artistName: {fileID: 1849339700}
-  m_perfectCount: {fileID: 1630446751}
-  m_goodCount: {fileID: 1939711212}
-  m_missCount: {fileID: 841211337}
-  m_maxCombo: {fileID: 159100278}
-  m_accuracy: {fileID: 1410013260}
-  m_scoreThisTime: {fileID: 1290424363}
-  m_hiScore: {fileID: 1164678358}
+  - {fileID: 886881270}
+  artistName: {fileID: 1849339700}
+  perfectCount: {fileID: 1630446751}
+  goodCount: {fileID: 1939711212}
+  missCount: {fileID: 841211337}
+  maxCombo: {fileID: 159100278}
+  accuracy: {fileID: 1410013260}
+  scoreThisTime: {fileID: 1290424363}
+  hiScore: {fileID: 1164678358}
 --- !u!114 &1729189351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4384,10 +4384,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1250a849de2e564f9edea9f53bbbe90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_defaultBGM: {fileID: 8300000, guid: 1fad8e3cb3dfafb41bafd6d19587d6b8, type: 3}
-  m_crossfadeTime: 2
-  m_bgmMixerGroup: {fileID: -4070982358696839402, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
-  m_isPlayingTrack01: 0
+  defaultBGM: {fileID: 0}
+  crossfadeTime: 0
+  bgmMixerGroup: {fileID: -4070982358696839402, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
+  isPlayingTrack01: 0
 --- !u!1 &1849339698
 GameObject:
   m_ObjectHideFlags: 0
@@ -4917,10 +4917,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958b24d9676ad854abceecafaef8f8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_pausePanel: {fileID: 1767626280}
-  m_fadeObj: {fileID: 1802769616}
-  m_countDownObj: {fileID: 660226564}
-  m_isPause: 0
+  pausePanel: {fileID: 1767626280}
+  fadeObj: {fileID: 1802769616}
+  countDownObj: {fileID: 660226564}
+  isPause: 0
 --- !u!1 &2140142119
 GameObject:
   m_ObjectHideFlags: 0

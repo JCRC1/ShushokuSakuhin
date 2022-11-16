@@ -5,12 +5,12 @@ using UnityEngine;
 public class SingleNoteHolder : MonoBehaviour
 {
     // Which lane it belongs to
-    public int m_laneID;
-    public int m_indexOfThis;
-    public SingleNoteData m_heldNote;
+    public int laneID;
+    public int indexOfThis;
+    public SingleNoteData heldNote;
 
     private void Update()
     {
-        m_indexOfThis = NoteListDisplay.Instance.m_singleNotes[m_laneID].m_single.IndexOf(m_heldNote);
+        indexOfThis = NoteListDisplay.Instance.singleNotes[laneID].single.IndexOf(heldNote);
     }
 }

@@ -7,49 +7,49 @@ using UnityEngine.SceneManagement;
 
 public class ChartLevelSelect : MonoBehaviour
 {
-    public string m_selectedChartPath;
+    public string selectedChartPath;
 
-    private string m_selectedTrackName;
+    private string selectedTrackName;
 
-    public static string m_levelPath;
+    public static string levelPath;
 
-    public int m_difficultySelected;
-    public Text m_trackHiScore;
+    public int difficultySelected;
+    public Text trackHiScore;
 
     private void Start()
     {
-        SelectDifficulty(m_difficultySelected);
+        SelectDifficulty(difficultySelected);
     }
 
     private void Update()
     {
-        m_selectedChartPath = m_selectedChartPath.Replace("_difficulty_", "_" + m_difficultySelected.ToString() + "_");
-        m_selectedChartPath = m_selectedChartPath.Replace("_0_", "_" + m_difficultySelected.ToString() + "_");
-        m_selectedChartPath = m_selectedChartPath.Replace("_1_", "_" + m_difficultySelected.ToString() + "_");
-        m_selectedChartPath = m_selectedChartPath.Replace("_2_", "_" + m_difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_difficulty_", "_" + difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_0_", "_" + difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_1_", "_" + difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_2_", "_" + difficultySelected.ToString() + "_");
 
-        m_trackHiScore.text = PlayerPrefs.GetInt(m_selectedTrackName + "_" + m_difficultySelected + "_" + "HiScore").ToString("0000000");
+        trackHiScore.text = PlayerPrefs.GetInt(selectedTrackName + "_" + difficultySelected + "_" + "HiScore").ToString("0000000");
 
-        m_levelPath = m_selectedChartPath;
+        levelPath = selectedChartPath;
     }
 
     public void SelectTrackName(string _name)
     {
-        m_selectedTrackName = _name;
+        selectedTrackName = _name;
     }
 
     public void SelectPath(string _path)
     {
-        m_selectedChartPath = _path;
+        selectedChartPath = _path;
     }
 
     public void SelectDifficulty(int _difficulty)
     {
-        m_difficultySelected = _difficulty;
+        difficultySelected = _difficulty;
 
-        m_selectedChartPath = m_selectedChartPath.Replace("_difficulty_", "_" + m_difficultySelected.ToString() + "_");
-        m_selectedChartPath = m_selectedChartPath.Replace("_0_", "_" + m_difficultySelected.ToString() + "_");
-        m_selectedChartPath = m_selectedChartPath.Replace("_1_", "_" + m_difficultySelected.ToString() + "_");
-        m_selectedChartPath = m_selectedChartPath.Replace("_2_", "_" + m_difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_difficulty_", "_" + difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_0_", "_" + difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_1_", "_" + difficultySelected.ToString() + "_");
+        selectedChartPath = selectedChartPath.Replace("_2_", "_" + difficultySelected.ToString() + "_");
     }
 }

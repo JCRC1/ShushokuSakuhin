@@ -5,33 +5,33 @@ using UnityEngine.UI;
 
 public class HoldNoteEditor : MonoBehaviour
 {
-    public HoldNoteData m_selectedNote;
+    public HoldNoteData selectedNote;
 
-    public InputField m_noteLane;
-    public InputField m_noteBeat;
-    public InputField m_noteDuration;
+    public InputField noteLane;
+    public InputField noteBeat;
+    public InputField noteDuration;
 
-    public SelectedNoteEditor m_holder;
+    public SelectedNoteEditor holder;
 
     public void SetNote(SelectedNoteEditor _holder)
     {
-        if (_holder.m_selectedHoldNote != null)
+        if (_holder.selectedHoldNote != null)
         {
-            m_holder = _holder;
+            holder = _holder;
 
-            m_selectedNote = _holder.m_selectedHoldNote.m_heldNote;
+            selectedNote = _holder.selectedHoldNote.heldNote;
 
-            m_noteLane.text = _holder.m_selectedHoldNote.m_laneID.ToString();
-            m_noteBeat.text = _holder.m_selectedHoldNote.m_heldNote.m_beat.ToString();
-            m_noteDuration.text = _holder.m_selectedHoldNote.m_heldNote.m_duration.ToString();
+            noteLane.text = _holder.selectedHoldNote.laneID.ToString();
+            noteBeat.text = _holder.selectedHoldNote.heldNote.beat.ToString();
+            noteDuration.text = _holder.selectedHoldNote.heldNote.duration.ToString();
         }
     }
 
     public void ConfirmEdit()
     {
-        m_selectedNote.m_beat = float.Parse(m_noteBeat.text);
-        m_selectedNote.m_duration = float.Parse(m_noteDuration.text);
+        selectedNote.beat = float.Parse(noteBeat.text);
+        selectedNote.duration = float.Parse(noteDuration.text);
 
-        NoteListDisplay.Instance.EditNote(m_selectedNote, m_holder.m_selectedHoldNote);
+        NoteListDisplay.Instance.EditNote(selectedNote, holder.selectedHoldNote);
     }
 }

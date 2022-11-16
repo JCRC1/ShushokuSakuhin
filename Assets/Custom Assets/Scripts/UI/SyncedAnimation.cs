@@ -5,26 +5,26 @@ using UnityEngine;
 public class SyncedAnimation : MonoBehaviour
 {
     //The animator controller attached to this GameObject
-    public Animator m_animator;
+    public Animator animator;
     //Records the animation state or animation that the Animator is currently in
-    public AnimatorStateInfo m_animatorStateInfo;
+    public AnimatorStateInfo animatorStateInfo;
 
     //Used to address the current state within the Animator using the Play() function
-    public int m_currentState;
+    public int currentState;
 
     // Triggered when the game has ended
-    private bool m_playEnd;
+    private bool playEnd;
     // Start is called before the first frame update
     void Start()
     {
         //Load the animator attached to this object
-        m_animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
 
         //Get the info about the current animator state
-        m_animatorStateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
+        animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         //Convert the current state name to an integer hash for identification
-        m_currentState = m_animatorStateInfo.fullPathHash;
+        currentState = animatorStateInfo.fullPathHash;
     }
 
     // Update is called once per frame
@@ -33,22 +33,22 @@ public class SyncedAnimation : MonoBehaviour
         if (LevelEditorManager.Instance)
         {
             //Start playing the current animation from wherever the current conductor loop is
-            m_animator.Play(m_currentState, -1, LevelEditorManager.Instance.m_loopPosInAnalog);
+            animator.Play(currentState, -1, LevelEditorManager.Instance.loopPosInAnalog);
             //Set the speed to 0 so it will only change frames when you next update it
-            m_animator.speed = 0;
+            animator.speed = 0;
         }
         else
         {
-            if (GameManager.Instance.m_finalized)
+            if (GameManager.Instance.finalized)
             {
-                m_animator.SetTrigger("Finalized");
-                m_animator.speed = 1;
+                animator.SetTrigger("Finalized");
+                animator.speed = 1;
                 return;
             }
             //Start playing the current animation from wherever the current conductor loop is
-            m_animator.Play(m_currentState, -1, GameManager.Instance.m_loopPosInAnalog);
+            animator.Play(currentState, -1, GameManager.Instance.loopPosInAnalog);
             //Set the speed to 0 so it will only change frames when you next update it
-            m_animator.speed = 0;            
+            animator.speed = 0;            
         }
 
     }

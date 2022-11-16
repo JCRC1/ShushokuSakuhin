@@ -6,11 +6,11 @@ using AnotherFileBrowser.Windows;
 
 public class ChartMetadataBuilder : MonoBehaviour
 {
-    public static ChartData m_chartData;
+    public static ChartData chartData;
 
     private void Start()
     {
-        m_chartData = new ChartData();
+        chartData = new ChartData();
     }
 
     public void TrackPathLoad()
@@ -27,7 +27,7 @@ public class ChartMetadataBuilder : MonoBehaviour
             string temp2 = temp.Replace(".mp3", "");
             string temp3 = temp2.Replace(".wav", "");
 
-            m_chartData.m_trackAudioPath = temp3;
+            chartData.trackAudioPath = temp3;
         });
     }
 
@@ -42,7 +42,7 @@ public class ChartMetadataBuilder : MonoBehaviour
         {
             //Do something with path(string)
             string json = File.ReadAllText(path);
-            JsonUtility.FromJsonOverwrite(json, LevelEditorManager.Instance.m_chartData);
+            JsonUtility.FromJsonOverwrite(json, LevelEditorManager.Instance.chartData);
         });
     }
 
@@ -60,32 +60,32 @@ public class ChartMetadataBuilder : MonoBehaviour
             string temp2 = temp.Replace(".png", "");
             string temp3 = temp2.Replace(".jpg", "");
 
-            m_chartData.m_trackCoverArtPath = temp3;
+            chartData.trackCoverArtPath = temp3;
         });
     }
 
     public void TrackNameAdd(Text name)
     {
-        m_chartData.m_trackName = name.text;
+        chartData.trackName = name.text;
     }
 
     public void TrackArtistAdd(Text name)
     {
-        m_chartData.m_trackArtist = name.text;
+        chartData.trackArtist = name.text;
     }
 
     public void TrackDifficultyAdd(Dropdown dropdown)
     {
-        m_chartData.m_trackDifficulty = dropdown.value;
+        chartData.trackDifficulty = dropdown.value;
     }
 
     public void TrackBPMAdd(Text bpm)
     {
-        float.TryParse(bpm.text, out m_chartData.m_trackBPM);
+        float.TryParse(bpm.text, out chartData.trackBPM);
     }
 
     public void TrackOffsetAdd(Text offset)
     {
-        float.TryParse(offset.text, out m_chartData.m_trackOffset);
+        float.TryParse(offset.text, out chartData.trackOffset);
     }
 }

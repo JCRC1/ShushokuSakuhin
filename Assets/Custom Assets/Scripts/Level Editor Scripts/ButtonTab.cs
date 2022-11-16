@@ -11,35 +11,35 @@ using UnityEngine.EventSystems;
 public class ButtonTab : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     // Reference to tab group this tab belongs to
-    public TabGroup m_tabGroup;
+    public TabGroup tabGroup;
     // Image attached to this tab
-    public Image m_tabImage;
+    public Image tabImage;
 
-    private Button m_button;
+    private Button button;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(m_button.interactable)
-            m_tabGroup.OnTabSelected(this);
+        if(button.interactable)
+            tabGroup.OnTabSelected(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (m_button.interactable)
-            m_tabGroup.OnTabEnter(this);
+        if (button.interactable)
+            tabGroup.OnTabEnter(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (m_button.interactable)
-            m_tabGroup.OnTabExit(this);
+        if (button.interactable)
+            tabGroup.OnTabExit(this);
     }
 
     private void Start()
     {
-        m_tabImage = GetComponent<Image>();
-        m_tabGroup.Subscribe(this);
+        tabImage = GetComponent<Image>();
+        tabGroup.Subscribe(this);
 
-        m_button = GetComponent<Button>();
+        button = GetComponent<Button>();
     }
 }

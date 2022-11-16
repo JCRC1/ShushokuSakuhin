@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RoundBeatDisplay : MonoBehaviour
 {
-    public Toggle[] m_toggles;
+    public Toggle[] toggles;
 
     public void ToggleOne(Toggle _toggle)
     {
@@ -14,12 +14,12 @@ public class RoundBeatDisplay : MonoBehaviour
 
     public void Update()
     {
-        for (int i = 0; i < m_toggles.Length; i++)
+        for (int i = 0; i < toggles.Length; i++)
         {
-            if (m_toggles[i].isOn)
+            if (toggles[i].isOn)
             {
-                Seekbar.Instance.m_currentBeatText[1].text = (Mathf.Round(LevelEditorManager.Instance.m_trackPosInBeats * Mathf.Pow(2.0f, i)) / Mathf.Pow(2.0f, i)).ToString();
-                Seekbar.Instance.m_currentBeatText[2].text = (Mathf.Round(LevelEditorManager.Instance.m_trackPosInBeats * Mathf.Pow(2.0f, i)) / Mathf.Pow(2.0f, i)).ToString();
+                Seekbar.Instance.currentBeatText[1].text = (Mathf.Round(LevelEditorManager.Instance.trackPosInBeats * Mathf.Pow(2.0f, i)) / Mathf.Pow(2.0f, i)).ToString();
+                Seekbar.Instance.currentBeatText[2].text = (Mathf.Round(LevelEditorManager.Instance.trackPosInBeats * Mathf.Pow(2.0f, i)) / Mathf.Pow(2.0f, i)).ToString();
             }
         }
     }

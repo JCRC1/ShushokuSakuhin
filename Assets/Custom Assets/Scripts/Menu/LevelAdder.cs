@@ -7,24 +7,24 @@ using System.IO;
 
 public class LevelAdder : MonoBehaviour
 {
-    public int m_chartFolderCount;
+    public int chartFolderCount;
 
-    public GameObject m_levelTabsContainer; // Where the level button will be
-    public GameObject m_levelTabTemplate;
+    public GameObject levelTabsContainer; // Where the level button will be
+    public GameObject levelTabTemplate;
 
-    public GameObject m_levelInfoContainer; // Where the level info will be
-    public GameObject m_levelInfoTemplate;
+    public GameObject levelInfoContainer; // Where the level info will be
+    public GameObject levelInfoTemplate;
 
-    public ChartLevelSelect m_chartLevelSelect;
+    public ChartLevelSelect chartLevelSelect;
 
     private void Start()
     {
         // Check how many folders in this directory, each is a chart folder
         DirectoryInfo dir = new DirectoryInfo(Application.dataPath + "\\Resources\\");
-        m_chartFolderCount = dir.GetDirectories().Length;
+        chartFolderCount = dir.GetDirectories().Length;
 
         // Iterate through the chart folders
-        for (int i = 0; i < m_chartFolderCount; i++)
+        for (int i = 0; i < chartFolderCount; i++)
         {
             // Check if the chart folder has all necessary files needed to create the objects
             DirectoryInfo chartDir = dir.GetDirectories()[i];
@@ -36,7 +36,7 @@ public class LevelAdder : MonoBehaviour
             // Now with those folders in mind, lets create some objects in the world
             // First the level select button tab
             {
-                GameObject levelTab = Instantiate(m_levelTabTemplate, m_levelTabsContainer.transform);
+                GameObject levelTab = Instantiate(levelTabTemplate, levelTabsContainer.transform);
                 AudioClip trackPreview = Resources.Load<AudioClip>(chartDir.GetFiles("*Preview*")[0].FullName.Replace(Application.dataPath.Replace("/", "\\") + "\\Resources\\", "").Replace(".mp3", "").Replace(".wav", ""));
                 Text levelName = levelTab.transform.GetChild(0).GetComponent<Text>();
 
@@ -47,7 +47,7 @@ public class LevelAdder : MonoBehaviour
                 levelTab.GetComponent<Button>().onClick.AddListener(
                     delegate
                     {
-                        m_chartLevelSelect.SelectPath(chartDir.Name + "\\" + chartDir.Name + "_difficulty_Chart.txt");
+                        chartLevelSelect.SelectPath(chartDir.Name + "\\" + chartDir.Name + "_difficulty_Chart.txt");
                     }
                     );
 
@@ -55,7 +55,7 @@ public class LevelAdder : MonoBehaviour
                 levelTab.GetComponent<Button>().onClick.AddListener(
                    delegate
                    {
-                       m_chartLevelSelect.SelectTrackName(chartDir.Name);
+                       chartLevelSelect.SelectTrackName(chartDir.Name);
                    }
                    );
 
@@ -70,7 +70,7 @@ public class LevelAdder : MonoBehaviour
 
             // Next the level info display
             {
-                GameObject levelInfo = Instantiate(m_levelInfoTemplate, m_levelInfoContainer.transform);
+                GameObject levelInfo = Instantiate(levelInfoTemplate, levelInfoContainer.transform);
                 Image trackImage = levelInfo.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
 
                 trackImage.sprite = Resources.Load<Sprite>(chartDir.GetFiles("*Image*")[0].FullName.Replace(Application.dataPath.Replace("/", "\\") + "\\Resources\\", "").Replace(".png", "").Replace(".jpg", ""));
@@ -80,14 +80,14 @@ public class LevelAdder : MonoBehaviour
                 {
                     if (line.Contains("Artist"))
                     {
-                        string temp = line.Replace("    \"m_trackArtist\": ", "");
+                        string temp = line.Replace("    \"trackArtist\": ", "");
                         levelInfo.transform.GetChild(1).GetComponent<Text>().text = temp.Trim('\"').Trim(',').TrimEnd('\"');
                         continue;
                     }
                 }
 
                 // Add these to the objects to swap for the tabs
-                GetComponent<TabGroup>().m_objectsToSwap.Add(levelInfo);
+                GetComponent<TabGroup>().objectsToSwap.Add(levelInfo);
             }
         }
     }

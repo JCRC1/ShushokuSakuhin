@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TrackPositionDisplayToggle : MonoBehaviour
 {
-    public static bool m_canSeek = false;
+    public static bool canSeek = false;
     public void DisplayToggle(GameObject _display)
     {
         _display.SetActive(!_display.activeSelf);
@@ -16,6 +16,6 @@ public class TrackPositionDisplayToggle : MonoBehaviour
     }
     public void CanSeekToggle()
     {
-        m_canSeek = !m_canSeek;
+        canSeek = !canSeek;
     }
 }

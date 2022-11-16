@@ -153,14 +153,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ea519078d087945b67c72e22631a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animatorsToTrigger:
-  - {fileID: 663934546}
+  animatorsToTrigger:
   - {fileID: 118378185}
+  - {fileID: 484370118}
   - {fileID: 697513305}
   - {fileID: 1665385064}
-  m_transitionTime: 2
-  m_sceneIndex: 1
-  m_soundEffect: {fileID: 8300000, guid: 90717c6b5b87cc742816f720cc9ca65e, type: 3}
+  - {fileID: 663934546}
+  transitionTime: 1
+  sceneIndex: 1
+  soundEffect: {fileID: 8300000, guid: 90717c6b5b87cc742816f720cc9ca65e, type: 3}
 --- !u!4 &82817288
 Transform:
   m_ObjectHideFlags: 0
@@ -513,8 +514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9445177b4ca303841afbc59b79383d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animator: {fileID: 0}
-  m_currentState: 0
+  animator: {fileID: 0}
+  currentState: 0
 --- !u!95 &484370118
 Animator:
   serializedVersion: 3
@@ -979,10 +980,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1250a849de2e564f9edea9f53bbbe90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_defaultBGM: {fileID: 8300000, guid: 1fad8e3cb3dfafb41bafd6d19587d6b8, type: 3}
-  m_crossfadeTime: 2
-  m_bgmMixerGroup: {fileID: -4070982358696839402, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
-  m_isPlayingTrack01: 0
+  defaultBGM: {fileID: 8300000, guid: 1fad8e3cb3dfafb41bafd6d19587d6b8, type: 3}
+  crossfadeTime: 1
+  bgmMixerGroup: {fileID: -4070982358696839402, guid: ae49809205aed9a4482ffeb5bd2fc946, type: 2}
+  isPlayingTrack01: 0
 --- !u!4 &985576260
 Transform:
   m_ObjectHideFlags: 0

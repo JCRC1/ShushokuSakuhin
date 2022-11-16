@@ -6,86 +6,86 @@ using UnityEngine.U2D;
 
 public class DummyLaneMovement : MonoBehaviour
 {
-    public GameObject m_movementGizmoPrefab;
-    public GameObject m_XmovementGizmoPrefab;
-    public GameObject m_rotationGizmoPrefab;
+    public GameObject movementGizmoPrefab;
+    public GameObject XmovementGizmoPrefab;
+    public GameObject rotationGizmoPrefab;
 
     [HideInInspector]
-    public GameObject m_movementGizmo;
+    public GameObject movementGizmo;
     [HideInInspector]
-    public GameObject m_XmovementGizmo;
+    public GameObject XmovementGizmo;
     [HideInInspector]
-    public GameObject m_rotationGizmo;
+    public GameObject rotationGizmo;
 
-    private SpriteShapeController m_spriteShapeController;
+    private SpriteShapeController spriteShapeController;
 
     private void Awake()
     {
-        m_spriteShapeController = GetComponent<SpriteShapeController>();
+        spriteShapeController = GetComponent<SpriteShapeController>();
         
-        m_movementGizmo = Instantiate(m_movementGizmoPrefab);
-        m_movementGizmo.SetActive(false);
+        movementGizmo = Instantiate(movementGizmoPrefab);
+        movementGizmo.SetActive(false);
 
-        m_XmovementGizmo = Instantiate(m_XmovementGizmoPrefab);
-        m_XmovementGizmo.SetActive(false);
+        XmovementGizmo = Instantiate(XmovementGizmoPrefab);
+        XmovementGizmo.SetActive(false);
 
-        m_rotationGizmo = Instantiate(m_rotationGizmoPrefab);
-        m_rotationGizmo.SetActive(false);
+        rotationGizmo = Instantiate(rotationGizmoPrefab);
+        rotationGizmo.SetActive(false);
     }
     public void StartUseM()
     {
-        m_movementGizmo.SetActive(true);
-        m_movementGizmo.GetComponent<MovementGizmo>().m_operating = true;
-        m_movementGizmo.GetComponent<MovementGizmo>().SetTargetObject(gameObject);
+        movementGizmo.SetActive(true);
+        movementGizmo.GetComponent<MovementGizmo>().operating = true;
+        movementGizmo.GetComponent<MovementGizmo>().SetTargetObject(gameObject);
     }
 
     public void EndUseM()
     {
-        m_movementGizmo.GetComponent<MovementGizmo>().m_operating = false;
-        m_movementGizmo.SetActive(false);
+        movementGizmo.GetComponent<MovementGizmo>().operating = false;
+        movementGizmo.SetActive(false);
     }
 
     public void StartUseR()
     {
-        m_rotationGizmo.SetActive(true);
-        m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_operating = true;
-        m_rotationGizmo.transform.GetChild(0).GetComponent< RotationGizmo>().SetTargetObject(gameObject);
+        rotationGizmo.SetActive(true);
+        rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().operating = true;
+        rotationGizmo.transform.GetChild(0).GetComponent< RotationGizmo>().SetTargetObject(gameObject);
     }
 
     public void EndUseR()
     {
-        m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_operating = false;
-        m_rotationGizmo.SetActive(false);
+        rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().operating = false;
+        rotationGizmo.SetActive(false);
     }
 
     public void StartUseL()
     {
-        m_XmovementGizmo.SetActive(true);
-        m_XmovementGizmo.transform.rotation = transform.rotation;
-        m_XmovementGizmo.GetComponent<MovementGizmo>().m_operating = true;
-        m_XmovementGizmo.GetComponent<MovementGizmo>().SetTargetObject(transform.GetChild(0).gameObject);
+        XmovementGizmo.SetActive(true);
+        XmovementGizmo.transform.rotation = transform.rotation;
+        XmovementGizmo.GetComponent<MovementGizmo>().operating = true;
+        XmovementGizmo.GetComponent<MovementGizmo>().SetTargetObject(transform.GetChild(0).gameObject);
     }
 
     public void EndUseL()
     {
-        m_XmovementGizmo.GetComponent<MovementGizmo>().m_operating = false;
-        m_XmovementGizmo.SetActive(false);
+        XmovementGizmo.GetComponent<MovementGizmo>().operating = false;
+        XmovementGizmo.SetActive(false);
     }
 
     private void Update()
     {
-        if (!ManualButton.m_manualBeatInput)
+        if (!ManualButton.manualBeatInput)
         {
-            SelectedLaneDisplay.Instance.m_moveToXDisplay.text = transform.position.x.ToString("0.00");
-            SelectedLaneDisplay.Instance.m_moveToYDisplay.text = transform.position.y.ToString("0.00");
-            SelectedLaneDisplay.Instance.m_targetLengthDisplay.text = transform.GetChild(0).localPosition.x.ToString("0.00");
+            SelectedLaneDisplay.Instance.moveToXDisplay.text = transform.position.x.ToString("0.00");
+            SelectedLaneDisplay.Instance.moveToYDisplay.text = transform.position.y.ToString("0.00");
+            SelectedLaneDisplay.Instance.targetLengthDisplay.text = transform.GetChild(0).localPosition.x.ToString("0.00");
 
-            SelectedLaneDisplay.Instance.m_angleDisplay.text = m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_currentAngle.ToString("0.00");
+            SelectedLaneDisplay.Instance.angleDisplay.text = rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().currentAngle.ToString("0.00");
 
-            if (SelectedLaneDisplay.Instance.m_pivotToggle.isOn)
-                m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_pivot = new Vector2(m_rotationGizmo.transform.GetChild(0).transform.position.x - 5.0f, m_rotationGizmo.transform.GetChild(0).transform.position.y);
+            if (SelectedLaneDisplay.Instance.pivotToggle.isOn)
+                rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().pivot = new Vector2(rotationGizmo.transform.GetChild(0).transform.position.x - 5.0f, rotationGizmo.transform.GetChild(0).transform.position.y);
             else
-                m_rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().m_pivot = new Vector2(m_rotationGizmo.transform.GetChild(0).transform.position.x, m_rotationGizmo.transform.GetChild(0).transform.position.y);
+                rotationGizmo.transform.GetChild(0).GetComponent<RotationGizmo>().pivot = new Vector2(rotationGizmo.transform.GetChild(0).transform.position.x, rotationGizmo.transform.GetChild(0).transform.position.y);
         }
 
         SpriteShapeUpdate();
@@ -93,7 +93,7 @@ public class DummyLaneMovement : MonoBehaviour
 
     private void SpriteShapeUpdate()
     {
-        Spline spline = m_spriteShapeController.spline;
+        Spline spline = spriteShapeController.spline;
         spline.Clear();
 
         // Lock Y Movement
@@ -117,6 +117,6 @@ public class DummyLaneMovement : MonoBehaviour
         spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y - 0.5f));
         spline.InsertPointAt(0, new Vector2(end.transform.localPosition.x - 0.5f, end.transform.localPosition.y + 0.5f));
 
-        m_spriteShapeController.RefreshSpriteShape();
+        spriteShapeController.RefreshSpriteShape();
     }
 }

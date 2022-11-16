@@ -6,29 +6,29 @@ using UnityEngine.Audio;
 
 public class SetVolume : MonoBehaviour
 {
-    public AudioMixer m_mixer;
-    public Slider m_slider;
-    public string m_parameterName;
+    public AudioMixer mixer;
+    public Slider slider;
+    public string parameterName;
 
     private void Start()
     {
-        if (m_parameterName.Contains("BGM"))
+        if (parameterName.Contains("BGM"))
         {
-            m_slider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
-        } else if (m_parameterName.Contains("SFX"))
+            slider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        } else if (parameterName.Contains("SFX"))
         {
-            m_slider.value = PlayerPrefs.GetFloat("SoundVolume", 0.5f);
+            slider.value = PlayerPrefs.GetFloat("SoundVolume", 0.5f);
         }
     }
 
     public void SetLevel(float sliderValue)
     {
-        m_mixer.SetFloat(m_parameterName, Mathf.Log10(sliderValue) * 20);
-        if (m_parameterName.Contains("BGM"))
+        mixer.SetFloat(parameterName, Mathf.Log10(sliderValue) * 20);
+        if (parameterName.Contains("BGM"))
         {
             PlayerPrefs.SetFloat("MusicVolume", sliderValue);
         }
-        else if (m_parameterName.Contains("SFX"))
+        else if (parameterName.Contains("SFX"))
         {
             PlayerPrefs.SetFloat("SoundVolume", sliderValue);
         }

@@ -9,46 +9,46 @@ public class EventListDisplay : MonoBehaviour
     [System.Serializable]
     public class MovItem
     {
-        public List<GameObject> m_objects;
-        public List<LaneEventMovement> m_moves;
-        public bool m_created;
+        public List<GameObject> objects;
+        public List<LaneEventMovement> moves;
+        public bool created;
     }
 
     [System.Serializable]
     public class RotItem
     {
-        public List<GameObject> m_objects;
-        public List<LaneEventRotation> m_rots;
-        public bool m_created;
+        public List<GameObject> objects;
+        public List<LaneEventRotation> rots;
+        public bool created;
     }
 
     [System.Serializable]
     public class FadeItem
     {
-        public List<GameObject> m_objects;
-        public List<LaneEventFade> m_fades;
-        public bool m_created;
+        public List<GameObject> objects;
+        public List<LaneEventFade> fades;
+        public bool created;
     }
 
     [System.Serializable]
     public class LenItem
     {
-        public List<GameObject> m_objects;
-        public List<LaneEventLength> m_lengths;
-        public bool m_created;
+        public List<GameObject> objects;
+        public List<LaneEventLength> lengths;
+        public bool created;
     }
 
     public static EventListDisplay Instance;
 
-    public GameObject m_movementTemplate;
-    public GameObject m_rotationTemplate;
-    public GameObject m_fadeTemplate;
-    public GameObject m_lengthTemplate;
+    public GameObject movementTemplate;
+    public GameObject rotationTemplate;
+    public GameObject fadeTemplate;
+    public GameObject lengthTemplate;
 
-    public List<MovItem> m_movements;
-    public List<RotItem> m_rotations;
-    public List<FadeItem> m_fades;
-    public List<LenItem> m_lengths;
+    public List<MovItem> movements;
+    public List<RotItem> rotations;
+    public List<FadeItem> fades;
+    public List<LenItem> lengths;
 
     private void Awake()
     {
@@ -57,119 +57,119 @@ public class EventListDisplay : MonoBehaviour
 
     private void Start()
     {
-        m_movements = new List<MovItem>();
-        m_rotations = new List<RotItem>();
-        m_fades = new List<FadeItem>();
-        m_lengths = new List<LenItem>();
+        movements = new List<MovItem>();
+        rotations = new List<RotItem>();
+        fades = new List<FadeItem>();
+        lengths = new List<LenItem>();
     }
 
     public void GenerateLoadedList()
     {
         // For each event in each lane, create an item
-        for (int i = 0; i < LevelEditorManager.Instance.m_chartData.m_lane.Count; i++)
+        for (int i = 0; i < LevelEditorManager.Instance.chartData.lane.Count; i++)
         {
             // Movements
-            if (m_movements.Count < LevelEditorManager.Instance.m_chartData.m_lane.Count)
+            if (movements.Count < LevelEditorManager.Instance.chartData.lane.Count)
             {
                 MovItem item = new MovItem();
-                item.m_objects = new List<GameObject>();
-                item.m_moves = new List<LaneEventMovement>();
-                item.m_created = true;
-                m_movements.Add(item);
+                item.objects = new List<GameObject>();
+                item.moves = new List<LaneEventMovement>();
+                item.created = true;
+                movements.Add(item);
             }
 
-            for (int j = 0; j < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement.Count; j++)
+            for (int j = 0; j < LevelEditorManager.Instance.chartData.lane[i].laneEventsMovement.Count; j++)
             {
-                if (m_movements[i].m_moves.Count < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement.Count)
+                if (movements[i].moves.Count < LevelEditorManager.Instance.chartData.lane[i].laneEventsMovement.Count)
                 {
-                    GameObject obj = Instantiate(m_movementTemplate, transform);
+                    GameObject obj = Instantiate(movementTemplate, transform);
                     obj.SetActive(true);
-                    m_movements[i].m_objects.Add(obj);
+                    movements[i].objects.Add(obj);
 
-                    LaneEventMovement move = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement[j];
+                    LaneEventMovement move = LevelEditorManager.Instance.chartData.lane[i].laneEventsMovement[j];
 
-                    obj.GetComponent<MoveEventHolder>().m_heldLaneEvent = move;
-                    m_movements[i].m_moves.Add(move);
+                    obj.GetComponent<MoveEventHolder>().heldLaneEvent = move;
+                    movements[i].moves.Add(move);
                 }
-                m_movements[i].m_objects[j].GetComponent<MoveEventHolder>().m_laneID = i;
+                movements[i].objects[j].GetComponent<MoveEventHolder>().laneID = i;
             }
 
             // Rotations
-            if (m_rotations.Count < LevelEditorManager.Instance.m_chartData.m_lane.Count)
+            if (rotations.Count < LevelEditorManager.Instance.chartData.lane.Count)
             {
                 RotItem item = new RotItem();
-                item.m_objects = new List<GameObject>();
-                item.m_rots = new List<LaneEventRotation>();
-                item.m_created = true;
-                m_rotations.Add(item);
+                item.objects = new List<GameObject>();
+                item.rots = new List<LaneEventRotation>();
+                item.created = true;
+                rotations.Add(item);
             }
 
-            for (int j = 0; j < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsRotation.Count; j++)
+            for (int j = 0; j < LevelEditorManager.Instance.chartData.lane[i].laneEventsRotation.Count; j++)
             {
-                if (m_rotations[i].m_rots.Count < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsRotation.Count)
+                if (rotations[i].rots.Count < LevelEditorManager.Instance.chartData.lane[i].laneEventsRotation.Count)
                 {
-                    GameObject obj = Instantiate(m_rotationTemplate, transform);
+                    GameObject obj = Instantiate(rotationTemplate, transform);
                     obj.SetActive(true);
-                    m_rotations[i].m_objects.Add(obj);
+                    rotations[i].objects.Add(obj);
 
-                    LaneEventRotation rot = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsRotation[j];
+                    LaneEventRotation rot = LevelEditorManager.Instance.chartData.lane[i].laneEventsRotation[j];
 
-                    obj.GetComponent<RotEventHolder>().m_heldLaneEvent = rot;
-                    m_rotations[i].m_rots.Add(rot);
+                    obj.GetComponent<RotEventHolder>().heldLaneEvent = rot;
+                    rotations[i].rots.Add(rot);
                 }
-                m_rotations[i].m_objects[j].GetComponent<RotEventHolder>().m_laneID = i;
+                rotations[i].objects[j].GetComponent<RotEventHolder>().laneID = i;
             }
 
             // Fades
-            if (m_fades.Count < LevelEditorManager.Instance.m_chartData.m_lane.Count)
+            if (fades.Count < LevelEditorManager.Instance.chartData.lane.Count)
             {
                 FadeItem item = new FadeItem();
-                item.m_objects = new List<GameObject>();
-                item.m_fades = new List<LaneEventFade>();
-                item.m_created = true;
-                m_fades.Add(item);
+                item.objects = new List<GameObject>();
+                item.fades = new List<LaneEventFade>();
+                item.created = true;
+                fades.Add(item);
             }
 
-            for (int j = 0; j < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventFade.Count; j++)
+            for (int j = 0; j < LevelEditorManager.Instance.chartData.lane[i].laneEventFade.Count; j++)
             {
-                if (m_fades[i].m_fades.Count < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventFade.Count)
+                if (fades[i].fades.Count < LevelEditorManager.Instance.chartData.lane[i].laneEventFade.Count)
                 {
-                    GameObject obj = Instantiate(m_fadeTemplate, transform);
+                    GameObject obj = Instantiate(fadeTemplate, transform);
                     obj.SetActive(true);
-                    m_fades[i].m_objects.Add(obj);
+                    fades[i].objects.Add(obj);
 
-                    LaneEventFade fade = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventFade[j];
+                    LaneEventFade fade = LevelEditorManager.Instance.chartData.lane[i].laneEventFade[j];
 
-                    obj.GetComponent<FadeEventHolder>().m_heldLaneEvent = fade;
-                    m_fades[i].m_fades.Add(fade);
+                    obj.GetComponent<FadeEventHolder>().heldLaneEvent = fade;
+                    fades[i].fades.Add(fade);
                 }
-                m_fades[i].m_objects[j].GetComponent<FadeEventHolder>().m_laneID = i;
+                fades[i].objects[j].GetComponent<FadeEventHolder>().laneID = i;
             }
 
             // Lengths
-            if (m_lengths.Count < LevelEditorManager.Instance.m_chartData.m_lane.Count)
+            if (lengths.Count < LevelEditorManager.Instance.chartData.lane.Count)
             {
                 LenItem item = new LenItem();
-                item.m_objects = new List<GameObject>();
-                item.m_lengths = new List<LaneEventLength>();
-                item.m_created = true;
-                m_lengths.Add(item);
+                item.objects = new List<GameObject>();
+                item.lengths = new List<LaneEventLength>();
+                item.created = true;
+                lengths.Add(item);
             }
 
-            for (int j = 0; j < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventLength.Count; j++)
+            for (int j = 0; j < LevelEditorManager.Instance.chartData.lane[i].laneEventLength.Count; j++)
             {
-                if (m_lengths[i].m_lengths.Count < LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventLength.Count)
+                if (lengths[i].lengths.Count < LevelEditorManager.Instance.chartData.lane[i].laneEventLength.Count)
                 {
-                    GameObject obj = Instantiate(m_lengthTemplate, transform);
+                    GameObject obj = Instantiate(lengthTemplate, transform);
                     obj.SetActive(true);
-                    m_lengths[i].m_objects.Add(obj);
+                    lengths[i].objects.Add(obj);
 
-                    LaneEventLength len = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventLength[j];
+                    LaneEventLength len = LevelEditorManager.Instance.chartData.lane[i].laneEventLength[j];
 
-                    obj.GetComponent<LengthEventHolder>().m_heldLaneEvent = len;
-                    m_lengths[i].m_lengths.Add(len);
+                    obj.GetComponent<LengthEventHolder>().heldLaneEvent = len;
+                    lengths[i].lengths.Add(len);
                 }
-                m_lengths[i].m_objects[j].GetComponent<LengthEventHolder>().m_laneID = i;
+                lengths[i].objects[j].GetComponent<LengthEventHolder>().laneID = i;
             }
         }
 
@@ -179,40 +179,40 @@ public class EventListDisplay : MonoBehaviour
     public void ListInfoDisplay()
     {
         // Now that the things are created, lets uh....populate it?
-        for (int i = 0; i < m_movements.Count; i++)
+        for (int i = 0; i < movements.Count; i++)
         {
-            if (m_movements[i].m_moves.Count > 0)
+            if (movements[i].moves.Count > 0)
             {
-                m_movements[i].m_moves = m_movements[i].m_moves.OrderBy(lst => lst.m_beat).ToList();
+                movements[i].moves = movements[i].moves.OrderBy(lst => lst.beat).ToList();
             }
 
-            for (int j = 0; j < m_movements[i].m_moves.Count; j++)
+            for (int j = 0; j < movements[i].moves.Count; j++)
             {
-                if (m_movements[i].m_objects[j] != null)
+                if (movements[i].objects[j] != null)
                 {
-                    foreach (Transform child in m_movements[i].m_objects[j].transform)
+                    foreach (Transform child in movements[i].objects[j].transform)
                     {
                         if (child.childCount > 0)
                         {
                             if (child.GetComponent<Text>().text.Contains("Lane"))
                             {
-                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_lanes[i].GetComponent<LaneHandler>().m_identifier.ToString();
+                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.lanes[i].GetComponent<LaneHandler>().identifier.ToString();
                             }
                             else if (child.GetComponent<Text>().text.Contains("Beat"))
                             {
-                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement[j].m_beat.ToString("0.00");
+                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventsMovement[j].beat.ToString("0.00");
                             }
                             else if (child.GetComponent<Text>().text.Contains("X"))
                             {
-                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement[j].m_targetPosition.x.ToString("0.00");
+                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventsMovement[j].targetPosition.x.ToString("0.00");
                             }
                             else if (child.GetComponent<Text>().text.Contains("Y"))
                             {
-                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement[j].m_targetPosition.y.ToString("0.00");
+                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventsMovement[j].targetPosition.y.ToString("0.00");
                             }
                             else if (child.GetComponent<Text>().text.Contains("Duration"))
                             {
-                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsMovement[j].m_duration.ToString("0.00");
+                                child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventsMovement[j].duration.ToString("0.00");
                             }
                         }
                     }
@@ -221,34 +221,34 @@ public class EventListDisplay : MonoBehaviour
         }
 
         // And rotations too
-        for (int i = 0; i < m_rotations.Count; i++)
+        for (int i = 0; i < rotations.Count; i++)
         {
-            if (m_rotations[i].m_rots.Count > 0)
+            if (rotations[i].rots.Count > 0)
             {
-                m_rotations[i].m_rots = m_rotations[i].m_rots.OrderBy(lst => lst.m_beat).ToList();
+                rotations[i].rots = rotations[i].rots.OrderBy(lst => lst.beat).ToList();
             }
 
-            for (int j = 0; j < m_rotations[i].m_rots.Count; j++)
+            for (int j = 0; j < rotations[i].rots.Count; j++)
             {
-                foreach (Transform child in m_rotations[i].m_objects[j].transform)
+                foreach (Transform child in rotations[i].objects[j].transform)
                 {
                     if (child.childCount > 0)
                     {
                         if (child.GetComponent<Text>().text.Contains("Lane"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_lanes[i].GetComponent<LaneHandler>().m_identifier.ToString();
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.lanes[i].GetComponent<LaneHandler>().identifier.ToString();
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsRotation[j].m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventsRotation[j].beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Target"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsRotation[j].m_targetRotation.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventsRotation[j].targetRotation.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventsRotation[j].m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventsRotation[j].duration.ToString("0.00");
                         }
                     }
                 }
@@ -256,34 +256,34 @@ public class EventListDisplay : MonoBehaviour
         }
 
         // And fades
-        for (int i = 0; i < m_fades.Count; i++)
+        for (int i = 0; i < fades.Count; i++)
         {
-            if (m_fades[i].m_fades.Count > 0)
+            if (fades[i].fades.Count > 0)
             {
-                m_fades[i].m_fades = m_fades[i].m_fades.OrderBy(lst => lst.m_beat).ToList();
+                fades[i].fades = fades[i].fades.OrderBy(lst => lst.beat).ToList();
             }
 
-            for (int j = 0; j < m_fades[i].m_fades.Count; j++)
+            for (int j = 0; j < fades[i].fades.Count; j++)
             {
-                foreach (Transform child in m_fades[i].m_objects[j].transform)
+                foreach (Transform child in fades[i].objects[j].transform)
                 {
                     if (child.childCount > 0)
                     {
                         if (child.GetComponent<Text>().text.Contains("Lane"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_lanes[i].GetComponent<LaneHandler>().m_identifier.ToString();
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.lanes[i].GetComponent<LaneHandler>().identifier.ToString();
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventFade[j].m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventFade[j].beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Target"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventFade[j].m_targetAlpha.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventFade[j].targetAlpha.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventFade[j].m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventFade[j].duration.ToString("0.00");
                         }
                     }
                 }
@@ -291,34 +291,34 @@ public class EventListDisplay : MonoBehaviour
         }
 
         // Aaaaand length events
-        for (int i = 0; i < m_lengths.Count; i++)
+        for (int i = 0; i < lengths.Count; i++)
         {
-            if (m_lengths[i].m_lengths.Count > 0)
+            if (lengths[i].lengths.Count > 0)
             {
-                m_lengths[i].m_lengths = m_lengths[i].m_lengths.OrderBy(lst => lst.m_beat).ToList();
+                lengths[i].lengths = lengths[i].lengths.OrderBy(lst => lst.beat).ToList();
             }
 
-            for (int j = 0; j < m_lengths[i].m_lengths.Count; j++)
+            for (int j = 0; j < lengths[i].lengths.Count; j++)
             {
-                foreach (Transform child in m_lengths[i].m_objects[j].transform)
+                foreach (Transform child in lengths[i].objects[j].transform)
                 {
                     if (child.childCount > 0)
                     {
                         if (child.GetComponent<Text>().text.Contains("Lane"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_lanes[i].GetComponent<LaneHandler>().m_identifier.ToString();
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.lanes[i].GetComponent<LaneHandler>().identifier.ToString();
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventLength[j].m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventLength[j].beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Target"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventLength[j].m_targetLength.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventLength[j].targetLength.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.m_chartData.m_lane[i].m_laneEventLength[j].m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = LevelEditorManager.Instance.chartData.lane[i].laneEventLength[j].duration.ToString("0.00");
                         }
                     }
                 }
@@ -330,41 +330,41 @@ public class EventListDisplay : MonoBehaviour
     {
         // A lane consists of 4 events, these are the 4 events
         MovItem item1 = new MovItem();
-        item1.m_objects = new List<GameObject>();
-        item1.m_moves = new List<LaneEventMovement>();
-        item1.m_created = true;
-        m_movements.Add(item1);
+        item1.objects = new List<GameObject>();
+        item1.moves = new List<LaneEventMovement>();
+        item1.created = true;
+        movements.Add(item1);
 
         RotItem item2 = new RotItem();
-        item2.m_objects = new List<GameObject>();
-        item2.m_rots = new List<LaneEventRotation>();
-        item2.m_created = true;
-        m_rotations.Add(item2);
+        item2.objects = new List<GameObject>();
+        item2.rots = new List<LaneEventRotation>();
+        item2.created = true;
+        rotations.Add(item2);
 
         FadeItem item3 = new FadeItem();
-        item3.m_objects = new List<GameObject>();
-        item3.m_fades = new List<LaneEventFade>();
-        item3.m_created = true;
-        m_fades.Add(item3);
+        item3.objects = new List<GameObject>();
+        item3.fades = new List<LaneEventFade>();
+        item3.created = true;
+        fades.Add(item3);
 
         LenItem item4 = new LenItem();
-        item4.m_objects = new List<GameObject>();
-        item4.m_lengths = new List<LaneEventLength>();
-        item4.m_created = true;
-        m_lengths.Add(item4);
+        item4.objects = new List<GameObject>();
+        item4.lengths = new List<LaneEventLength>();
+        item4.created = true;
+        lengths.Add(item4);
     }
 
     public void AddEventToList(LaneEventMovement _newEvent, int _lane)
     {
-        GameObject obj = Instantiate(m_movementTemplate, transform);
-        obj.GetComponent<MoveEventHolder>().m_laneID = _lane;
-        obj.GetComponent<MoveEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventsMovement.IndexOf(_newEvent);
+        GameObject obj = Instantiate(movementTemplate, transform);
+        obj.GetComponent<MoveEventHolder>().laneID = _lane;
+        obj.GetComponent<MoveEventHolder>().indexOfThis = LevelEditorManager.Instance.chartData.lane[_lane].laneEventsMovement.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_movements[_lane].m_objects.Insert(obj.GetComponent<MoveEventHolder>().m_indexOfThis, obj);
+        movements[_lane].objects.Insert(obj.GetComponent<MoveEventHolder>().indexOfThis, obj);
 
-        obj.GetComponent<MoveEventHolder>().m_heldLaneEvent = _newEvent;
-        m_movements[_lane].m_moves.Insert(obj.GetComponent<MoveEventHolder>().m_indexOfThis, _newEvent);
+        obj.GetComponent<MoveEventHolder>().heldLaneEvent = _newEvent;
+        movements[_lane].moves.Insert(obj.GetComponent<MoveEventHolder>().indexOfThis, _newEvent);
 
         foreach (Transform child in obj.transform)
         {
@@ -376,34 +376,34 @@ public class EventListDisplay : MonoBehaviour
                 }
                 else if (child.GetComponent<Text>().text.Contains("Beat"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("X"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetPosition.x.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.targetPosition.x.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Y"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetPosition.y.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.targetPosition.y.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Duration"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                 }
             }
         }
     }
     public void AddEventToList(LaneEventRotation _newEvent, int _lane)
     {
-        GameObject obj = Instantiate(m_rotationTemplate, transform);
-        obj.GetComponent<RotEventHolder>().m_laneID = _lane;
-        obj.GetComponent<RotEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventsRotation.IndexOf(_newEvent);
+        GameObject obj = Instantiate(rotationTemplate, transform);
+        obj.GetComponent<RotEventHolder>().laneID = _lane;
+        obj.GetComponent<RotEventHolder>().indexOfThis = LevelEditorManager.Instance.chartData.lane[_lane].laneEventsRotation.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_rotations[_lane].m_objects.Insert(obj.GetComponent<RotEventHolder>().m_indexOfThis, obj);
+        rotations[_lane].objects.Insert(obj.GetComponent<RotEventHolder>().indexOfThis, obj);
 
-        obj.GetComponent<RotEventHolder>().m_heldLaneEvent = _newEvent;
-        m_rotations[_lane].m_rots.Insert(obj.GetComponent<RotEventHolder>().m_indexOfThis, _newEvent);
+        obj.GetComponent<RotEventHolder>().heldLaneEvent = _newEvent;
+        rotations[_lane].rots.Insert(obj.GetComponent<RotEventHolder>().indexOfThis, _newEvent);
 
         foreach (Transform child in obj.transform)
         {
@@ -415,30 +415,30 @@ public class EventListDisplay : MonoBehaviour
                 }
                 else if (child.GetComponent<Text>().text.Contains("Beat"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Target"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetRotation.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.targetRotation.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Duration"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                 }
             }
         }
     }
     public void AddEventToList(LaneEventFade _newEvent, int _lane)
     {
-        GameObject obj = Instantiate(m_fadeTemplate, transform);
-        obj.GetComponent<FadeEventHolder>().m_laneID = _lane;
-        obj.GetComponent<FadeEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventFade.IndexOf(_newEvent);
+        GameObject obj = Instantiate(fadeTemplate, transform);
+        obj.GetComponent<FadeEventHolder>().laneID = _lane;
+        obj.GetComponent<FadeEventHolder>().indexOfThis = LevelEditorManager.Instance.chartData.lane[_lane].laneEventFade.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_fades[_lane].m_objects.Insert(obj.GetComponent<FadeEventHolder>().m_indexOfThis, obj);
+        fades[_lane].objects.Insert(obj.GetComponent<FadeEventHolder>().indexOfThis, obj);
 
-        obj.GetComponent<FadeEventHolder>().m_heldLaneEvent = _newEvent;
-        m_fades[_lane].m_fades.Insert(obj.GetComponent<FadeEventHolder>().m_indexOfThis, _newEvent);
+        obj.GetComponent<FadeEventHolder>().heldLaneEvent = _newEvent;
+        fades[_lane].fades.Insert(obj.GetComponent<FadeEventHolder>().indexOfThis, _newEvent);
 
         foreach (Transform child in obj.transform)
         {
@@ -450,30 +450,30 @@ public class EventListDisplay : MonoBehaviour
                 }
                 else if (child.GetComponent<Text>().text.Contains("Beat"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Target"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetAlpha.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.targetAlpha.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Duration"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                 }
             }
         }
     }
     public void AddEventToList(LaneEventLength _newEvent, int _lane)
     {
-        GameObject obj = Instantiate(m_lengthTemplate, transform);
-        obj.GetComponent<LengthEventHolder>().m_laneID = _lane;
-        obj.GetComponent<LengthEventHolder>().m_indexOfThis = LevelEditorManager.Instance.m_chartData.m_lane[_lane].m_laneEventLength.IndexOf(_newEvent);
+        GameObject obj = Instantiate(lengthTemplate, transform);
+        obj.GetComponent<LengthEventHolder>().laneID = _lane;
+        obj.GetComponent<LengthEventHolder>().indexOfThis = LevelEditorManager.Instance.chartData.lane[_lane].laneEventLength.IndexOf(_newEvent);
         obj.SetActive(true);
 
-        m_lengths[_lane].m_objects.Insert(obj.GetComponent<LengthEventHolder>().m_indexOfThis, obj);
+        lengths[_lane].objects.Insert(obj.GetComponent<LengthEventHolder>().indexOfThis, obj);
 
-        obj.GetComponent<LengthEventHolder>().m_heldLaneEvent = _newEvent;
-        m_lengths[_lane].m_lengths.Insert(obj.GetComponent<LengthEventHolder>().m_indexOfThis, _newEvent);
+        obj.GetComponent<LengthEventHolder>().heldLaneEvent = _newEvent;
+        lengths[_lane].lengths.Insert(obj.GetComponent<LengthEventHolder>().indexOfThis, _newEvent);
 
         foreach (Transform child in obj.transform)
         {
@@ -485,15 +485,15 @@ public class EventListDisplay : MonoBehaviour
                 }
                 else if (child.GetComponent<Text>().text.Contains("Beat"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Target"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetLength.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.targetLength.ToString("0.00");
                 }
                 else if (child.GetComponent<Text>().text.Contains("Duration"))
                 {
-                    child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                    child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                 }
             }
         }
@@ -501,12 +501,12 @@ public class EventListDisplay : MonoBehaviour
 
     public void EditEvent(LaneEventMovement _newEvent, MoveEventHolder _holder)
     {
-        int lane = _holder.m_laneID;
-        for (int i = 0; i < m_movements[lane].m_objects.Count; i++)
+        int lane = _holder.laneID;
+        for (int i = 0; i < movements[lane].objects.Count; i++)
         {
-            if (_holder == m_movements[lane].m_objects[i].GetComponent<MoveEventHolder>())
+            if (_holder == movements[lane].objects[i].GetComponent<MoveEventHolder>())
             {
-                foreach (Transform child in m_movements[lane].m_objects[i].transform)
+                foreach (Transform child in movements[lane].objects[i].transform)
                 {
                     if (child.childCount > 0)
                     {
@@ -516,19 +516,19 @@ public class EventListDisplay : MonoBehaviour
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("X"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetPosition.x.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.targetPosition.x.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Y"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetPosition.y.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.targetPosition.y.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                         }
                     }
                 }
@@ -537,12 +537,12 @@ public class EventListDisplay : MonoBehaviour
     }
     public void EditEvent(LaneEventRotation _newEvent, RotEventHolder _holder)
     {
-        int lane = _holder.m_laneID;
-        for (int i = 0; i < m_rotations[lane].m_objects.Count; i++)
+        int lane = _holder.laneID;
+        for (int i = 0; i < rotations[lane].objects.Count; i++)
         {
-            if (_holder == m_rotations[lane].m_objects[i].GetComponent<RotEventHolder>())
+            if (_holder == rotations[lane].objects[i].GetComponent<RotEventHolder>())
             {
-                foreach (Transform child in m_rotations[lane].m_objects[i].transform)
+                foreach (Transform child in rotations[lane].objects[i].transform)
                 {
                     if (child.childCount > 0)
                     {
@@ -552,15 +552,15 @@ public class EventListDisplay : MonoBehaviour
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Target"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetRotation.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.targetRotation.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                         }
                     }
                 }
@@ -569,12 +569,12 @@ public class EventListDisplay : MonoBehaviour
     }
     public void EditEvent(LaneEventFade _newEvent, FadeEventHolder _holder)
     {
-        int lane = _holder.m_laneID;
-        for (int i = 0; i < m_fades[lane].m_objects.Count; i++)
+        int lane = _holder.laneID;
+        for (int i = 0; i < fades[lane].objects.Count; i++)
         {
-            if (_holder == m_fades[lane].m_objects[i].GetComponent<FadeEventHolder>())
+            if (_holder == fades[lane].objects[i].GetComponent<FadeEventHolder>())
             {
-                foreach (Transform child in m_fades[lane].m_objects[i].transform)
+                foreach (Transform child in fades[lane].objects[i].transform)
                 {
                     if (child.childCount > 0)
                     {
@@ -584,15 +584,15 @@ public class EventListDisplay : MonoBehaviour
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Target"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetAlpha.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.targetAlpha.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                         }
                     }
                 }
@@ -601,12 +601,12 @@ public class EventListDisplay : MonoBehaviour
     }
     public void EditEvent(LaneEventLength _newEvent, LengthEventHolder _holder)
     {
-        int lane = _holder.m_laneID;
-        for (int i = 0; i < m_lengths[lane].m_objects.Count; i++)
+        int lane = _holder.laneID;
+        for (int i = 0; i < lengths[lane].objects.Count; i++)
         {
-            if (_holder == m_lengths[lane].m_objects[i].GetComponent<LengthEventHolder>())
+            if (_holder == lengths[lane].objects[i].GetComponent<LengthEventHolder>())
             {
-                foreach (Transform child in m_lengths[lane].m_objects[i].transform)
+                foreach (Transform child in lengths[lane].objects[i].transform)
                 {
                     if (child.childCount > 0)
                     {
@@ -616,15 +616,15 @@ public class EventListDisplay : MonoBehaviour
                         }
                         else if (child.GetComponent<Text>().text.Contains("Beat"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_beat.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.beat.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Target"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_targetLength.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.targetLength.ToString("0.00");
                         }
                         else if (child.GetComponent<Text>().text.Contains("Duration"))
                         {
-                            child.GetChild(0).GetComponent<Text>().text = _newEvent.m_duration.ToString("0.00");
+                            child.GetChild(0).GetComponent<Text>().text = _newEvent.duration.ToString("0.00");
                         }
                     }
                 }

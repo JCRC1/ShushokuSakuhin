@@ -18,9 +18,9 @@ public class LaneEvent
 
 
     // When to begin event
-    public float m_beat;
+    public float beat;
     // Duration of the event beat+ duration = new beat to end at
-    public float m_duration;
+    public float duration;
     // Ease type
-    public EaseType m_easeType;
+    public EaseType easeType;
 }

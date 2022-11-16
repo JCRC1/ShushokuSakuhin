@@ -11,19 +11,19 @@ public class KeyboardControls : MonoBehaviour
     /// <summary>
     /// The Red Lanes
     /// </summary>
-    public KeyCode[] m_oddLaneKeybind;
+    public KeyCode[] oddLaneKeybind;
 
     /// <summary>
     /// The Blue Lanes
     /// </summary>
-    public KeyCode[] m_evenLaneKeybind;
+    public KeyCode[] evenLaneKeybind;
 
-    public AudioClip m_hitSound;
+    public AudioClip hitSound;
     [HideInInspector]
-    public AudioSource m_hitSource;
-    public AudioMixerGroup m_sfxMixerGroup;
+    public AudioSource hitSource;
+    public AudioMixerGroup sfxMixerGroup;
 
-    private ObjectPooler m_pooler;
+    private ObjectPooler pooler;
 
     private void Awake()
     {
@@ -32,13 +32,13 @@ public class KeyboardControls : MonoBehaviour
 
     private void Start()
     {
-        m_hitSource = gameObject.AddComponent<AudioSource>();
-        m_hitSource.outputAudioMixerGroup = m_sfxMixerGroup;
-        m_hitSource.volume = 0.05f;
-        m_hitSource.playOnAwake = false;
-        m_hitSource.clip = m_hitSound;
+        hitSource = gameObject.AddComponent<AudioSource>();
+        hitSource.outputAudioMixerGroup = sfxMixerGroup;
+        hitSource.volume = 0.05f;
+        hitSource.playOnAwake = false;
+        hitSource.clip = hitSound;
 
-        m_pooler = GetComponent<ObjectPooler>();
+        pooler = GetComponent<ObjectPooler>();
     }
 
     private void Update()
@@ -52,9 +52,9 @@ public class KeyboardControls : MonoBehaviour
 
     public bool EvenKeyDown()
     {
-        for (int i = 0; i < m_evenLaneKeybind.Length; i++)
+        for (int i = 0; i < evenLaneKeybind.Length; i++)
         {
-            if (Input.GetKeyDown(m_evenLaneKeybind[i]))
+            if (Input.GetKeyDown(evenLaneKeybind[i]))
             {
                 return true;
             }
@@ -64,9 +64,9 @@ public class KeyboardControls : MonoBehaviour
 
     public bool EvenKeyUp()
     {
-        for (int i = 0; i < m_evenLaneKeybind.Length; i++)
+        for (int i = 0; i < evenLaneKeybind.Length; i++)
         {
-            if (Input.GetKeyUp(m_evenLaneKeybind[i]))
+            if (Input.GetKeyUp(evenLaneKeybind[i]))
             {
                 return true;
             }
@@ -76,9 +76,9 @@ public class KeyboardControls : MonoBehaviour
 
     public bool OddKeyDown()
     {
-        for (int i = 0; i < m_oddLaneKeybind.Length; i++)
+        for (int i = 0; i < oddLaneKeybind.Length; i++)
         {
-            if (Input.GetKeyDown(m_oddLaneKeybind[i]))
+            if (Input.GetKeyDown(oddLaneKeybind[i]))
             {
                 return true;
             }
@@ -88,9 +88,9 @@ public class KeyboardControls : MonoBehaviour
 
     public bool OddKeyUp()
     {
-        for (int i = 0; i < m_oddLaneKeybind.Length; i++)
+        for (int i = 0; i < oddLaneKeybind.Length; i++)
         {
-            if (Input.GetKeyUp(m_oddLaneKeybind[i]))
+            if (Input.GetKeyUp(oddLaneKeybind[i]))
             {
                 return true;
             }
@@ -102,11 +102,11 @@ public class KeyboardControls : MonoBehaviour
     {
         if (EvenKeyUp())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_identifier % 2 == 0)
+                if (lane.identifier % 2 == 0)
                 {
                     lane.GetComponent<LineRenderer>().material.SetColor("_Color", Color.blue);
                 }
@@ -115,11 +115,11 @@ public class KeyboardControls : MonoBehaviour
 
         if (OddKeyUp())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_identifier % 2 != 0)
+                if (lane.identifier % 2 != 0)
                 {
                     lane.GetComponent<LineRenderer>().material.SetColor("_Color", Color.red);
                 }
@@ -131,11 +131,11 @@ public class KeyboardControls : MonoBehaviour
     {
         if (EvenKeyDown())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_identifier % 2 == 0)
+                if (lane.identifier % 2 == 0)
                 {
                     lane.GetComponent<LineRenderer>().material.SetColor("_Color", Color.blue * 4);
                 }
@@ -145,11 +145,11 @@ public class KeyboardControls : MonoBehaviour
 
         if (OddKeyDown())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_identifier % 2 != 0)
+                if (lane.identifier % 2 != 0)
                 {
                     lane.GetComponent<LineRenderer>().material.SetColor("_Color", Color.red * 4);
                 }
@@ -162,72 +162,72 @@ public class KeyboardControls : MonoBehaviour
         // Even
         if (EvenKeyDown())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
                 // Check if there is even notes enqueued
-                if (lane.m_singleNotes.Count <= 0)
+                if (lane.singleNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (!lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>())
+                if (!lane.allNotes.Peek().GetComponent<SingleNoteHandler>())
                 {
                     continue;
                 }
 
-                SingleNoteHandler currentSingleNote = lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>();
+                SingleNoteHandler currentSingleNote = lane.allNotes.Peek().GetComponent<SingleNoteHandler>();
 
                 // If this is odd, move on
-                if (lane.m_identifier % 2 != 0)
+                if (lane.identifier % 2 != 0)
                 {
                     continue;
                 }
 
-                GameObject ripple = m_pooler.GetPooledNote("Ripple");
-                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
+                GameObject ripple = pooler.GetPooledNote("Ripple");
+                GameObject rippleG = pooler.GetPooledNote("RippleGood");
 
-                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
-                GameObject goodText = m_pooler.GetPooledNote("GoodText");
+                GameObject perfectText = pooler.GetPooledNote("PerfectText");
+                GameObject goodText = pooler.GetPooledNote("GoodText");
 
-                switch (currentSingleNote.m_noteState)
+                switch (currentSingleNote.noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
-                        m_hitSource.Play();
+                        hitSource.Play();
                         ScoreController.Instance.AddPerfectHit();
 
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        ripple.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
                         ripple.SetActive(true);
 
                         perfectText.transform.position = lane.transform.GetChild(1).position;
-                        perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        perfectText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         perfectText.SetActive(true);
 
                         currentSingleNote.gameObject.SetActive(false);
-                        lane.m_singleNotes.Dequeue();
-                        lane.m_allNotes.Dequeue();
+                        lane.singleNotes.Dequeue();
+                        lane.allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
-                        m_hitSource.Play();
+                        hitSource.Play();
                         ScoreController.Instance.AddGoodHit();
 
-                        rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        rippleG.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         rippleG.GetComponent<ParticleSystem>().startColor = Color.blue;
                         rippleG.GetComponent<ParticleSystem>().loop = false;
                         rippleG.SetActive(true);
 
                         goodText.transform.position = lane.transform.GetChild(1).position;
-                        goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        goodText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         goodText.SetActive(true);
 
                         currentSingleNote.gameObject.SetActive(false);
-                        lane.m_singleNotes.Dequeue();
-                        lane.m_allNotes.Dequeue();
+                        lane.singleNotes.Dequeue();
+                        lane.allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.MISS:
                         break;
@@ -240,73 +240,73 @@ public class KeyboardControls : MonoBehaviour
         // Odd
         if (OddKeyDown())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
                 // Check if there are even notes in this lane
-                if (lane.m_singleNotes.Count <= 0)
+                if (lane.singleNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (!lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>())
+                if (!lane.allNotes.Peek().GetComponent<SingleNoteHandler>())
                 {
                     continue;
                 }
 
-                SingleNoteHandler currentSingleNote = lane.m_allNotes.Peek().GetComponent<SingleNoteHandler>();
+                SingleNoteHandler currentSingleNote = lane.allNotes.Peek().GetComponent<SingleNoteHandler>();
 
 
                 // If this is even, move on
-                if (lane.m_identifier % 2 == 0)
+                if (lane.identifier % 2 == 0)
                 {
                     continue;
                 }
 
-                GameObject ripple = m_pooler.GetPooledNote("Ripple");
-                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
+                GameObject ripple = pooler.GetPooledNote("Ripple");
+                GameObject rippleG = pooler.GetPooledNote("RippleGood");
 
-                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
-                GameObject goodText = m_pooler.GetPooledNote("GoodText");
+                GameObject perfectText = pooler.GetPooledNote("PerfectText");
+                GameObject goodText = pooler.GetPooledNote("GoodText");
 
-                switch (currentSingleNote.m_noteState)
+                switch (currentSingleNote.noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
-                        m_hitSource.Play();
+                        hitSource.Play();
                         ScoreController.Instance.AddPerfectHit();
 
-                        ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        ripple.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                         ripple.GetComponent<ParticleSystem>().loop = false;
                         ripple.SetActive(true);
 
                         perfectText.transform.position = lane.transform.GetChild(1).position;
-                        perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        perfectText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         perfectText.SetActive(true);
 
                         currentSingleNote.gameObject.SetActive(false);
-                        lane.m_singleNotes.Dequeue();
-                        lane.m_allNotes.Dequeue();
+                        lane.singleNotes.Dequeue();
+                        lane.allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.GOOD:
-                        m_hitSource.Play();
+                        hitSource.Play();
                         ScoreController.Instance.AddPerfectHit();
 
-                        rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        rippleG.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         rippleG.GetComponent<ParticleSystem>().startColor = Color.red;
                         rippleG.GetComponent<ParticleSystem>().loop = false;
                         rippleG.SetActive(true);
 
                         goodText.transform.position = lane.transform.GetChild(1).position;
-                        goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                        goodText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                         goodText.SetActive(true);
 
                         currentSingleNote.gameObject.SetActive(false);
-                        lane.m_singleNotes.Dequeue();
-                        lane.m_allNotes.Dequeue();
+                        lane.singleNotes.Dequeue();
+                        lane.allNotes.Dequeue();
                         break;
                     case NoteHandler.NoteState.MISS:
                         break;
@@ -322,99 +322,99 @@ public class KeyboardControls : MonoBehaviour
         // Even
         if (EvenKeyDown())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_holdNotes.Count <= 0)
+                if (lane.holdNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (!lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>())
+                if (!lane.allNotes.Peek().GetComponent<HoldNoteHandler>())
                 {
                     continue;
                 }
 
-                HoldNoteHandler currentHoldNote = lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>();
+                HoldNoteHandler currentHoldNote = lane.allNotes.Peek().GetComponent<HoldNoteHandler>();
 
                 // If this is odd, move on
-                if (lane.m_identifier % 2 != 0)
+                if (lane.identifier % 2 != 0)
                 {
                     continue;
                 }
 
-                GameObject ripple = m_pooler.GetPooledNote("Ripple");
-                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
+                GameObject ripple = pooler.GetPooledNote("Ripple");
+                GameObject rippleG = pooler.GetPooledNote("RippleGood");
 
-                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
-                GameObject goodText = m_pooler.GetPooledNote("GoodText");
+                GameObject perfectText = pooler.GetPooledNote("PerfectText");
+                GameObject goodText = pooler.GetPooledNote("GoodText");
 
-                switch (currentHoldNote.m_noteState)
+                switch (currentHoldNote.noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
                         KeyCode pressed = KeyCode.None;
 
-                        if (currentHoldNote.m_pressed == KeyCode.None)
+                        if (currentHoldNote.pressed == KeyCode.None)
                         {
-                            foreach (KeyCode key in m_evenLaneKeybind)
+                            foreach (KeyCode key in evenLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    currentHoldNote.m_pressed = pressed;
+                                    currentHoldNote.pressed = pressed;
                                 }
                             }
                         }
-                        currentHoldNote.m_isHeld = true;
+                        currentHoldNote.isHeld = true;
 
-                        if (currentHoldNote.m_pressed == pressed)
+                        if (currentHoldNote.pressed == pressed)
                         {
-                            m_hitSource.Play();
+                            hitSource.Play();
 
-                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            ripple.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                             ripple.GetComponent<ParticleSystem>().loop = true;
-                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+                            ripple.GetComponent<ParticleLifetime>().lifeTime = lane.holdNotes.Peek().noteData.duration * GameManager.Instance.secPerBeat;
 
                             ripple.SetActive(true);
 
                             perfectText.transform.position = lane.transform.GetChild(1).position;
-                            perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            perfectText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             perfectText.SetActive(true);
                         }                        
                         break;
                     case NoteHandler.NoteState.GOOD:
                         pressed = KeyCode.None;
 
-                        if (currentHoldNote.m_pressed == KeyCode.None)
+                        if (currentHoldNote.pressed == KeyCode.None)
                         {
-                            foreach (KeyCode key in m_evenLaneKeybind)
+                            foreach (KeyCode key in evenLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    currentHoldNote.m_pressed = pressed;
+                                    currentHoldNote.pressed = pressed;
                                 }
                             }
                         }
-                        currentHoldNote.m_isHeld = true;
+                        currentHoldNote.isHeld = true;
 
-                        if (currentHoldNote.m_pressed == pressed)
+                        if (currentHoldNote.pressed == pressed)
                         {
-                            m_hitSource.Play();
+                            hitSource.Play();
 
-                            rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            rippleG.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             rippleG.GetComponent<ParticleSystem>().startColor = Color.blue;
                             rippleG.GetComponent<ParticleSystem>().loop = true;
-                            rippleG.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+                            rippleG.GetComponent<ParticleLifetime>().lifeTime = lane.holdNotes.Peek().noteData.duration * GameManager.Instance.secPerBeat;
 
                             rippleG.SetActive(true);
 
                             goodText.transform.position = lane.transform.GetChild(1).position;
-                            goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            goodText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             goodText.SetActive(true);
                         }
                         break;
@@ -429,99 +429,99 @@ public class KeyboardControls : MonoBehaviour
         // Odd
         if (OddKeyDown())
         {
-            for (int j = 0; j < GameManager.Instance.m_lanes.Count; j++)
+            for (int j = 0; j < GameManager.Instance.lanes.Count; j++)
             {
-                LaneHandler lane = GameManager.Instance.m_lanes[j].GetComponent<LaneHandler>();
+                LaneHandler lane = GameManager.Instance.lanes[j].GetComponent<LaneHandler>();
 
-                if (lane.m_holdNotes.Count <= 0)
+                if (lane.holdNotes.Count <= 0)
                 {
                     continue;
                 }
 
-                if (!lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>())
+                if (!lane.allNotes.Peek().GetComponent<HoldNoteHandler>())
                 {
                     continue;
                 }
 
-                HoldNoteHandler currentHoldNote = lane.m_allNotes.Peek().GetComponent<HoldNoteHandler>();
+                HoldNoteHandler currentHoldNote = lane.allNotes.Peek().GetComponent<HoldNoteHandler>();
 
                 // If this is odd, move on
-                if (lane.m_identifier % 2 == 0)
+                if (lane.identifier % 2 == 0)
                 {
                     continue;
                 }
 
-                GameObject ripple = m_pooler.GetPooledNote("Ripple");
-                GameObject rippleG = m_pooler.GetPooledNote("RippleGood");
+                GameObject ripple = pooler.GetPooledNote("Ripple");
+                GameObject rippleG = pooler.GetPooledNote("RippleGood");
 
-                GameObject perfectText = m_pooler.GetPooledNote("PerfectText");
-                GameObject goodText = m_pooler.GetPooledNote("GoodText");
+                GameObject perfectText = pooler.GetPooledNote("PerfectText");
+                GameObject goodText = pooler.GetPooledNote("GoodText");
 
-                switch (currentHoldNote.m_noteState)
+                switch (currentHoldNote.noteState)
                 {
                     case NoteHandler.NoteState.NONE:
                         break;
                     case NoteHandler.NoteState.PERFECT:
                         KeyCode pressed = KeyCode.None;
 
-                        if (currentHoldNote.m_pressed == KeyCode.None)
+                        if (currentHoldNote.pressed == KeyCode.None)
                         {
-                            foreach (KeyCode key in m_oddLaneKeybind)
+                            foreach (KeyCode key in oddLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    currentHoldNote.m_pressed = pressed;
+                                    currentHoldNote.pressed = pressed;
                                 }
                             }
                         }
-                        currentHoldNote.m_isHeld = true;
+                        currentHoldNote.isHeld = true;
 
-                        if (currentHoldNote.m_pressed == pressed)
+                        if (currentHoldNote.pressed == pressed)
                         {
-                            m_hitSource.Play();
+                            hitSource.Play();
 
-                            ripple.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            ripple.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             ripple.GetComponent<ParticleSystem>().startColor = Color.red + Color.blue;
                             ripple.GetComponent<ParticleSystem>().loop = true;
-                            ripple.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+                            ripple.GetComponent<ParticleLifetime>().lifeTime = lane.holdNotes.Peek().noteData.duration * GameManager.Instance.secPerBeat;
 
                             ripple.SetActive(true);
 
                             perfectText.transform.position = lane.transform.GetChild(1).position;
-                            perfectText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            perfectText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             perfectText.SetActive(true);
                         }
                         break;
                     case NoteHandler.NoteState.GOOD:
                         pressed = KeyCode.None;
 
-                        if (currentHoldNote.m_pressed == KeyCode.None)
+                        if (currentHoldNote.pressed == KeyCode.None)
                         {
-                            foreach (KeyCode key in m_oddLaneKeybind)
+                            foreach (KeyCode key in oddLaneKeybind)
                             {
                                 if (Input.GetKey(key))
                                 {
                                     pressed = key;
-                                    currentHoldNote.m_pressed = pressed;
+                                    currentHoldNote.pressed = pressed;
                                 }
                             }
                         }
-                        currentHoldNote.m_isHeld = true;
+                        currentHoldNote.isHeld = true;
 
-                        if (currentHoldNote.m_pressed == pressed)
+                        if (currentHoldNote.pressed == pressed)
                         {
-                            m_hitSource.Play();
+                            hitSource.Play();
 
-                            rippleG.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            rippleG.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             rippleG.GetComponent<ParticleSystem>().startColor = Color.red;
                             rippleG.GetComponent<ParticleSystem>().loop = true;
-                            rippleG.GetComponent<ParticleLifetime>().m_lifeTime = lane.m_holdNotes.Peek().m_noteData.m_duration * GameManager.Instance.m_secPerBeat;
+                            rippleG.GetComponent<ParticleLifetime>().lifeTime = lane.holdNotes.Peek().noteData.duration * GameManager.Instance.secPerBeat;
 
                             rippleG.SetActive(true);
 
                             goodText.transform.position = lane.transform.GetChild(1).position;
-                            goodText.GetComponent<ParticleLifetime>().m_follow = lane.transform.GetChild(1);
+                            goodText.GetComponent<ParticleLifetime>().follow = lane.transform.GetChild(1);
                             goodText.SetActive(true);
                         }
                         break;

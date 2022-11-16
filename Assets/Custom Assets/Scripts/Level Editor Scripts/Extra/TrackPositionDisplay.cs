@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class TrackPositionDisplay : MonoBehaviour
 {
-    public InputField m_secDisplay;
-    public InputField m_beatDisplay;
+    public InputField secDisplay;
+    public InputField beatDisplay;
 
     private void Update()
     {
-        if (!TrackPositionDisplayToggle.m_canSeek)
+        if (!TrackPositionDisplayToggle.canSeek)
         {
-            m_secDisplay.text = (LevelEditorManager.Instance.m_trackPos).ToString("00.00");
-            m_beatDisplay.text = (LevelEditorManager.Instance.m_trackPosInBeats).ToString("00.00");
+            secDisplay.text = (LevelEditorManager.Instance.trackPos).ToString("00.00");
+            beatDisplay.text = (LevelEditorManager.Instance.trackPosInBeats).ToString("00.00");
         }
     }
 }

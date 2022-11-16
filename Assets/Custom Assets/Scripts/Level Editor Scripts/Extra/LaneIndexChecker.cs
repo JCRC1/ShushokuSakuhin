@@ -5,21 +5,21 @@ using UnityEngine.UI;
 
 public class LaneIndexChecker : MonoBehaviour
 {
-    public InputField m_laneIndex;
+    public InputField laneIndex;
 
-    public Button[] m_eventCreateButtons;
+    public Button[] eventCreateButtons;
 
     private void Update()
     {
-        for (int i = 0; i < m_eventCreateButtons.Length; i++)
+        for (int i = 0; i < eventCreateButtons.Length; i++)
         {
-            if (m_laneIndex.text != "None")
+            if (laneIndex.text != "None")
             {
-                m_eventCreateButtons[i].interactable = true;
+                eventCreateButtons[i].interactable = true;
             }
             else
             {
-                m_eventCreateButtons[i].interactable = false;
+                eventCreateButtons[i].interactable = false;
             }
         }
     }

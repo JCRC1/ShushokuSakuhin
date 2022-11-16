@@ -10,24 +10,24 @@ public class LaneEditor : MonoBehaviour
     // Singleton declaration
     public static LaneEditor Instance;
 
-    public Camera m_worldCam;
-    private Ray m_ray;
-    private RaycastHit m_hit;
+    public Camera worldCam;
+    private Ray ray;
+    private RaycastHit hit;
 
     //[HideInInspector]
-    public LaneHandler m_selectedLane;
+    public LaneHandler selectedLane;
 
-    public Color m_highlightedCol;
-    public Color m_defaultCol;
+    public Color highlightedCol;
+    public Color defaultCol;
 
-    public InputField m_startPosX;
-    public InputField m_startPosY;
+    public InputField startPosX;
+    public InputField startPosY;
 
-    public TempLaneInit m_tempLaneInit;
+    public TempLaneInit tempLaneInit;
 
-    public GameObject m_dummyLanePrefab;
+    public GameObject dummyLanePrefab;
 
-    private GameObject m_dummyLane;
+    private GameObject dummyLane;
 
     private void Awake()
     {
@@ -37,25 +37,25 @@ public class LaneEditor : MonoBehaviour
 
     private void Start()
     {
-        m_dummyLane = Instantiate(m_dummyLanePrefab);
-        Destroy(m_dummyLane.GetComponent<DummyLaneMovement>());
-        m_dummyLane.SetActive(false);
+        dummyLane = Instantiate(dummyLanePrefab);
+        Destroy(dummyLane.GetComponent<DummyLaneMovement>());
+        dummyLane.SetActive(false);
     }
 
     private void Update()
     {
-        var view = m_worldCam.ScreenToViewportPoint(Input.mousePosition);
+        var view = worldCam.ScreenToViewportPoint(Input.mousePosition);
         var isOutside = view.x < 0 || view.x > 1 || view.y < 0 || view.y > 1;
 
         // Create a ray from the screen down to the world
-        m_ray = m_worldCam.ScreenPointToRay(Input.mousePosition);
+        ray = worldCam.ScreenPointToRay(Input.mousePosition);
 
-        if (m_selectedLane)
+        if (selectedLane)
         {
-            if (m_selectedLane.m_identifier % 2 == 0)
-                m_defaultCol = Color.blue;
+            if (selectedLane.identifier % 2 == 0)
+                defaultCol = Color.blue;
             else
-                m_defaultCol = Color.red;
+                defaultCol = Color.red;
         }
 
         if (!isOutside)
@@ -65,39 +65,39 @@ public class LaneEditor : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Vector2 vec2;
-                    vec2 = m_worldCam.ScreenToWorldPoint(Input.mousePosition);
+                    vec2 = worldCam.ScreenToWorldPoint(Input.mousePosition);
                     vec2.x = Mathf.Round(vec2.x);
                     vec2.y = Mathf.Round(vec2.y);
 
-                    m_startPosX.text = vec2.x.ToString();
-                    m_startPosY.text = vec2.y.ToString();
+                    startPosX.text = vec2.x.ToString();
+                    startPosY.text = vec2.y.ToString();
 
-                    m_tempLaneInit.m_tempLaneData.m_initialPosition = vec2;
-                    m_dummyLane.SetActive(true);
-                    m_dummyLane.transform.position = vec2;
+                    tempLaneInit.tempLaneData.initialPosition = vec2;
+                    dummyLane.SetActive(true);
+                    dummyLane.transform.position = vec2;
                 }
             }
             else
             {
-                m_dummyLane.SetActive(false);
+                dummyLane.SetActive(false);
             }
             // Check if there isnt already a lane selected
-            if (!m_selectedLane)
+            if (!selectedLane)
             {
                 // If we hit something, in this case, the lane, and click...
-                if (Physics.Raycast(m_ray, out m_hit))
+                if (Physics.Raycast(ray, out hit))
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (m_hit.collider.tag == "Lane")
+                        if (hit.collider.tag == "Lane")
                         {
                             // It is now selected
-                            m_selectedLane = m_hit.collider.GetComponent<LaneHandler>();
-                            m_defaultCol = m_selectedLane.GetComponent<LineRenderer>().startColor;
+                            selectedLane = hit.collider.GetComponent<LaneHandler>();
+                            defaultCol = selectedLane.GetComponent<LineRenderer>().startColor;
 
-                            for (int i = 0; i < SelectedLaneDisplay.Instance.m_indexDisplay.Length; i++)
+                            for (int i = 0; i < SelectedLaneDisplay.Instance.indexDisplay.Length; i++)
                             {
-                                SelectedLaneDisplay.Instance.m_indexDisplay[i].text = m_selectedLane.m_identifier.ToString();
+                                SelectedLaneDisplay.Instance.indexDisplay[i].text = selectedLane.identifier.ToString();
                             }
                         }
                     }
@@ -105,20 +105,20 @@ public class LaneEditor : MonoBehaviour
             }
             else
             {
-                if (Physics.Raycast(m_ray, out m_hit))
+                if (Physics.Raycast(ray, out hit))
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (m_hit.collider.tag != "MGizmo" && m_hit.collider.tag != "Dummy")
+                        if (hit.collider.tag != "MGizmo" && hit.collider.tag != "Dummy")
                         {
-                            m_selectedLane.GetComponent<LineRenderer>().startColor = m_defaultCol;
-                            m_selectedLane.GetComponent<LineRenderer>().endColor = m_defaultCol;
+                            selectedLane.GetComponent<LineRenderer>().startColor = defaultCol;
+                            selectedLane.GetComponent<LineRenderer>().endColor = defaultCol;
 
-                            for (int i = 0; i < SelectedLaneDisplay.Instance.m_indexDisplay.Length; i++)
+                            for (int i = 0; i < SelectedLaneDisplay.Instance.indexDisplay.Length; i++)
                             {
-                                SelectedLaneDisplay.Instance.m_indexDisplay[i].text = "None";
+                                SelectedLaneDisplay.Instance.indexDisplay[i].text = "None";
                             }
-                            m_selectedLane = null;
+                            selectedLane = null;
                         }
                     }
                 }
@@ -127,38 +127,38 @@ public class LaneEditor : MonoBehaviour
 
             if (Input.mouseScrollDelta.y > 0)
             {
-                m_worldCam.orthographicSize--;
+                worldCam.orthographicSize--;
             }
             if (Input.mouseScrollDelta.y < 0)
             {
-                m_worldCam.orthographicSize++;
+                worldCam.orthographicSize++;
             }
 
-            if (m_worldCam.orthographicSize <= 10)
+            if (worldCam.orthographicSize <= 10)
             {
-                m_worldCam.orthographicSize = 10;
+                worldCam.orthographicSize = 10;
             }
-            if (m_worldCam.orthographicSize >= 50)
+            if (worldCam.orthographicSize >= 50)
             {
-                m_worldCam.orthographicSize = 50;
+                worldCam.orthographicSize = 50;
             }
         }
 
-        if (m_selectedLane)
+        if (selectedLane)
         {
-            m_selectedLane.GetComponent<LineRenderer>().startColor = m_highlightedCol;
-            m_selectedLane.GetComponent<LineRenderer>().endColor = m_highlightedCol;
+            selectedLane.GetComponent<LineRenderer>().startColor = highlightedCol;
+            selectedLane.GetComponent<LineRenderer>().endColor = highlightedCol;
         }
     }
 
     public void SetSelectedLane(Text _text)
     {
-        if (m_selectedLane)
+        if (selectedLane)
         {
-            m_selectedLane.GetComponent<LineRenderer>().startColor = m_defaultCol;
-            m_selectedLane.GetComponent<LineRenderer>().endColor = m_defaultCol;
+            selectedLane.GetComponent<LineRenderer>().startColor = defaultCol;
+            selectedLane.GetComponent<LineRenderer>().endColor = defaultCol;
         }
 
-        m_selectedLane = LevelEditorManager.Instance.m_lanes[int.Parse(_text.text)].GetComponent<LaneHandler>();
+        selectedLane = LevelEditorManager.Instance.lanes[int.Parse(_text.text)].GetComponent<LaneHandler>();
     }
 }
